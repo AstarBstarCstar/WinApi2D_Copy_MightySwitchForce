@@ -42,15 +42,37 @@ void CTile::render()
 	fPoint fptScale = GetScale();
 
 	CRenderManager::getInst()->RenderFrame(
-		m_pImg,
-		fptRenderPos.x,
-		fptRenderPos.y,
-		fptScale.x,
-		fptScale.y,
-		iCurCol * fptScale.x,
-		iCurRow * fptScale.y,
-		fptScale.x,
-		fptScale.y
+		//m_pImg,
+		//fptRenderPos.x,
+		//fptRenderPos.y,
+		//fptScale.x,
+		//fptScale.y,
+		//iCurCol * fptScale.x,
+		//iCurRow * fptScale.y,
+		//fptScale.x,
+		//fptScale.y//TODO:
+		//RENDER->RenderFrame(
+		//	m_pImg,
+		//	vRenderPos.x,
+		//	vRenderPos.y,
+		//	vRenderPos.x + vScale.x,
+		//	vRenderPos.y + vScale.y,
+		//	(float)(iCurX * SIZE_TILE),
+		//	(float)(iCurY * SIZE_TILE),
+		//	SIZE_TILE,
+		//	SIZE_TILE, 0.2f
+		/*);*/
+
+		/*RENDER->RenderFrame(*/
+			m_pImg,
+			fptRenderPos.x,
+		    fptRenderPos.y,
+		    fptRenderPos.x + fptScale.x,
+			fptRenderPos.y + fptScale.y,
+			(float)(iCurCol * SIZE_TILE),
+			(float)(iCurRow * SIZE_TILE),
+			(float)((iCurCol + 1) * SIZE_TILE),
+			(float)((iCurRow + 1) * SIZE_TILE)
 	);
 }
 

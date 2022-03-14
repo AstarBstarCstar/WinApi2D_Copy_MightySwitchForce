@@ -28,22 +28,22 @@ void CScene_Start::update()
 
 	if (KeyDown('Z'))
 	{
-		CSoundManager::getInst()->AddSound(L"bgm", L"sound\\drumloop.wav", true);
-		CSoundManager::getInst()->Play(L"bgm");
+		CSoundManager::getInst()->AddSound(L"Stage2", L"sound\\MSF_ST2.wav", true);
+		CSoundManager::getInst()->Play(L"Stage2");
 	}
 
 	if (KeyDown('X'))
 	{
-		CSoundManager::getInst()->Stop(L"bgm");
+		CSoundManager::getInst()->Stop(L"Stage2");
 	}
 }
 
 void CScene_Start::Enter()
 {
 	// 타일 로딩
-	wstring path = CPathManager::getInst()->GetContentPath();
-	path += L"tile\\Start.tile";
-	//LoadTile(path);
+	//wstring path = CPathManager::getInst()->GetContentPath();
+	//path += L"tile\\Start.tile";
+	////LoadTile(path);
 
 	// Player 추가
 	CGameObject* pPlayer = new CPlayer;
@@ -65,7 +65,7 @@ void CScene_Start::Enter()
 	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::MISSILE_PLAYER, GROUP_GAMEOBJ::MONSTER);
 
 	// Camera Look 지정
-	CCameraManager::getInst()->SetLookAt(fPoint(WINSIZEX / 2.f, WINSIZEY / 2.f));
+	//CCameraManager::getInst()->SetLookAt(fPoint(WINSIZEX / 2.f, WINSIZEY / 2.f));
 }
 
 void CScene_Start::Exit()

@@ -51,9 +51,9 @@ void Map_Start::render()
 
     CRenderManager::getInst()->RenderImage(
         pimg,
-        pos.x - scale.x / 2.f,
-        pos.y - scale.y / 2.f,
-        pos.x + scale.x / 2.f,
-        pos.y + scale.y / 2.f
+        pos.x - scale.x / 1.f,
+        pos.y + scale.y / 1.f,
+        pos.x + scale.x*50,
+        pos.y+ - scale.y*50
     );
 }

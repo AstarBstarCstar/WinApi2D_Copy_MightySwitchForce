@@ -5,7 +5,7 @@ CTexture::CTexture()
 {
 	m_hDC = 0;
 	m_hBMP = 0;
-	m_bmpInfo = {};
+	m_bmpInfo = {};	
 }
 
 CTexture::~CTexture()
