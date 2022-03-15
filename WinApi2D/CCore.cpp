@@ -6,7 +6,7 @@
 CCore::CCore()
 {
 	// 게임 화면을 그리기 위한 DC 핸들값 초기화
-	m_hDC = 0;
+	/*m_hDC = 0;*/
 }
 
 CCore::~CCore()
@@ -36,6 +36,7 @@ void CCore::render()
 	CRenderManager::getInst()->RenderFillRectangle(-1, -1, WINSIZEX + 1, WINSIZEY + 1, RGB(255, 255, 255));
 
 	CSceneManager::getInst()->render();
+	CCameraManager::getInst()->render();
 	//CCameraManager::getInst()->render(m_pMemTex->GetDC());
 
 	// 오른쪽 상단에 FPS 표시
@@ -48,8 +49,6 @@ void CCore::render()
 
 void CCore::init()
 {
-	m_hDC = GetDC(hWnd);
-
 	CPathManager::getInst()->init();
 	CTimeManager::getInst()->init();
 	CKeyManager::getInst()->init();
@@ -59,9 +58,4 @@ void CCore::init()
 	CCameraManager::getInst()->init();
 	CCollisionManager::getInst()->init();
 	CSceneManager::getInst()->init();
-}
-
-HDC CCore::GetMainDC()
-{
-	return m_hDC;
 }

@@ -30,7 +30,8 @@ void CRenderManager::init()
 
 	 /*지정한 윈도우의 클라이언트 영역에 그림을 그리기 위한 Render Target을 생성*/
 	m_pFactory->CreateHwndRenderTarget(RenderTargetProperties(),
-		HwndRenderTargetProperties(hWnd, SizeU(rc.right, rc.bottom)),
+		HwndRenderTargetProperties(hWnd, SizeU(rc.right, rc.bottom),
+			D2D1_PRESENT_OPTIONS_IMMEDIATELY),
 		&m_pRenderTarget);
 
 	//m_pFactory->CreateHwndRenderTarget(RenderTargetProperties(),
@@ -57,12 +58,12 @@ void CRenderManager::init()
 	}
 }
 
-void CRenderManager::RenderImage(CD2DImage* img, float dstX, float dstY, float dstW, float dstH)
+void CRenderManager::RenderImage(CD2DImage* img, float dstX, float dstY, float dstW, float dstH, float alpha)
 {
 	D2D1_RECT_F imgRect = { dstX, dstY, dstW, dstH };
 	if (nullptr != img)
 	{
-		CRenderManager::getInst()->GetRenderTarget()->DrawBitmap(img->GetImage(), imgRect, 1.0f, D2D1_BITMAP_INTERPOLATION_MODE_NEAREST_NEIGHBOR);
+		m_pRenderTarget->DrawBitmap(img->GetImage(), imgRect, alpha, D2D1_BITMAP_INTERPOLATION_MODE_NEAREST_NEIGHBOR);
 	}
 }
 
@@ -130,11 +131,11 @@ void CRenderManager::RenderRectangle(float dstX, float dstY, float dstW, float d
 	ID2D1SolidColorBrush* brush;
 
 	m_pRenderTarget->CreateSolidColorBrush(
-		D2D1::ColorF(red / 2.f, green / 255.0f, blue / 255.0f), &brush);
+		D2D1::ColorF(red / 255.f, green / 255.0f, blue / 255.0f), &brush);
 	m_pRenderTarget->DrawRectangle(m_imgRect, brush);
 }
 
-void CRenderManager::RenderFillRectangle(float dstX, float dstY, float dstW, float dstH, COLORREF color)
+void CRenderManager::RenderFillRectangle(float dstX, float dstY, float dstW, float dstH, COLORREF color, float alpha)
 {
 	D2D1_RECT_F m_imgRect = { dstX, dstY, dstW, dstH };
 
@@ -144,7 +145,7 @@ void CRenderManager::RenderFillRectangle(float dstX, float dstY, float dstW, flo
 	ID2D1SolidColorBrush* brush;
 
 	m_pRenderTarget->CreateSolidColorBrush(
-		D2D1::ColorF(red / 2.f, green / 255.0f, blue / 255.0f), &brush);
+		D2D1::ColorF(red / 255.f, green / 255.0f, blue / 255.0f), &brush);
 	m_pRenderTarget->FillRectangle(m_imgRect, brush);
 }
 
@@ -158,7 +159,7 @@ void CRenderManager::RenderEllipse(float dstX, float dstY, float dstW, float dst
 	ID2D1SolidColorBrush* brush;
 
 	m_pRenderTarget->CreateSolidColorBrush(
-		D2D1::ColorF(red / 2.f, green / 255.0f, blue / 255.0f), &brush);
+		D2D1::ColorF(red / 255.f, green / 255.0f, blue / 255.0f), &brush);
 	m_pRenderTarget->DrawEllipse(m_imgRect, brush);
 }
 
@@ -172,8 +173,23 @@ void CRenderManager::RenderFillEllipse(float dstX, float dstY, float dstW, float
 	ID2D1SolidColorBrush* brush;
 
 	m_pRenderTarget->CreateSolidColorBrush(
-		D2D1::ColorF(red / 2.f, green / 255.0f, blue / 255.0f), &brush);
+		D2D1::ColorF(red / 255.f, green / 255.0f, blue / 255.0f), &brush);
 	m_pRenderTarget->FillEllipse(m_imgRect, brush);
+}
+
+void CRenderManager::RenderLine(fPoint startPoint, fPoint endPoint, COLORREF color, float strokeWidth)
+{
+	D2D1_POINT_2F start = { startPoint.x, startPoint.y };
+	D2D1_POINT_2F end = { endPoint.x, endPoint.y };
+
+	int red = color & 0xFF;
+	int green = (color >> 8) & 0xFF;
+	int blue = (color >> 16) & 0xFF;
+	ID2D1SolidColorBrush* brush;
+
+	m_pRenderTarget->CreateSolidColorBrush(
+		D2D1::ColorF(red / 255.f, green / 255.0f, blue / 255.0f), &brush);
+	m_pRenderTarget->DrawLine(start, end, brush, strokeWidth);
 }
 
 ID2D1Bitmap* CRenderManager::GetBitmap()

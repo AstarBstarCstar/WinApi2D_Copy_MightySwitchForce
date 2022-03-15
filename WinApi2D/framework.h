@@ -39,6 +39,8 @@ using namespace std;
 enum class GROUP_GAMEOBJ
 {
 	DEFAULT,
+	BACKGROUND,
+	MAP,
 	TILE,
 	PLAYER,
 	MONSTER,
@@ -46,6 +48,15 @@ enum class GROUP_GAMEOBJ
 	MISSILE_MONSTER,
 
 	UI,		// UI는 모든 게임오브젝트 중 최상단 Layer에 위치
+	SIZE,
+};
+
+enum class GROUP_TILE
+{
+	NONE,
+	GROUND,
+	WALL,
+
 	SIZE,
 };
 
