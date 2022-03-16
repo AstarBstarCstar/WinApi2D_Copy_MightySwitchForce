@@ -25,10 +25,15 @@ public:
 	virtual void update();
 	virtual void render();
 
-	void SetTexture(CD2DImage* pTex);
+	void SetD2DImage(CD2DImage* pTex);
 	void SetImgIdx(UINT idx);
+	int GetIdx();
 	int GetX();
 	int GetY();
+	void SetX(int x);
+	void SetY(int y);
+	void SetGroup(GROUP_TILE group);
+	GROUP_TILE GetGroup();
 
 	virtual void Save(FILE* pFile);
 	virtual void Load(FILE* pFile);

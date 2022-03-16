@@ -12,8 +12,9 @@ public:
 	~CMap();
 
 	void Load(wstring strKey, wstring strPath);
-
+	void TitleLoad(wstring strKey, wstring strPath);
 	virtual CMap* Clone();
+	
 	virtual void update();
 	virtual void render();
 };

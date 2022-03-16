@@ -18,6 +18,7 @@
 #include <string>
 #include <math.h>
 #include <assert.h>
+#include <stdlib.h>
 
 // STL
 #include <vector>
@@ -63,6 +64,7 @@ enum class GROUP_TILE
 enum class GROUP_SCENE
 {
 	TOOL,
+	TITLE,
 	START,
 	STAGE_01,
 	STAGE_02,

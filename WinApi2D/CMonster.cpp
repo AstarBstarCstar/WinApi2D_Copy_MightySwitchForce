@@ -36,7 +36,7 @@ CMonster::CMonster()
 	GetCollider()->SetOffsetPos(fPoint(0.f, 10.f));
 
 	CreateAnimator();
-	GetAnimator()->CreateAnimation(L"RightNone", m_MImg, fPoint(0.f, 0.f), fPoint(89.1f, 157.f), fPoint(89.1f, 0.f), 0.1f, 9);
+	GetAnimator()->CreateAnimation(L"RightNone", m_MImg, fPoint(0.f, 0.f), fPoint(89.1f, 157.f), fPoint(89.1f, 0.f), 0.1f, 9,true);
 	//GetAnimator()->CreateAnimation(L"RightNone",	m_pImg, fPoint(0.f, 70.f),	fPoint(70.f, 70.f), fPoint(70.f, 0.f), 0.5f, 2);
 	//GetAnimator()->CreateAnimation(L"LeftMove",		m_pImg, fPoint(0.f, 140.f),	fPoint(70.f, 70.f), fPoint(70.f, 0.f), 0.25f, 3);
 	//GetAnimator()->CreateAnimation(L"RightMove",	m_pImg, fPoint(0.f, 210.f), fPoint(70.f, 70.f), fPoint(70.f, 0.f), 0.25f, 3);

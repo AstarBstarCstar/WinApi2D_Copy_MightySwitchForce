@@ -40,10 +40,10 @@ void CScene_Start::update()
 
 void CScene_Start::Enter()
 {
-	// 타일 로딩
-	//wstring path = CPathManager::getInst()->GetContentPath();
-	//path += L"tile\\Start.tile";
-	////LoadTile(path);
+	//// 타일 로딩
+	////wstring path = CPathManager::getInst()->GetContentPath();
+	////path += L"tile\\Start.tile";
+	//LoadTile(path);
 
 	// Player 추가
 	CGameObject* pPlayer = new CPlayer;
@@ -73,13 +73,14 @@ void CScene_Start::Enter()
 
 	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::MONSTER);
 	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::MISSILE_PLAYER, GROUP_GAMEOBJ::MONSTER);
+	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::TILE);
 
 	// Camera Look 지정
 	//CCameraManager::getInst()->SetLookAt(fPoint(WINSIZEX / 2.f, WINSIZEY / 2.f));
 	CCameraManager::getInst()->SetLookAt(fPoint(WINSIZEX / 2.f, WINSIZEY / 2.f));
 	CCameraManager::getInst()->SetTargetObj(pPlayer);
-	CCameraManager::getInst()->FadeOut(5.f);
-	CCameraManager::getInst()->FadeIn(5.f);
+	//CCameraManager::getInst()->FadeOut(1.f);
+	//CCameraManager::getInst()->FadeIn(1.f);
 }
 
 void CScene_Start::Exit()

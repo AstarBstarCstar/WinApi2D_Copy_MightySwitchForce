@@ -17,6 +17,12 @@ void CMap::Load(wstring strKey, wstring strPath)
     SetScale(fPoint(m_pImg->GetWidth() * 2.f, m_pImg->GetHeight() * 2.f));
 }
 
+void CMap::TitleLoad(wstring strKey, wstring strPath)
+{
+    m_pImg = CResourceManager::getInst()->LoadD2DImage(strKey, strPath);
+    SetScale(fPoint(m_pImg->GetWidth()/1.5, m_pImg->GetHeight()/1.5 ));
+}
+
 CMap* CMap::Clone()
 {
     return nullptr;
