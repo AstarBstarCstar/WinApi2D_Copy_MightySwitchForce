@@ -2,6 +2,7 @@
 #include "CScene.h"
 
 class CD2DImage;
+class CButtonUI;
 
 class CScene_Tool : public CScene
 {
@@ -35,7 +36,12 @@ public:
 	void SaveTile(const wstring& strPath);
 	void SaveTileData();
 	void LoadTileData();
+	void LoadMap();
+	void ClickTileGroup(CButtonUI* button);
+
 private:
+	void CreateTilePanel();
+	void PrintMap();
 	void PrintTileLine();
 	void PrintTileGroup();
 };

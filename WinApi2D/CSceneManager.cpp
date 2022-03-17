@@ -3,6 +3,7 @@
 #include "CScene_Start.h"
 #include "CScene_Tool.h"
 #include "CScene_Title.h"
+#include "CScene_Select.h"
 
 CSceneManager::CSceneManager()
 {
@@ -51,6 +52,9 @@ void CSceneManager::init()
 
 	m_arrScene[(size_t)GROUP_SCENE::TITLE] = new CScene_Title;
 	m_arrScene[(size_t)GROUP_SCENE::TITLE]->SetName(L"Title_Scene");
+
+	m_arrScene[(size_t)GROUP_SCENE::SELECT] = new CScene_Select;
+	m_arrScene[(size_t)GROUP_SCENE::SELECT]->SetName(L"Select_Scene");
 
 	m_arrScene[(size_t)GROUP_SCENE::TOOL] = new CScene_Tool;
 	m_arrScene[(size_t)GROUP_SCENE::TOOL]->SetName(L"Tool_Scene");

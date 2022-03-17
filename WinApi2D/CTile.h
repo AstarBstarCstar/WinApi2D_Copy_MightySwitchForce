@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "CGameObject.h"
 
 class CD2DImage;
@@ -10,9 +10,9 @@ private:
 	CD2DImage* m_pImg;
 	int m_iX;
 	int m_iY;
-	int m_iIdx;			// ÅØ½ºÃÄ ÀÎµ¦½º
+	int m_iIdx;			// Ã…Ã˜Â½ÂºÃƒÃ„ Ã€ÃŽÂµÂ¦Â½Âº
 
-	GROUP_TILE m_group;
+	GROUP_TILE m_eGroup;
 
 public:
 	const static int SIZE_TILE = 32;
@@ -27,15 +27,15 @@ public:
 
 	void SetD2DImage(CD2DImage* pTex);
 	void SetImgIdx(UINT idx);
-	int GetIdx();
-	int GetX();
-	int GetY();
 	void SetX(int x);
 	void SetY(int y);
 	void SetGroup(GROUP_TILE group);
+
+	int GetIdx();
+	int GetX();
+	int GetY();
 	GROUP_TILE GetGroup();
 
 	virtual void Save(FILE* pFile);
 	virtual void Load(FILE* pFile);
 };
-

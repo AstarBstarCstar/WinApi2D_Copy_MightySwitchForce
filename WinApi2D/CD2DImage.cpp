@@ -3,7 +3,10 @@
 
 CD2DImage::CD2DImage()
 {
-	m_pBitmap = nullptr;
+	if (nullptr != m_pBitmap)
+	{
+		m_pBitmap->Release();
+	}
 }
 
 CD2DImage::~CD2DImage()

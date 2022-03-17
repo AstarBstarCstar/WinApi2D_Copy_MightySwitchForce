@@ -57,6 +57,8 @@ enum class GROUP_TILE
 	NONE,
 	GROUND,
 	WALL,
+	PLATFORM,
+	SLOPE,
 
 	SIZE,
 };
@@ -65,6 +67,7 @@ enum class GROUP_SCENE
 {
 	TOOL,
 	TITLE,
+	SELECT,
 	START,
 	STAGE_01,
 	STAGE_02,
@@ -81,6 +84,18 @@ enum class TYPE_EVENT
 	CREATE_OBJECT,
 	DELETE_OBJECT,
 	CHANGE_SCENE,
+
+	SIZE,
+};
+
+enum class MON_STATE
+{
+	IDLE,
+	PATROL,
+	TRACE,
+	ATT,
+	RUN,
+	DEAD,
 
 	SIZE,
 };

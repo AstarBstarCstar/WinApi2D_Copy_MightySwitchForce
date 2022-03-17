@@ -149,6 +149,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AI.h" />
     <ClInclude Include="CAnimation.h" />
     <ClInclude Include="CAnimator.h" />
     <ClInclude Include="CBackGround.h" />
@@ -160,6 +161,7 @@
     <ClInclude Include="CD2DImage.h" />
     <ClInclude Include="CEventManager.h" />
     <ClInclude Include="CGameObject.h" />
+    <ClInclude Include="CIdleState.h" />
     <ClInclude Include="CKeyManager.h" />
     <ClInclude Include="CMap.h" />
     <ClInclude Include="CMissile.h" />
@@ -178,6 +180,7 @@
     <ClInclude Include="CScene_Tool.h" />
     <ClInclude Include="CSound.h" />
     <ClInclude Include="CSoundManager.h" />
+    <ClInclude Include="CState.h" />
     <ClInclude Include="CTexture.h" />
     <ClInclude Include="CTile.h" />
     <ClInclude Include="CTimeManager.h" />
@@ -193,6 +196,7 @@
     <ClInclude Include="WinApi2D.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AI.cpp" />
     <ClCompile Include="CAnimation.cpp" />
     <ClCompile Include="CAnimator.cpp" />
     <ClCompile Include="CBackGround.cpp" />
@@ -204,6 +208,7 @@
     <ClCompile Include="CD2DImage.cpp" />
     <ClCompile Include="CEventManager.cpp" />
     <ClCompile Include="CGameObject.cpp" />
+    <ClCompile Include="CIdleState.cpp" />
     <ClCompile Include="CKeyManager.cpp" />
     <ClCompile Include="CMap.cpp" />
     <ClCompile Include="CMissile.cpp" />
@@ -222,6 +227,7 @@
     <ClCompile Include="CScene_Tool.cpp" />
     <ClCompile Include="CSound.cpp" />
     <ClCompile Include="CSoundManager.cpp" />
+    <ClCompile Include="CState.cpp" />
     <ClCompile Include="CTexture.cpp" />
     <ClCompile Include="CTile.cpp" />
     <ClCompile Include="CTimeManager.cpp" />

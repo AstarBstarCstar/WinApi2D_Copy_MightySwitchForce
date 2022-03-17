@@ -1,11 +1,12 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "CScene_Start.h"
+
 #include "CGameObject.h"
 #include "CPlayer.h"
 #include "CMonster.h"
-#include "Map_Start.h"
 #include "CMap.h"
 #include "CBackGround.h"
+
 #include "CSound.h"
 #include "CD2DImage.h"
 
@@ -28,38 +29,40 @@ void CScene_Start::update()
 
 	if (KeyDown('Z'))
 	{
-		CSoundManager::getInst()->AddSound(L"Stage2", L"sound\\MSF_ST2.wav", true);
-		CSoundManager::getInst()->Play(L"Stage2");
+
 	}
 
 	if (KeyDown('X'))
 	{
-		CSoundManager::getInst()->Stop(L"Stage2");
+		CSoundManager::getInst()->Stop(L"MSF_ST2");
 	}
 }
 
 void CScene_Start::Enter()
 {
-	//// Ÿ�� �ε�
-	////wstring path = CPathManager::getInst()->GetContentPath();
-	////path += L"tile\\Start.tile";
-	//LoadTile(path);
+	CSoundManager::getInst()->AddSound(L"MSF_ST2", L"sound\\MSF_ST2.wav", false, true);
+	CSoundManager::getInst()->Play(L"MSF_ST2");
+	// Å¸ÀÏ ·Îµù
+	wstring path = CPathManager::getInst()->GetContentPath();
+	path += L"tile\\Start.tile";
+	LoadTile(path);
 
-	// Player �߰�
+	// Player Ãß°¡
 	CGameObject* pPlayer = new CPlayer;
 	pPlayer->SetPos(fPoint(200, 200));
 	AddObject(pPlayer, GROUP_GAMEOBJ::PLAYER);
 
-	// Monster �߰�
+	// Monster Ãß°¡
 	CMonster* pMonster = new CMonster;
 	pMonster->SetPos(fPoint(1100, 350));
-	pMonster->SetCenterPos(pMonster->GetPos());
-	AddObject(pMonster, GROUP_GAMEOBJ::MONSTER);
+	AddObject(pMonster, GROUP_GAMEOBJ::PLAYER);
 
-	/*Map_Start* map = new Map_Start;*/
+	CMonster* pCloneMonster = pMonster->Clone();
+	pCloneMonster->SetPos(fPoint(500, 350));
+	AddObject(pCloneMonster, GROUP_GAMEOBJ::MONSTER);
+
 	CMap* map = new CMap;
 	map->Load(L"Map_Start", L"texture\\map\\Yoshis Island 2.png");
-	map->SetPos(fPoint(-200.f, -300.f));
 	AddObject(map, GROUP_GAMEOBJ::MAP);
 
 	CBackGround* backGround = new CBackGround;
@@ -67,20 +70,15 @@ void CScene_Start::Enter()
 	backGround->SetPos(fPoint(-100.f, -500.f));
 	AddObject(backGround, GROUP_GAMEOBJ::BACKGROUND);
 
-	map->SetPos(fPoint(100, 100));
-	map->SetScale(fPoint(100, 100));
-	AddObject(map, GROUP_GAMEOBJ::MONSTER);
-
 	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::MONSTER);
 	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::MISSILE_PLAYER, GROUP_GAMEOBJ::MONSTER);
 	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::TILE);
 
-	// Camera Look ����
-	//CCameraManager::getInst()->SetLookAt(fPoint(WINSIZEX / 2.f, WINSIZEY / 2.f));
+	// Camera Look ÁöÁ¤
 	CCameraManager::getInst()->SetLookAt(fPoint(WINSIZEX / 2.f, WINSIZEY / 2.f));
 	CCameraManager::getInst()->SetTargetObj(pPlayer);
-	//CCameraManager::getInst()->FadeOut(1.f);
-	//CCameraManager::getInst()->FadeIn(1.f);
+	CCameraManager::getInst()->FadeOut(1.f);
+	CCameraManager::getInst()->FadeIn(1.f);
 }
 
 void CScene_Start::Exit()

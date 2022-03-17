@@ -67,6 +67,9 @@
     <Filter Include="Object\Map">
       <UniqueIdentifier>{c4780346-4b61-45e6-ab7b-998eacd51534}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object\AI">
+      <UniqueIdentifier>{3f2e7d24-77c3-4dfb-842a-20c77968c88a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -195,6 +198,15 @@
     <ClInclude Include="CScene_Select.h">
       <Filter>Scene</Filter>
     </ClInclude>
+    <ClInclude Include="AI.h">
+      <Filter>Object\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="CIdleState.h">
+      <Filter>Object\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="CState.h">
+      <Filter>Object\AI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinApi2D.cpp">
@@ -304,6 +316,15 @@
     </ClCompile>
     <ClCompile Include="CScene_Select.cpp">
       <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="AI.cpp">
+      <Filter>Object\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="CIdleState.cpp">
+      <Filter>Object\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="CState.cpp">
+      <Filter>Object\AI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

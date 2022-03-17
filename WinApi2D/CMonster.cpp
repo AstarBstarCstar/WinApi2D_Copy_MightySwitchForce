@@ -5,7 +5,7 @@
 #include "CAnimation.h"
 #include "CTexture.h"
 #include "CScene.h"
-
+#include "AI.h"
 
 CMonster* CMonster::Clone()
 {
@@ -21,7 +21,7 @@ CMonster::CMonster()
 
 	m_MImg = CResourceManager::getInst()->LoadD2DImage(L"MonsterImg", L"texture\\Animation\\MonTest.PNG");
 	SetName(L"MonsterImg");
-	SetScale(fPoint(70.f, 70.f));
+	SetScale(fPoint(100, 100));
 
 	//SetName(L"Monster");
 	//SetScale(fPoint(100.f, 100.f));
@@ -48,6 +48,10 @@ CMonster::CMonster()
 
 CMonster::~CMonster()
 {
+	if (nullptr != m_pAI)
+	{
+		delete m_pAI;
+	}
 }
 
 void CMonster::update()
@@ -68,11 +72,20 @@ void CMonster::update()
 	}
 
 	SetPos(pos);
-	GetAnimator()->update();
+	if (nullptr != GetAnimator())
+		GetAnimator()->update();
+	if (nullptr != m_pAI)
+		m_pAI->update();
 }
 void CMonster::render()
 {
 	component_render();
+}
+
+void CMonster::SetAI(AI* ai)
+{
+	m_pAI = ai;
+	m_pAI->m_pOwner = this;
 }
 
 void CMonster::SetCenterPos(fPoint point)
