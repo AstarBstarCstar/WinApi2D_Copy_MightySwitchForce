@@ -3,6 +3,7 @@
 #include "CGameObject.h"
 #include "CTexture.h"
 /*신경치료 2차 아플까봐 무섭다 ㅠㅠ찌밤*/
+/*신경치료 아픈거 끝낫다 이제 초집중이다*/
 CCore::CCore()
 {
 	// 게임 화면을 그리기 위한 DC 핸들값 초기화
