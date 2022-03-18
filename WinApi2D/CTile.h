@@ -6,7 +6,7 @@ class CD2DImage;
 class CTile : public CGameObject
 {
 
-private:
+public:
 	CD2DImage* m_pImg;
 	int m_iX;
 	int m_iY;

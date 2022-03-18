@@ -15,7 +15,7 @@ CCollisionManager::~CCollisionManager()
 
 void CCollisionManager::CollisionGroupUpdate(GROUP_GAMEOBJ objLeft, GROUP_GAMEOBJ objRight)
 {
-	CScene* pCurScene = CSceneManager::getInst()->GetCurScene();
+	CScene* pCurScene = CSceneManager::GetInst()->GetCurScene();
 
 	const vector<CGameObject*>& vecLeft = pCurScene->GetGroupObject(objLeft);
 	const vector<CGameObject*>& vecRight = pCurScene->GetGroupObject(objRight);

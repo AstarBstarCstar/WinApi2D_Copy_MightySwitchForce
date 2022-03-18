@@ -84,11 +84,12 @@ enum class TYPE_EVENT
 	CREATE_OBJECT,
 	DELETE_OBJECT,
 	CHANGE_SCENE,
+	CHANGE_AI_STATE,
 
 	SIZE,
 };
 
-enum class MON_STATE
+enum class STATE_MON
 {
 	IDLE,
 	PATROL,
@@ -98,6 +99,15 @@ enum class MON_STATE
 	DEAD,
 
 	SIZE,
+};
+
+enum class PLAYER_STATE
+{
+	IDLE,
+	WALK,
+	ATTACK,
+	JUMP,
+	DEAD,
 };
 
 // Core & Manager
@@ -124,18 +134,19 @@ enum class MON_STATE
 #define	WINSIZEY	720
 #define WINSTYLE	WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX
 
-#define DT				CTimeManager::getInst()->GetDT()
-#define fDT				CTimeManager::getInst()->GetfDT()
+#define DT				CTimeManager::GetInst()->GetDT()
+#define fDT				CTimeManager::GetInst()->GetfDT()
 
-#define Key(key)		CKeyManager::getInst()->GetButton(key)
-#define KeyUp(key)		CKeyManager::getInst()->GetButtonUP(key)
-#define KeyDown(key)	CKeyManager::getInst()->GetButtonDOWN(key)
+#define Key(key)		CKeyManager::GetInst()->GetButton(key)
+#define KeyUp(key)		CKeyManager::GetInst()->GetButtonUP(key)
+#define KeyDown(key)	CKeyManager::GetInst()->GetButtonDOWN(key)
 
-#define MousePos()		CKeyManager::getInst()->GetMousePos()
+#define MousePos()		CKeyManager::GetInst()->GetMousePos()
 
-#define CreateObj(pObj, group)	CEventManager::getInst()->EventCreateObject(pObj, group)
-#define DeleteObj(pObj)			CEventManager::getInst()->EventDeleteObject(pObj)
-#define ChangeScn(scene)		CEventManager::getInst()->EventChangeScene(scene)
+#define CreateObj(pObj, group)		CEventManager::GetInst()->EventCreateObject(pObj, group)
+#define DeleteObj(pObj)				CEventManager::GetInst()->EventDeleteObject(pObj)
+#define ChangeScn(scene)			CEventManager::GetInst()->EventChangeScene(scene)
+#define ChangeAIState(ai, state)	CEventManager::GetInst()->EventChangeAIState(ai, state)
 
 //========================================
 //## 전역변수(인스턴스, 윈도우 핸들)	##

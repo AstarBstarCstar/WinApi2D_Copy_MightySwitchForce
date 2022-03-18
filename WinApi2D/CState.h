@@ -1,20 +1,23 @@
 #pragma once
 
 class AI;
+class CMonster;
 
 class CState
 {
 	friend class AI;
 
 private:
-	AI* m_pOwnerAi;
-	MON_STATE m_eState;
+	AI* m_pOwnerAI;
+	STATE_MON m_eState;
 
 public:
-	CState(MON_STATE state);
+	CState(STATE_MON state);
 	virtual ~CState();
 
-	AI* GetOwner();
+	AI* GetOwnerAI();
+	STATE_MON GetType();
+	CMonster* GetMonster();
 
 	virtual void Enter() = 0;
 	virtual void Exit() = 0;

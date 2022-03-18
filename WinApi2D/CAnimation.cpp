@@ -72,12 +72,12 @@ void CAnimation::render()
     tAniFrm frm = m_vecFrm[m_iCurFrm];
 
     fptPos = fptPos + frm.fptOffset;
-    fptPos = CCameraManager::getInst()->GetRenderPos(fptPos);
+    fptPos = CCameraManager::GetInst()->GetRenderPos(fptPos);
 
 
     if (m_bReverse)
     {
-        CRenderManager::getInst()->RenderRevFrame(
+        CRenderManager::GetInst()->RenderRevFrame(
             m_pImg,
             fptPos.x - fptScale.x / 2.f,
             fptPos.y - fptScale.y / 2.f,
@@ -91,7 +91,7 @@ void CAnimation::render()
     }
     else
     {
-        CRenderManager::getInst()->RenderFrame(
+        CRenderManager::GetInst()->RenderFrame(
             m_pImg,
             fptPos.x - fptScale.x / 2.f,
             fptPos.y - fptScale.y / 2.f,

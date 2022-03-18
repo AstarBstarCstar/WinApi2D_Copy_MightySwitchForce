@@ -60,7 +60,7 @@ void CCameraManager::render()
 	else if (CAM_EFFECT::FADE_IN == effect.m_eEffect)
 		fRatio = 1.f - fRatio;
 
-	CRenderManager::getInst()->RenderFillRectangle(0, 0, WINSIZEX, WINSIZEY, RGB(0, 0, 0), fRatio);
+	CRenderManager::GetInst()->RenderFillRectangle(0, 0, WINSIZEX, WINSIZEY, RGB(0, 0, 0), fRatio);
 
 	//AlphaBlend(hDC
 	//	, 0, 0
@@ -160,7 +160,7 @@ void CCameraManager::CalDiff()
 	{
 		fPoint fptCenter = fPoint(WINSIZEX / 2.f, WINSIZEY / 2.f);
 
-		m_fptCurLookAt = m_fptPrevLookAt + (m_fptLookAt - m_fptPrevLookAt).normalize() * m_fSpeed * fDT;
+		m_fptCurLookAt = m_fptPrevLookAt + (m_fptLookAt - m_fptPrevLookAt).Normalize() * m_fSpeed * fDT;
 		m_fptDiff = m_fptCurLookAt - fptCenter;
 		m_fptPrevLookAt = m_fptCurLookAt;
 	}

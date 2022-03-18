@@ -25,7 +25,7 @@ void CButtonUI::render()
 
 	if (m_strText.size() > 0)
 	{
-		CRenderManager::getInst()->RenderText(
+		CRenderManager::GetInst()->RenderText(
 			m_strText,
 			GetFinalPos().x,
 			GetFinalPos().y,

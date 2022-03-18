@@ -40,9 +40,9 @@ void CMissile::render()
 	fPoint pos = GetPos();
 	fPoint scale = GetScale();
 
-	fPoint fptRenderPos = CCameraManager::getInst()->GetRenderPos(pos);
+	fPoint fptRenderPos = CCameraManager::GetInst()->GetRenderPos(pos);
 
-	CRenderManager::getInst()->RenderEllipse(
+	CRenderManager::GetInst()->RenderEllipse(
 		fptRenderPos.x,
 		fptRenderPos.y,
 		scale.x / 2.f,
@@ -53,7 +53,7 @@ void CMissile::render()
 
 void CMissile::SetDir(fVec2 vec)
 {
-	m_fvDir = vec.normalize();
+	m_fvDir = vec.Normalize();
 }
 
 void CMissile::SetDir(float theta)

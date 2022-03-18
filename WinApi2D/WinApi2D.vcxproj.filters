@@ -207,6 +207,15 @@
     <ClInclude Include="CState.h">
       <Filter>Object\AI</Filter>
     </ClInclude>
+    <ClInclude Include="CTraceState.h">
+      <Filter>Object\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="CTileButton.h">
+      <Filter>Object\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="CGravity.h">
+      <Filter>Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinApi2D.cpp">
@@ -325,6 +334,15 @@
     </ClCompile>
     <ClCompile Include="CState.cpp">
       <Filter>Object\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="CTraceState.cpp">
+      <Filter>Object\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="CTileButton.cpp">
+      <Filter>Object\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="CGravity.cpp">
+      <Filter>Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

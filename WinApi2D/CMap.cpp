@@ -13,14 +13,8 @@ CMap::~CMap()
 
 void CMap::Load(wstring strKey, wstring strPath)
 {
-    m_pImg = CResourceManager::getInst()->LoadD2DImage(strKey, strPath);
-    SetScale(fPoint(m_pImg->GetWidth() * 2.f, m_pImg->GetHeight() * 2.f));
-}
-
-void CMap::TitleLoad(wstring strKey, wstring strPath)
-{
-    m_pImg = CResourceManager::getInst()->LoadD2DImage(strKey, strPath);
-    SetScale(fPoint(m_pImg->GetWidth()/1.5, m_pImg->GetHeight()/1.5 ));
+    m_pImg = CResourceManager::GetInst()->LoadD2DImage(strKey, strPath);
+    SetScale(fPoint(m_pImg->GetWidth() * 1.f, m_pImg->GetHeight() * 1.f));
 }
 
 CMap* CMap::Clone()
@@ -41,13 +35,19 @@ void CMap::render()
     }
     fPoint pos = GetPos();
     fPoint scale = GetScale();
-    pos = CCameraManager::getInst()->GetRenderPos(pos);
+    pos = CCameraManager::GetInst()->GetRenderPos(pos);
 
-    CRenderManager::getInst()->RenderImage(
+    CRenderManager::GetInst()->RenderImage(
         m_pImg,
         pos.x,
         pos.y,
         pos.x + scale.x,
         pos.y + scale.y
     );
+}
+
+void CMap::TitleLoad(wstring strKey, wstring strPath)
+{
+    m_pImg = CResourceManager::GetInst()->LoadD2DImage(strKey, strPath);
+    SetScale(fPoint(m_pImg->GetWidth() / 1.5, m_pImg->GetHeight() / 1.5));
 }

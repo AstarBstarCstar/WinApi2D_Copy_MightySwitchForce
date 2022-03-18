@@ -64,7 +64,7 @@ CTexture* CResourceManager::LoadTextrue(const wstring& strKey, const wstring& st
 	}
 	
 	// Texture 저장 경로 확인
-	wstring strFilePath = CPathManager::getInst()->GetContentPath();
+	wstring strFilePath = CPathManager::GetInst()->GetContentPath();
 	strFilePath += strRelativePath;
 
 	// Texture 생성 후 저장
@@ -118,7 +118,7 @@ CSound* CResourceManager::LoadSound(const wstring& strKey, const wstring& strRel
 	}
 
 	// Sound 저장 경로 확인
-	wstring strFilePath = CPathManager::getInst()->GetRelativeContentPath();
+	wstring strFilePath = CPathManager::GetInst()->GetRelativeContentPath();
 	strFilePath += strRelativePath;
 
 	// Sound 생성 후 저장
@@ -139,7 +139,7 @@ CSound* CResourceManager::LoadBGM(const wstring& strKey, const wstring& strRelat
 		return pBGM;
 
 	// Sound 저장 경로 확인
-	wstring strFilePath = CPathManager::getInst()->GetRelativeContentPath();
+	wstring strFilePath = CPathManager::GetInst()->GetRelativeContentPath();
 	strFilePath += strRelativePath;
 
 	// Sound 생성 후 저장
@@ -172,7 +172,7 @@ CD2DImage* CResourceManager::LoadD2DImage(const wstring& strKey, const wstring& 
 	if (nullptr != pD2DImg)
 		return pD2DImg;
 
-	wstring strFilePath = CPathManager::getInst()->GetRelativeContentPath();
+	wstring strFilePath = CPathManager::GetInst()->GetRelativeContentPath();
 	strFilePath += strRelativePath;
 
 	CD2DImage* img = new CD2DImage;
@@ -182,7 +182,7 @@ CD2DImage* CResourceManager::LoadD2DImage(const wstring& strKey, const wstring& 
 	IWICFormatConverter* p_converter;	// 이미지 변환 객체
 
 	// WIC용 Factory 객체를 사용하여 이미지 압축 해제를 위한 객체를 생성
-	if (S_OK != CRenderManager::getInst()->GetImageFactory()->CreateDecoderFromFilename(strFilePath.c_str(), NULL, GENERIC_READ, WICDecodeMetadataCacheOnDemand, &p_decoder))
+	if (S_OK != CRenderManager::GetInst()->GetImageFactory()->CreateDecoderFromFilename(strFilePath.c_str(), NULL, GENERIC_READ, WICDecodeMetadataCacheOnDemand, &p_decoder))
 	{
 		assert(nullptr);
 	}
@@ -192,7 +192,7 @@ CD2DImage* CResourceManager::LoadD2DImage(const wstring& strKey, const wstring& 
 		assert(nullptr);
 	}
 	// IWICBitmap형식의 비트맵을 ID2D1Bitmap. 형식으로 변환하기 위한 객체 생성
-	if (S_OK != CRenderManager::getInst()->GetImageFactory()->CreateFormatConverter(&p_converter))
+	if (S_OK != CRenderManager::GetInst()->GetImageFactory()->CreateFormatConverter(&p_converter))
 	{
 		assert(nullptr);
 	}
@@ -202,8 +202,8 @@ CD2DImage* CResourceManager::LoadD2DImage(const wstring& strKey, const wstring& 
 		assert(nullptr);
 	}
 	// IWICBitmap 형식의 비트맵으로 ID2D1Bitmap 객체를 생성
-	ID2D1Bitmap* bitmap = CRenderManager::getInst()->GetBitmap();
-	if (S_OK != CRenderManager::getInst()->GetRenderTarget()->CreateBitmapFromWicBitmap(p_converter, NULL, &bitmap))
+	ID2D1Bitmap* bitmap = CRenderManager::GetInst()->GetBitmap();
+	if (S_OK != CRenderManager::GetInst()->GetRenderTarget()->CreateBitmapFromWicBitmap(p_converter, NULL, &bitmap))
 	{
 		assert(nullptr);
 	}
@@ -235,7 +235,7 @@ CD2DImage* CResourceManager::LoadToolD2DImage(const wstring& strPath)
 	IWICFormatConverter* p_converter;	// 이미지 변환 객체
 
 	// WIC용 Factory 객체를 사용하여 이미지 압축 해제를 위한 객체를 생성
-	if (S_OK != CRenderManager::getInst()->GetImageFactory()->CreateDecoderFromFilename(strPath.c_str(), NULL, GENERIC_READ, WICDecodeMetadataCacheOnDemand, &p_decoder))
+	if (S_OK != CRenderManager::GetInst()->GetImageFactory()->CreateDecoderFromFilename(strPath.c_str(), NULL, GENERIC_READ, WICDecodeMetadataCacheOnDemand, &p_decoder))
 	{
 		assert(nullptr);
 	}
@@ -245,7 +245,7 @@ CD2DImage* CResourceManager::LoadToolD2DImage(const wstring& strPath)
 		assert(nullptr);
 	}
 	// IWICBitmap형식의 비트맵을 ID2D1Bitmap. 형식으로 변환하기 위한 객체 생성
-	if (S_OK != CRenderManager::getInst()->GetImageFactory()->CreateFormatConverter(&p_converter))
+	if (S_OK != CRenderManager::GetInst()->GetImageFactory()->CreateFormatConverter(&p_converter))
 	{
 		assert(nullptr);
 	}
@@ -255,8 +255,8 @@ CD2DImage* CResourceManager::LoadToolD2DImage(const wstring& strPath)
 		assert(nullptr);
 	}
 	// IWICBitmap 형식의 비트맵으로 ID2D1Bitmap 객체를 생성
-	ID2D1Bitmap* bitmap = CRenderManager::getInst()->GetBitmap();
-	if (S_OK != CRenderManager::getInst()->GetRenderTarget()->CreateBitmapFromWicBitmap(p_converter, NULL, &bitmap))
+	ID2D1Bitmap* bitmap = CRenderManager::GetInst()->GetBitmap();
+	if (S_OK != CRenderManager::GetInst()->GetRenderTarget()->CreateBitmapFromWicBitmap(p_converter, NULL, &bitmap))
 	{
 		assert(nullptr);
 	}

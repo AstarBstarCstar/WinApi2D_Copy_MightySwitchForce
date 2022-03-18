@@ -3,6 +3,7 @@
 
 class CD2DImage;
 class CButtonUI;
+class CTileButton;
 
 class CScene_Tool : public CScene
 {
@@ -23,26 +24,31 @@ public:
 
 	virtual void update();
 	virtual void render();
+
 	virtual void Enter();
 	virtual void Exit();
 
-	void LoadTile(const wstring& strPath);
-	void CreateTile(UINT xSize, UINT ySize);
 	void SetIdx(UINT idx);
 	void SetTileIdx();		// 마우스와 상호작용해서 타일을 바꿈.
 	void SetGroup(GROUP_TILE group);
 	void SetTileGroup();
 
+	void CreateTile(UINT xSize, UINT ySize);
 	void SaveTile(const wstring& strPath);
+	void LoadTile(const wstring& strPath);
 	void SaveTileData();
 	void LoadTileData();
 	void LoadMap();
+
 	void ClickTileGroup(CButtonUI* button);
+	void ClickTile(CTileButton* button);
 
 private:
 	void CreateTilePanel();
+
 	void PrintMap();
 	void PrintTileLine();
 	void PrintTileGroup();
-};
 
+
+};

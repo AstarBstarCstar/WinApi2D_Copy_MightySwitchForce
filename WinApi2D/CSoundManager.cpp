@@ -36,11 +36,11 @@ void CSoundManager::AddSound(wstring keyName, wstring filePath, bool bgm, bool l
 	CSound* pSound;
 	if (bgm)
 	{
-		pSound = CResourceManager::getInst()->LoadBGM(keyName, filePath);
+		pSound = CResourceManager::GetInst()->LoadBGM(keyName, filePath);
 	}
 	else
 	{
-		pSound = CResourceManager::getInst()->LoadSound(keyName, filePath);
+		pSound = CResourceManager::GetInst()->LoadSound(keyName, filePath);
 	}
 	m_mapSound.insert(make_pair(keyName, pSound));
 }

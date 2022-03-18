@@ -23,17 +23,17 @@ void CSound::Load(const wstring& strFilePath, bool bgm)
 
 	if (bgm)
 	{
-		CSoundManager::getInst()->GetSystem()->createStream(str, FMOD_LOOP_NORMAL, 0, &m_pSound);
+		CSoundManager::GetInst()->GetSystem()->createStream(str, FMOD_LOOP_NORMAL, 0, &m_pSound);
 	}
 	else
 	{
-		CSoundManager::getInst()->GetSystem()->createSound(str, FMOD_LOOP_OFF, 0, &m_pSound);
+		CSoundManager::GetInst()->GetSystem()->createSound(str, FMOD_LOOP_OFF, 0, &m_pSound);
 	}
 }
 
 void CSound::Play()
 {
-	CSoundManager::getInst()->GetSystem()->playSound(m_pSound, 0, false, &m_pChannel);
+	CSoundManager::GetInst()->GetSystem()->playSound(m_pSound, 0, false, &m_pChannel);
 	assert(m_pChannel);
 }
 

@@ -5,7 +5,7 @@
 Map_Start::Map_Start()
 {
     pimg = new CD2DImage;
-    pimg = CResourceManager::getInst()->LoadD2DImage(L"test", L"texture\\map\\Test.png");
+    pimg = CResourceManager::GetInst()->LoadD2DImage(L"test", L"texture\\map\\Test.png");
 }
 
 Map_Start::~Map_Start()
@@ -49,7 +49,7 @@ void Map_Start::render()
     fPoint pos = GetPos();
     fPoint scale = GetScale();
 
-    CRenderManager::getInst()->RenderImage(
+    CRenderManager::GetInst()->RenderImage(
         pimg,
         pos.x - scale.x / 1.f,
         pos.y + scale.y / 1.f,
