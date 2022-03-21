@@ -246,6 +246,7 @@
     <ResourceCompile Include="WinApi2D.rc" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="icon1.ico" />
     <Image Include="small.ico" />
     <Image Include="WinApi2D.ico" />
   </ItemGroup>
