@@ -33,7 +33,7 @@ void CScene_Title::update()
 	CScene::update();
 }
 
-void CScene_Title::Enter(
+void CScene_Title::Enter()
 {
 	CSoundManager::GetInst()->AddSound(L"StartVoice", L"sound\\MSFC.wav", false);
 	CSoundManager::GetInst()->AddSound(L"EnterVoice", L"sound\\IntroStart.wav", false);

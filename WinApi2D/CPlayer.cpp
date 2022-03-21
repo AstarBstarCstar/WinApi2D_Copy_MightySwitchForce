@@ -33,6 +33,8 @@ CPlayer::CPlayer()
 	pAni->GetFrame(1).fptOffset = fPoint(0.f, -20.f);
 	pAni = GetAnimator()->FindAnimation(L"RightMove");
 	pAni->GetFrame(1).fptOffset = fPoint(0.f, -20.f);
+
+	CSoundManager::GetInst()->AddSound(L"FireSound", L"Sound\\PELLET_FIRE.wav",false,false);
 }
 
 CPlayer::~CPlayer()
@@ -73,6 +75,7 @@ void CPlayer::update()
 	if (KeyDown(VK_SPACE))
 	{
 		CreateMissile();
+		CSoundManager::GetInst()->Play(L"FireSound");
 		GetAnimator()->Play(L"LeftHit");
 	}
 

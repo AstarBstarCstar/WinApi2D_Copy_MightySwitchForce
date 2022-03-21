@@ -27,21 +27,13 @@ void CScene_Start::update()
 	{
 		ChangeScn(GROUP_SCENE::TOOL);
 	}
-
-	if (KeyDown('Z'))
-	{
-		CSoundManager::GetInst()->AddSound(L"bgm", L"sound\\drumloop.wav", true);
-		CSoundManager::GetInst()->Play(L"bgm");
-	}
-
-	if (KeyDown('X'))
-	{
-		CSoundManager::GetInst()->Stop(L"bgm");
-	}
 }
 
 void CScene_Start::Enter()
 {
+	CSoundManager::GetInst()->AddSound(L"Stbgm", L"sound\\MSF_ST2.wav",false,true);
+	CSoundManager::GetInst()->Play(L"Stbgm");
+
 	// 타일 로딩
 	wstring path = CPathManager::GetInst()->GetContentPath();
 	path += L"tile\\Start.tile";
@@ -63,7 +55,7 @@ void CScene_Start::Enter()
 	AddObject(pCloneMonster, GROUP_GAMEOBJ::MONSTER);
 
 	CMap* map = new CMap;
-	map->Load(L"Map_Start", L"texture\\map\\Yoshis Island 2.png");
+	map->Load(L"Map_Start", L"texture\\map\\IncLevel1.png");
 	AddObject(map, GROUP_GAMEOBJ::MAP);
 
 	CBackGround* backGround = new CBackGround;

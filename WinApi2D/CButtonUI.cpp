@@ -67,3 +67,4 @@ void CButtonUI::SetClickedCallBack(BTN_FUNC pFunc, DWORD_PTR param1, DWORD_PTR p
 	m_pParam1 = param1;
 	m_pParam2 = param2;
 }
+         
