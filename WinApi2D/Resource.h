@@ -23,6 +23,7 @@
 #define IDC_LOAD                        1007
 #define IDC_BUTTON1                     1008
 #define IDC_MAP                         1008
+#define IDC_SAVE2                       1008
 #define IDC                             1011
 #define IDM_TILE                        32774
 #define ID_ACCELERATOR32776             32776
