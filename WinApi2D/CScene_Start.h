@@ -11,4 +11,6 @@ public:
 
 	virtual void Enter();
 	virtual void Exit();
+	bool CameraLock=false;
+	bool Count=false;
 };

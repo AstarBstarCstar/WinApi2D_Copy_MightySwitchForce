@@ -27,12 +27,15 @@ void CScene_Start::update()
 	{
 		ChangeScn(GROUP_SCENE::TOOL);
 	}
+
 }
 
 void CScene_Start::Enter()
 {
 	CSoundManager::GetInst()->AddSound(L"Stbgm", L"sound\\MSF_ST2.wav",false,true);
 	CSoundManager::GetInst()->Play(L"Stbgm");
+
+	/*맵의 최좌측 최하단: 0,2400*/
 
 	// 타일 로딩
 	wstring path = CPathManager::GetInst()->GetContentPath();
@@ -41,17 +44,17 @@ void CScene_Start::Enter()
 
 	// Player 추가
 	CPlayer* pPlayer = new CPlayer;
-	pPlayer->SetPos(fPoint(200, 200));
+	pPlayer->SetPos(fPoint(700,2000));
 	AddObject(pPlayer, GROUP_GAMEOBJ::PLAYER);
 	pPlayer->RegisterPlayer();
 
 	// Monster 추가
 	CMonster* pMonster = new CMonster;
-	pMonster->SetPos(fPoint(1100, 350));
+	pMonster->SetPos(fPoint(1100, 2300));
 	AddObject(pMonster, GROUP_GAMEOBJ::PLAYER);
 
 	CMonster* pCloneMonster = pMonster->Clone();
-	pCloneMonster->SetPos(fPoint(500, 350));
+	pCloneMonster->SetPos(fPoint(500, 2350));
 	AddObject(pCloneMonster, GROUP_GAMEOBJ::MONSTER);
 
 	CMap* map = new CMap;
@@ -68,10 +71,10 @@ void CScene_Start::Enter()
 	CCollisionManager::GetInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::TILE);
 
 	// Camera Look 지정
-	CCameraManager::GetInst()->SetLookAt(fPoint(WINSIZEX / 2.f, WINSIZEY / 2.f));
-	CCameraManager::GetInst()->SetTargetObj(pPlayer);
-	CCameraManager::GetInst()->FadeOut(1.f);
-	CCameraManager::GetInst()->FadeIn(1.f);
+	//CCameraManager::GetInst()->SetLookAt(fPoint(WINSIZEX / 2.f, WINSIZEY / 2.f));
+	//CCameraManager::GetInst()->SetTargetObj(pPlayer);
+	//CCameraManager::GetInst()->FadeOut(1.f);
+	//CCameraManager::GetInst()->FadeIn(1.f);
 
 	// 몬스터 배치
 	CMonster* pMon = CMonster::Create(MON_TYPE::NORMAL, fPoint(500.f, 500.f));
@@ -83,6 +86,13 @@ void CScene_Start::Exit()
 	DeleteAll();
 	CCollisionManager::GetInst()->Reset();
 }
+
+
+
+
+
+
+
 
 
 

@@ -35,6 +35,10 @@ CPlayer::CPlayer()
 	pAni->GetFrame(1).fptOffset = fPoint(0.f, -20.f);
 
 	CSoundManager::GetInst()->AddSound(L"FireSound", L"Sound\\PELLET_FIRE.wav",false,false);
+	CSoundManager::GetInst()->AddSound(L"Camera", L"Sound\\SFX_CAMERA.wav", false, false);
+	CSoundManager::GetInst()->AddSound(L"CameraRelease", L"Sound\\SFX_CAMERA_RELEASE.wav", false, false);
+	isLeft = false;
+	CameraLock = false;
 }
 
 CPlayer::~CPlayer()
@@ -47,6 +51,14 @@ CPlayer* CPlayer::Clone()
 	return new CPlayer(*this);
 }
 
+
+/*
+TODO:
+공격->   Z
+점프->   X
+스위치->C
+카메라->Space
+UP DOWN 키 없음*/
 void CPlayer::update()
 {
 	fPoint pos = GetPos();
@@ -55,11 +67,13 @@ void CPlayer::update()
 	{
 		pos.x -= m_fSpeed * fDT;
 		GetAnimator()->Play(L"LeftMove");
+		isLeft = true;
 	}
 	if (Key(VK_RIGHT))
 	{
 		pos.x += m_fSpeed * fDT;
 		GetAnimator()->Play(L"RightMove");
+		isLeft = false;
 	}
 	if (Key(VK_UP))
 	{
@@ -69,19 +83,23 @@ void CPlayer::update()
 	{
 		pos.y += m_fSpeed * fDT;
 	}
-
-	SetPos(pos);
-
-	if (KeyDown(VK_SPACE))
+	if (Key('X'))
+	{
+		Jump();
+		/*TODO:점프 애니메이션 기본점프 달리면서점프 공격하면서 점프*/
+	}
+	if (KeyDown('Z'))
 	{
 		CreateMissile();
 		CSoundManager::GetInst()->Play(L"FireSound");
-		GetAnimator()->Play(L"LeftHit");
 	}
-
+	if (Key(VK_SPACE))
+	{
+		CameraRelease();
+	}
+	SetPos(pos);
 	GetAnimator()->update();
 }
-
 void CPlayer::render()
 {
 	component_render();
@@ -105,12 +123,64 @@ void CPlayer::CreateMissile()
 	// Misiile Object
 	CMissile* pMissile = new CMissile;
 	pMissile->SetPos(fpMissilePos);
-	pMissile->SetDir(fVec2(1, 0));
-	pMissile->SetName(L"Missile_Player");
-
-	CreateObj(pMissile, GROUP_GAMEOBJ::MISSILE_PLAYER);
+	if (isLeft == true)
+	{
+		pMissile->SetDir(fVec2(-1, 0));
+		pMissile->SetName(L"Missile_Player");
+		CreateObj(pMissile, GROUP_GAMEOBJ::MISSILE_PLAYER);
+	}
+	else
+	{
+		pMissile->SetDir(fVec2(1, 0));
+		pMissile->SetName(L"Missile_Player");
+		CreateObj(pMissile, GROUP_GAMEOBJ::MISSILE_PLAYER);
+	}
 }
 
+void CPlayer::Jump()
+{
+
+}
+
+void CPlayer::CameraRelease()
+{
+	CameraLock = true;
+	bool CameraLimit = false;
+	if (Count == 0)
+	{
+		CSoundManager::GetInst()->Play(L"Camera");
+		Count += 1;
+	}
+
+	/*방향키로 카메라 이동 상하좌우*/
+
+	if (Key(VK_UP))
+	{
+		CCameraManager::GetInst()->Scroll(fVec2(0, -1), 600);
+	}
+	if (Key(VK_DOWN))
+	{
+		/*TODO:카메라 아래로 일정범위까지*/
+		CCameraManager::GetInst()->Scroll(fVec2(0, 1), 600);
+	}
+	if (Key(VK_LEFT))
+	{
+		/*TODO:카메라 왼쪽으로 일정범위까지*/
+		CCameraManager::GetInst()->Scroll(fVec2(-1, 0), 600);
+	}
+	if (Key(VK_RIGHT))
+	{
+		/*TODO:카메라 오른쪽으로 일정범위까지*/
+		CCameraManager::GetInst()->Scroll(fVec2(1, 0), 600);
+	}
+if (KeyUp(VK_SPACE))
+{
+	CSoundManager::GetInst()->Play(L"CameraRelease");
+	CameraLock = false;
+	Count = 0;
+	return;
+}
+}
 
 
 

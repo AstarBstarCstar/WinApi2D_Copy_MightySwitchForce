@@ -20,7 +20,7 @@ CMissile::CMissile()
 CMissile::~CMissile()
 {
 }
-
+ 
 void CMissile::update()
 {
 	fPoint pos = GetPos();
@@ -30,8 +30,8 @@ void CMissile::update()
 
 	SetPos(pos);
 
-	if (pos.x < 0 || pos.x > WINSIZEX
-		|| pos.y < 0 || pos.y > WINSIZEY)
+	if (pos.x < 0 || pos.x > 30000
+		|| pos.y < 0 || pos.y >30000)
 		DeleteObj(this);
 }
 
