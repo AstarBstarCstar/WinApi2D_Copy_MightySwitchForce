@@ -32,10 +32,6 @@ void CScene_Select::update()
 		CSoundManager::GetInst()->Stop(L"SelectBGM");
 		CSoundManager::GetInst()->Play(L"LevelSelected");
 	}
-	if (KeyDown(VK_TAB))
-	{
-		ChangeScn(GROUP_SCENE::TOOL);
-	}
 	if (KeyDown('B'))
 	{
 		ChangeScn(GROUP_SCENE::TITLE);
