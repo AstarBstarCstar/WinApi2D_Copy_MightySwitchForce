@@ -70,6 +70,9 @@
     <Filter Include="Object\AI">
       <UniqueIdentifier>{3f2e7d24-77c3-4dfb-842a-20c77968c88a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object\Hooligan">
+      <UniqueIdentifier>{b0c22b89-6f88-4ce4-8d65-12efb1faddec}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -216,6 +219,9 @@
     <ClInclude Include="CGravity.h">
       <Filter>Object</Filter>
     </ClInclude>
+    <ClInclude Include="CHooligan.h">
+      <Filter>Object\Hooligan</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinApi2D.cpp">
@@ -343,6 +349,9 @@
     </ClCompile>
     <ClCompile Include="CGravity.cpp">
       <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="CHooligan.cpp">
+      <Filter>Object\Hooligan</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

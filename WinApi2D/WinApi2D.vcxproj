@@ -162,6 +162,7 @@
     <ClInclude Include="CEventManager.h" />
     <ClInclude Include="CGameObject.h" />
     <ClInclude Include="CGravity.h" />
+    <ClInclude Include="CHooligan.h" />
     <ClInclude Include="CIdleState.h" />
     <ClInclude Include="CKeyManager.h" />
     <ClInclude Include="CMap.h" />
@@ -212,6 +213,7 @@
     <ClCompile Include="CEventManager.cpp" />
     <ClCompile Include="CGameObject.cpp" />
     <ClCompile Include="CGravity.cpp" />
+    <ClCompile Include="CHooligan.cpp" />
     <ClCompile Include="CIdleState.cpp" />
     <ClCompile Include="CKeyManager.cpp" />
     <ClCompile Include="CMap.cpp" />

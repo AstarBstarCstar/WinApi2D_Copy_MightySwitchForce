@@ -7,6 +7,7 @@
 #include "CMonster.h"
 #include "CMap.h"
 #include "CBackGround.h"
+#include "CHooligan.h"
 
 #include "CSound.h"
 #include "CD2DImage.h"
@@ -30,56 +31,64 @@ void CScene_Start::update()
 
 }
 
+
 void CScene_Start::Enter()
 {
-	CSoundManager::GetInst()->AddSound(L"Stbgm", L"sound\\MSF_ST2.wav",false,true);
-	CSoundManager::GetInst()->Play(L"Stbgm");
+	{
+		CSoundManager::GetInst()->AddSound(L"Stbgm", L"sound\\MSF_ST2.wav", false, true);
+		CSoundManager::GetInst()->Play(L"Stbgm");
 
-	/*맵의 최좌측 최하단: 0,2400*/
+		/*맵의 최좌측 최하단: 0,2400*/
 
-	// 타일 로딩
-	wstring path = CPathManager::GetInst()->GetContentPath();
-	path += L"tile\\Start.tile";
-	LoadTile(path);
+		// 타일 로딩
+		wstring path = CPathManager::GetInst()->GetContentPath();
+		path += L"tile\\Start.tile";
+		LoadTile(path);
 
-	// Player 추가
-	CPlayer* pPlayer = new CPlayer;
-	pPlayer->SetPos(fPoint(700,2000));
-	AddObject(pPlayer, GROUP_GAMEOBJ::PLAYER);
-	pPlayer->RegisterPlayer();
+		// Player 추가
+		CPlayer* pPlayer = new CPlayer;
+		pPlayer->SetPos(fPoint(700, 2000));
+		AddObject(pPlayer, GROUP_GAMEOBJ::PLAYER);
+		pPlayer->RegisterPlayer();
 
-	// Monster 추가
-	CMonster* pMonster = new CMonster;
-	pMonster->SetPos(fPoint(1100, 2300));
-	AddObject(pMonster, GROUP_GAMEOBJ::PLAYER);
+		// Monster 추가
+		CMonster* pMonster = new CMonster;
+		pMonster->SetPos(fPoint(1100, 2300));
+		AddObject(pMonster, GROUP_GAMEOBJ::HOOLIGAN);
 
-	CMonster* pCloneMonster = pMonster->Clone();
-	pCloneMonster->SetPos(fPoint(500, 2350));
-	AddObject(pCloneMonster, GROUP_GAMEOBJ::MONSTER);
+		CHooligan* pHooligan = new Hooligan;
+		pHooligan->SetPos(fPoint(1100, 2200));
+		AddObject(pHooligan, GROUP_GAMEOBJ::HOOLIGAN);
 
-	CMap* map = new CMap;
-	map->Load(L"Map_Start", L"texture\\map\\IncLevel1.png");
-	AddObject(map, GROUP_GAMEOBJ::MAP);
+		//CMonster* pCloneMonster = pMonster->Clone();
+		//pCloneMonster->SetPos(fPoint(500, 2350));
+		//AddObject(pCloneMonster, GROUP_GAMEOBJ::MONSTER);
 
-	CBackGround* backGround = new CBackGround;
-	backGround->Load(L"BackGround_Start", L"texture\\background\\Level01.png");
-	backGround->SetPos(fPoint(-100.f, -500.f));
-	AddObject(backGround, GROUP_GAMEOBJ::BACKGROUND);
+		CMap* map = new CMap;
+		map->Load(L"Map_Start", L"texture\\map\\IncLevel1.png");
+		AddObject(map, GROUP_GAMEOBJ::MAP);
 
-	CCollisionManager::GetInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::MONSTER);
-	CCollisionManager::GetInst()->CheckGroup(GROUP_GAMEOBJ::MISSILE_PLAYER, GROUP_GAMEOBJ::MONSTER);
-	CCollisionManager::GetInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::TILE);
+		CBackGround* backGround = new CBackGround;
+		backGround->Load(L"BackGround_Start", L"texture\\background\\Level01.png");
+		backGround->SetPos(fPoint(-100.f, -500.f));
+		AddObject(backGround, GROUP_GAMEOBJ::BACKGROUND);
 
-	// Camera Look 지정
-	CCameraManager::GetInst()->SetLookAt(fPoint(WINSIZEX / 2.f, WINSIZEY / 2.f));
-	CCameraManager::GetInst()->SetTargetObj(pPlayer);
-	//CCameraManager::GetInst()->FadeOut(1.f);
-	//CCameraManager::GetInst()->FadeIn(1.f);
+		CCollisionManager::GetInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::MONSTER);
+		CCollisionManager::GetInst()->CheckGroup(GROUP_GAMEOBJ::MISSILE_PLAYER, GROUP_GAMEOBJ::MONSTER);
+		CCollisionManager::GetInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::TILE);
 
-	// 몬스터 배치
-	CMonster* pMon = CMonster::Create(MON_TYPE::NORMAL, fPoint(500.f, 500.f));
-	AddObject(pMon, GROUP_GAMEOBJ::MONSTER);
+		// Camera Look 지정
+		CCameraManager::GetInst()->SetLookAt(fPoint(WINSIZEX / 2.f, WINSIZEY / 2.f));
+		CCameraManager::GetInst()->SetTargetObj(pPlayer);
+		//CCameraManager::GetInst()->FadeOut(1.f);
+		//CCameraManager::GetInst()->FadeIn(1.f);
+
+		// 몬스터 배치
+		//CMonster* pMon = CMonster::Create(MON_TYPE::NORMAL, fPoint(1100.f, 2000.f));
+		//AddObject(pMon, GROUP_GAMEOBJ::MONSTER);
+	}
 }
+
 
 void CScene_Start::Exit()
 {

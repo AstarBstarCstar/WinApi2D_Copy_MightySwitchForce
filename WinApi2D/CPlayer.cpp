@@ -11,28 +11,30 @@ CPlayer* CPlayer::instance = nullptr;
 
 CPlayer::CPlayer()
 {
-	CD2DImage* m_pImg = CResourceManager::GetInst()->LoadD2DImage(L"PlayerImg", L"texture\\Animation_Player.bmp");
+	SetScale(fPoint(100.f, 200.f));
 	SetName(L"Player");
-	SetScale(fPoint(70.f, 70.f));
+	CD2DImage* m_Idle = CResourceManager::GetInst()->LoadD2DImage(L"Idle", L"texture\\Animation\\PatriciaWagon\\Resting_Idle\\Resting_Idle_104_216.png");
+	CD2DImage* m_Run = CResourceManager::GetInst()->LoadD2DImage(L"Run", L"texture\\Animation\\PatriciaWagon\\Run\\Run_196_204.png");
+	CD2DImage* m_Fire = CResourceManager::GetInst()->LoadD2DImage(L"Fire", L"texture\\Animation\\PatriciaWagon\\Fire\\Fire_172_212.png");
+	
 
 	CreateCollider();
-	GetCollider()->SetScale(fPoint(40.f, 40.f));
+	GetCollider()->SetScale(fPoint(70.f, 100.f));
 	GetCollider()->SetOffsetPos(fPoint(0.f, 10.f));
 
 	CreateAnimator();
-	GetAnimator()->CreateAnimation(L"LeftNone", m_pImg, fPoint(0.f, 0.f), fPoint(70.f, 70.f), fPoint(70.f, 0.f), 0.5f, 2);
-	GetAnimator()->CreateAnimation(L"RightNone", m_pImg, fPoint(0.f, 70.f), fPoint(70.f, 70.f), fPoint(70.f, 0.f), 0.5f, 2);
-	GetAnimator()->CreateAnimation(L"LeftMove", m_pImg, fPoint(0.f, 140.f), fPoint(70.f, 70.f), fPoint(70.f, 0.f), 0.25f, 3);
-	GetAnimator()->CreateAnimation(L"RightMove", m_pImg, fPoint(0.f, 210.f), fPoint(70.f, 70.f), fPoint(70.f, 0.f), 0.25f, 3);
-	GetAnimator()->CreateAnimation(L"LeftHit", m_pImg, fPoint(140.f, 0.f), fPoint(70.f, 70.f), fPoint(70.f, 0.f), 0.25f, 1);
-	GetAnimator()->CreateAnimation(L"RightHit", m_pImg, fPoint(140.f, 70.f), fPoint(70.f, 70.f), fPoint(70.f, 0.f), 0.25f, 1);
-	GetAnimator()->Play(L"LeftNone");
+	GetAnimator()->CreateAnimation(L"Idle", m_Idle, fPoint(0.f, 0.f), fPoint(104.f, 216.f), fPoint(104.f, 0.f), 0.1f, 7);
+	GetAnimator()->Play(L"Idle");
+	GetAnimator()->CreateAnimation(L"Run", m_Run, fPoint(0.f, 0.f), fPoint(196.f, 204.f), fPoint(196.f, 0.f), 0.1f, 12);
+	GetAnimator()->CreateAnimation(L"R_Run", m_Run, fPoint(0.f, 0.f), fPoint(196.f, 204.f), fPoint(196.f, 0.f), 0.1f, 12, true);
+	GetAnimator()->CreateAnimation(L"Fire", m_Fire, fPoint(0.f, 0.f), fPoint(172.f, 212.f), fPoint(172.f, 0.f), 0.1f, 5);
+	GetAnimator()->CreateAnimation(L"R_Fire", m_Fire, fPoint(0.f, 0.f), fPoint(172.f, 212.f), fPoint(172.f, 0.f), 0.1f, 5,true);
 
-	CAnimation* pAni;
-	pAni = GetAnimator()->FindAnimation(L"LeftMove");
-	pAni->GetFrame(1).fptOffset = fPoint(0.f, -20.f);
-	pAni = GetAnimator()->FindAnimation(L"RightMove");
-	pAni->GetFrame(1).fptOffset = fPoint(0.f, -20.f);
+	//CAnimation* pAni;
+	////pAni = GetAnimator()->FindAnimation(L"LeftMove");
+	//pAni->GetFrame(1).fptOffset = fPoint(0.f, -20.f);
+	////pAni = GetAnimator()->FindAnimation(L"RightMove");
+	//pAni->GetFrame(1).fptOffset = fPoint(0.f, -20.f);
 
 	CSoundManager::GetInst()->AddSound(L"FireSound", L"sound\\PELLET_FIRE.wav",false,false);
 	CSoundManager::GetInst()->AddSound(L"Switch", L"sound\\Switch.wav", false, false);
@@ -68,14 +70,14 @@ void CPlayer::update()
 	if (Key(VK_LEFT))
 	{
 		pos.x -= m_fSpeed * fDT;
-		GetAnimator()->Play(L"LeftMove");
 		isLeft = true;
+		GetAnimator()->Play(L"R_Run");
 	}
 	if (Key(VK_RIGHT))
 	{
 		pos.x += m_fSpeed * fDT;
-		GetAnimator()->Play(L"RightMove");
 		isLeft = false;
+		GetAnimator()->Play(L"Run");
 	}
 	if (Key(VK_UP))
 	{
@@ -94,6 +96,19 @@ void CPlayer::update()
 	{
 		CreateMissile();
 		CSoundManager::GetInst()->Play(L"FireSound");
+		if (isLeft == 1)
+		{
+			GetAnimator()->Play(L"R_Fire");
+			if(KeyUp('Z'))
+				GetAnimator()->Play(L"Idle");
+		}
+		else if (isLeft == 0)
+		{
+			GetAnimator()->Play(L"Fire");
+			if (KeyUp('Z'))
+				GetAnimator()->Play(L"Idle");
+			
+		}
 	}
 	if (KeyDown('C'))
 	{
