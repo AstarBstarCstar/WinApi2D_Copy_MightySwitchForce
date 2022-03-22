@@ -56,7 +56,7 @@ void CScene_Start::Enter()
 		pMonster->SetPos(fPoint(1100, 2300));
 		AddObject(pMonster, GROUP_GAMEOBJ::HOOLIGAN);
 
-		CHooligan* pHooligan = new Hooligan;
+		CHooligan* pHooligan = new CHooligan;
 		pHooligan->SetPos(fPoint(1100, 2200));
 		AddObject(pHooligan, GROUP_GAMEOBJ::HOOLIGAN);
 
