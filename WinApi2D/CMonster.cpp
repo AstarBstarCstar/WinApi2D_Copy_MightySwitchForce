@@ -9,7 +9,7 @@
 
 CMonster::CMonster()
 {
-	CD2DImage* m_pImg = CResourceManager::GetInst()->LoadD2DImage(L"MonsterTex", L"texture\\PlayerStand.png");
+	CD2DImage* m_pImg = CResourceManager::GetInst()->LoadD2DImage(L"MonsterTex", L"texture\\Animation\\Monster\\Bat\\Fly\\Bat_292_220.png");
 
 	m_pAI = nullptr;
 
@@ -20,7 +20,7 @@ CMonster::CMonster()
 	GetCollider()->SetScale(fPoint(90.f, 90.f));
 
 	CreateAnimator();
-	GetAnimator()->CreateAnimation(L"PlayerStand", m_pImg, fPoint(0, 0), fPoint(32.f, 32.f), fPoint(32.f, 0), 0.1f, 5, true);
+	GetAnimator()->CreateAnimation(L"PlayerStand", m_pImg, fPoint(0, 0), fPoint(292.f, 220.f), fPoint(292.f, 0), 0.1f, 7, true);
 	GetAnimator()->Play(L"PlayerStand");
 }
 

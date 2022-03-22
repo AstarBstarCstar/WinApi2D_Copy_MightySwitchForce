@@ -60,9 +60,9 @@ void CScene_Start::Enter()
 		pHooligan->SetPos(fPoint(1100, 2200));
 		AddObject(pHooligan, GROUP_GAMEOBJ::HOOLIGAN);
 
-		//CMonster* pCloneMonster = pMonster->Clone();
-		//pCloneMonster->SetPos(fPoint(500, 2350));
-		//AddObject(pCloneMonster, GROUP_GAMEOBJ::MONSTER);
+		CMonster* pCloneMonster = pMonster->Clone();
+		pCloneMonster->SetPos(fPoint(500, 2350));
+		AddObject(pCloneMonster, GROUP_GAMEOBJ::MONSTER);
 
 		CMap* map = new CMap;
 		map->Load(L"Map_Start", L"texture\\map\\IncLevel1.png");
@@ -84,8 +84,8 @@ void CScene_Start::Enter()
 		//CCameraManager::GetInst()->FadeIn(1.f);
 
 		// 몬스터 배치
-		//CMonster* pMon = CMonster::Create(MON_TYPE::NORMAL, fPoint(1100.f, 2000.f));
-		//AddObject(pMon, GROUP_GAMEOBJ::MONSTER);
+		CMonster* pMon = CMonster::Create(MON_TYPE::NORMAL, fPoint(1100.f, 2000.f));
+		AddObject(pMon, GROUP_GAMEOBJ::MONSTER);
 	}
 }
 
