@@ -180,7 +180,7 @@ CD2DImage* CResourceManager::LoadD2DImage(const wstring& strKey, const wstring& 
 	IWICBitmapDecoder* p_decoder;		// 압축된 이미지를 해제할 객체
 	IWICBitmapFrameDecode* p_frame;		// 특정 그림을 선택한 객체
 	IWICFormatConverter* p_converter;	// 이미지 변환 객체
-
+	
 	// WIC용 Factory 객체를 사용하여 이미지 압축 해제를 위한 객체를 생성
 	if (S_OK != CRenderManager::GetInst()->GetImageFactory()->CreateDecoderFromFilename(strFilePath.c_str(), NULL, GENERIC_READ, WICDecodeMetadataCacheOnDemand, &p_decoder))
 	{

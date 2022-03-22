@@ -10,7 +10,8 @@ public:
 	CHooligan();
 
 	virtual ~CHooligan();
-	
+
+	virtual CHooligan* Clone();
 	virtual void render();
 	virtual void update();
 };

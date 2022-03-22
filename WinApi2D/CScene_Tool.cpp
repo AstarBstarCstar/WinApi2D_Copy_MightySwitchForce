@@ -348,6 +348,16 @@ void CScene_Tool::ClickTileGroup(CButtonUI* button)
 	}
 	else if (m_gTile == GROUP_TILE::WALL)
 	{
+		m_gTile = GROUP_TILE::SPIKE;
+		button->SetText(L"SPIKE");
+	}
+	else if (m_gTile == GROUP_TILE::SPIKE)
+	{
+		m_gTile = GROUP_TILE::PLATFORM;
+		button->SetText(L"PLATFORM");
+	}
+	else if (m_gTile == GROUP_TILE::PLATFORM)
+	{
 		m_gTile = GROUP_TILE::NONE;
 		button->SetText(L"NONE");
 	}
@@ -412,8 +422,8 @@ void CScene_Tool::PrintMap()
 		m_pMap,
 		0 - pos.x,
 		0 - pos.y,
-		2 * m_pMap->GetWidth() - pos.x,
-		2 * m_pMap->GetHeight() - pos.y
+		m_pMap->GetWidth() - pos.x,
+		m_pMap->GetHeight() - pos.y
 	);
 }
 
@@ -471,6 +481,28 @@ void CScene_Tool::PrintTileGroup()
 				CTile::SIZE_TILE / 2.f,
 				CTile::SIZE_TILE / 2.f,
 				RGB(0, 255, 0),
+				3.f
+			);
+		}
+		else if (GROUP_TILE::PLATFORM == pTile->GetGroup())
+		{
+			CRenderManager::GetInst()->RenderEllipse(
+				pTile->GetPos().x + CTile::SIZE_TILE / 2.f - pos.x,
+				pTile->GetPos().y + CTile::SIZE_TILE / 2.f - pos.y,
+				CTile::SIZE_TILE / 2.f,
+				CTile::SIZE_TILE / 2.f,
+				RGB(0, 0, 255),
+				3.f
+			);
+		}
+		else if (GROUP_TILE::SPIKE == pTile->GetGroup())
+		{
+			CRenderManager::GetInst()->RenderEllipse(
+				pTile->GetPos().x + CTile::SIZE_TILE / 2.f - pos.x,
+				pTile->GetPos().y + CTile::SIZE_TILE / 2.f - pos.y,
+				CTile::SIZE_TILE / 2.f,
+				CTile::SIZE_TILE / 2.f,
+				RGB(0, 255, 255),
 				3.f
 			);
 		}

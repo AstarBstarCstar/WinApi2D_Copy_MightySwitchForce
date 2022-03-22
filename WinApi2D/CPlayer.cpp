@@ -55,6 +55,15 @@ CPlayer* CPlayer::Clone()
 	return new CPlayer(*this);
 }
 
+void CPlayer::OnCollisionEnter(CCollider* pOther)
+{
+	CGameObject* pOtherObj = pOther->GetObj();
+	if (pOtherObj->GetName() == L"Monster")
+	{
+		//DeleteObj(this);
+		Sleep(1);
+	}
+}
 
 /*
 TODO:

@@ -19,11 +19,16 @@ CHooligan::CHooligan()
 
 	CreateAnimator();
 	GetAnimator()->CreateAnimation(L"IdleHool", m_pImg, fPoint(0, 0), fPoint(144.f, 240.f), fPoint(144.f, 0), 0.1f, 20);
-	GetAnimator()->Play(L"IdleHool");
+	
 }
 
 CHooligan::~CHooligan()
 {
+}
+
+CHooligan* CHooligan::Clone()
+{
+	return new CHooligan(*this);
 }
 
 void CHooligan::render()
@@ -37,4 +42,5 @@ void CHooligan::render()
 
 void CHooligan::update()
 {
+	GetAnimator()->Play(L"IdleHool");
 }

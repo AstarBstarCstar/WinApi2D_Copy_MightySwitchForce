@@ -27,6 +27,7 @@ void CScene_Start::update()
 	if (KeyDown(VK_TAB))
 	{
 		ChangeScn(GROUP_SCENE::TOOL);
+		CSoundManager::GetInst()->Stop(L"Stbgm");
 	}
 
 }
@@ -42,26 +43,26 @@ void CScene_Start::Enter()
 
 		// 타일 로딩
 		wstring path = CPathManager::GetInst()->GetContentPath();
-		path += L"tile\\Start.tile";
+		path += L"tile\\Level1.tile";
 		LoadTile(path);
 
 		// Player 추가
 		CPlayer* pPlayer = new CPlayer;
-		pPlayer->SetPos(fPoint(700, 2000));
+		pPlayer->SetPos(fPoint(700, 1300));
 		AddObject(pPlayer, GROUP_GAMEOBJ::PLAYER);
 		pPlayer->RegisterPlayer();
 
 		// Monster 추가
 		CMonster* pMonster = new CMonster;
-		pMonster->SetPos(fPoint(1100, 2300));
+		pMonster->SetPos(fPoint(1100, 1200));
 		AddObject(pMonster, GROUP_GAMEOBJ::HOOLIGAN);
 
 		CHooligan* pHooligan = new CHooligan;
-		pHooligan->SetPos(fPoint(1100, 2200));
+		pHooligan->SetPos(fPoint(1100, 1000));
 		AddObject(pHooligan, GROUP_GAMEOBJ::HOOLIGAN);
 
 		CMonster* pCloneMonster = pMonster->Clone();
-		pCloneMonster->SetPos(fPoint(500, 2350));
+		pCloneMonster->SetPos(fPoint(500, 1350));
 		AddObject(pCloneMonster, GROUP_GAMEOBJ::MONSTER);
 
 		CMap* map = new CMap;

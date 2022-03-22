@@ -59,6 +59,7 @@ enum class GROUP_TILE
 	GROUND,
 	WALL,
 	PLATFORM,
+	SPIKE,
 	SLOPE,
 
 	SIZE,

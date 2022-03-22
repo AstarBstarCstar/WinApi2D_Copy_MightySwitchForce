@@ -24,6 +24,8 @@ public:
 
 	void RegisterPlayer();
 	void CameraRelease();
+	void OnCollisionEnter(CCollider* pOther);
+
 	static CPlayer* GetPlayer();	// 게임 내에 하나만 있는 플레이어 객체 확인(임의로 싱글톤 선언)
 
 	bool isLeft;
