@@ -71,8 +71,8 @@ void CScene_Start::Enter()
 	CCollisionManager::GetInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::TILE);
 
 	// Camera Look 지정
-	//CCameraManager::GetInst()->SetLookAt(fPoint(WINSIZEX / 2.f, WINSIZEY / 2.f));
-	//CCameraManager::GetInst()->SetTargetObj(pPlayer);
+	CCameraManager::GetInst()->SetLookAt(fPoint(WINSIZEX / 2.f, WINSIZEY / 2.f));
+	CCameraManager::GetInst()->SetTargetObj(pPlayer);
 	//CCameraManager::GetInst()->FadeOut(1.f);
 	//CCameraManager::GetInst()->FadeIn(1.f);
 

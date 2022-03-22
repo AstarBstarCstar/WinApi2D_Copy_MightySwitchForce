@@ -34,9 +34,11 @@ CPlayer::CPlayer()
 	pAni = GetAnimator()->FindAnimation(L"RightMove");
 	pAni->GetFrame(1).fptOffset = fPoint(0.f, -20.f);
 
-	CSoundManager::GetInst()->AddSound(L"FireSound", L"Sound\\PELLET_FIRE.wav",false,false);
-	CSoundManager::GetInst()->AddSound(L"Camera", L"Sound\\SFX_CAMERA.wav", false, false);
-	CSoundManager::GetInst()->AddSound(L"CameraRelease", L"Sound\\SFX_CAMERA_RELEASE.wav", false, false);
+	CSoundManager::GetInst()->AddSound(L"FireSound", L"sound\\PELLET_FIRE.wav",false,false);
+	CSoundManager::GetInst()->AddSound(L"Switch", L"sound\\Switch.wav", false, false);
+	CSoundManager::GetInst()->AddSound(L"SLAM", L"sound\\Flip.wav", false, false);
+	CSoundManager::GetInst()->AddSound(L"Camera", L"sound\\SFX_CAMERA.wav", false, false);
+	CSoundManager::GetInst()->AddSound(L"CameraRelease", L"sound\\SFX_CAMERA_RELEASE.wav", false, false);
 	isLeft = false;
 	CameraLock = false;
 }
@@ -93,9 +95,14 @@ void CPlayer::update()
 		CreateMissile();
 		CSoundManager::GetInst()->Play(L"FireSound");
 	}
+	if (KeyDown('C'))
+	{
+		CSoundManager::GetInst()->Play(L"Switch");
+		CSoundManager::GetInst()->Play(L"Flip");
+	}
 	if (Key(VK_SPACE))
 	{
-		CameraRelease();
+		//CameraRelease();
 	}
 	SetPos(pos);
 	GetAnimator()->update();
