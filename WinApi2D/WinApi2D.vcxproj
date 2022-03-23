@@ -163,6 +163,10 @@
     <ClInclude Include="CGameObject.h" />
     <ClInclude Include="CGravity.h" />
     <ClInclude Include="CHooligan.h" />
+    <ClInclude Include="CHooligan2.h" />
+    <ClInclude Include="CHooligan3.h" />
+    <ClInclude Include="CHooligan4.h" />
+    <ClInclude Include="CHooligan5.h" />
     <ClInclude Include="CIdleState.h" />
     <ClInclude Include="CKeyManager.h" />
     <ClInclude Include="CMap.h" />
@@ -214,6 +218,10 @@
     <ClCompile Include="CGameObject.cpp" />
     <ClCompile Include="CGravity.cpp" />
     <ClCompile Include="CHooligan.cpp" />
+    <ClCompile Include="CHooligan2.cpp" />
+    <ClCompile Include="CHooligan3.cpp" />
+    <ClCompile Include="CHooligan4.cpp" />
+    <ClCompile Include="CHooligan5.cpp" />
     <ClCompile Include="CIdleState.cpp" />
     <ClCompile Include="CKeyManager.cpp" />
     <ClCompile Include="CMap.cpp" />

@@ -6,6 +6,7 @@
 #include "CCollider.h"
 #include "CAnimator.h"
 #include "CAnimation.h"
+#include "CTile.h"
 
 CPlayer* CPlayer::instance = nullptr;
 
@@ -20,7 +21,7 @@ CPlayer::CPlayer()
 
 	CreateCollider();
 	GetCollider()->SetScale(fPoint(70.f, 100.f));
-	GetCollider()->SetOffsetPos(fPoint(0.f, 10.f));
+	GetCollider()->SetOffsetPos(fPoint(0.f, 10.f));//TODO:
 
 	CreateAnimator();
 	GetAnimator()->CreateAnimation(L"Idle", m_Idle, fPoint(0.f, 0.f), fPoint(104.f, 216.f), fPoint(104.f, 0.f), 0.1f, 7);
@@ -43,6 +44,10 @@ CPlayer::CPlayer()
 	CSoundManager::GetInst()->AddSound(L"CameraRelease", L"sound\\SFX_CAMERA_RELEASE.wav", false, false);
 	isLeft = false;
 	CameraLock = false;
+	m_fVelocity = 0.f;
+	m_fMaxVelocity = MAX_SPEED;
+	m_gravity = GRAVITY;
+	m_State = CharacterState::IDLE;
 }
 
 CPlayer::~CPlayer()
@@ -58,10 +63,120 @@ CPlayer* CPlayer::Clone()
 void CPlayer::OnCollisionEnter(CCollider* pOther)
 {
 	CGameObject* pOtherObj = pOther->GetObj();
-	if (pOtherObj->GetName() == L"Monster")
+			fVec2 vPos = GetPos();
+		CTile* pTile = (CTile*)pOtherObj;
+		GROUP_TILE Type = pTile->GetGroup();
+
+	if (pOtherObj->GetName() == L"Tile")
 	{
-		//DeleteObj(this);
-		Sleep(1);
+
+		switch (Type)
+		{
+		case GROUP_TILE::GROUND:
+		{
+			if (abs(GetCollider()->GetFinalPos().y - pOther->GetFinalPos().y) + 2.f >= GetCollider()->GetScale().y / 2.f + pOther->GetScale().y / 2.f)
+			{
+				++m_Ground;
+			}
+			else
+			{
+				if (GetCollider()->GetFinalPos().x < pOther->GetFinalPos().x)
+				{
+					vPos.x -= 2.f;
+				}
+				else if (GetCollider()->GetFinalPos().x > pOther->GetFinalPos().x)
+				{
+					vPos.x += 2.f;
+				}
+				++m_Ground;
+			}
+			
+				break;
+		}
+		case GROUP_TILE::PLATFORM:
+		{	
+			if (abs(GetCollider()->GetFinalPos().y - pOther->GetFinalPos().y) + 2.f >= GetCollider()->GetScale().y / 2.f + pOther->GetScale().y / 2.f)
+			{
+				++m_Plat;
+			}
+		}
+		case GROUP_TILE::SPIKE:
+		{
+			break;
+		}
+		}
+		SetPos(vPos);
+	}
+}
+
+void CPlayer::OnCollision(CCollider* pOther)
+{
+	CGameObject* pOtherObj = pOther->GetObj();
+	fVec2 vPos = GetPos();
+	CTile* pTile = (CTile*)pOtherObj;
+	GROUP_TILE Type = pTile->GetGroup();
+
+	if (pOtherObj->GetName() == L"Tile")
+	{
+		switch (Type)
+		{
+		case GROUP_TILE::GROUND:
+		{
+				if (GetCollider()->GetFinalPos().y < pOther->GetFinalPos().y)
+				{
+					vPos.y -= 2.f;
+				}
+				else if (GetCollider()->GetFinalPos().y > pOther->GetFinalPos().y)
+				{
+					vPos.y += 2.f;
+				}
+
+			break;
+		}
+		case GROUP_TILE::PLATFORM:
+		{
+			if (GetCollider()->GetFinalPos().y < pOther->GetFinalPos().y)
+			{
+				vPos.y -= 2.f;
+			}
+			break;
+		}
+		case GROUP_TILE::SPIKE:
+		{
+			break;
+		}
+		}
+	}
+	SetPos(vPos);
+
+}
+
+void CPlayer::OnCollisionExit(CCollider* pOther)
+{
+	CGameObject* pOtherObj = pOther->GetObj();
+	fVec2 vPos = GetPos();
+	CTile* pTile = (CTile*)pOtherObj;
+	GROUP_TILE Type = pTile->GetGroup();
+	if (pOtherObj->GetName() == L"Tile")
+	{
+
+		switch (Type)
+		{
+		case GROUP_TILE::GROUND:
+		{
+			--m_Ground;
+			break;
+		}
+		case GROUP_TILE::PLATFORM:
+		{
+			--m_Plat;
+			break;
+		}
+		case GROUP_TILE::SPIKE:
+		{
+			break;
+		}
+		}
 	}
 }
 
@@ -75,6 +190,22 @@ UP DOWN 키 없음*/
 void CPlayer::update()
 {
 	fPoint pos = GetPos();
+	if (m_Ground > 0)
+	{
+		m_gravity = 0.f;
+		m_Upper = 0.f;
+	}
+	else
+	{
+		m_gravity = GRAVITY;
+		pos.y += GRAVITY * fDT;
+	}
+
+	if (m_State == CharacterState::JUMP)
+	{
+		m_Upper -= (700 * fDT);
+		pos.y -= m_Upper * fDT;
+	}
 
 	if (Key(VK_LEFT))
 	{
@@ -98,8 +229,8 @@ void CPlayer::update()
 	}
 	if (Key('X'))
 	{
-		Jump();
-		/*TODO:점프 애니메이션 기본점프 달리면서점프 공격하면서 점프*/
+		m_Upper = UPPER;
+		pos.y -= 20.f;
 	}
 	if (KeyDown('Z'))
 	{
@@ -134,6 +265,11 @@ void CPlayer::update()
 void CPlayer::render()
 {
 	component_render();
+}
+
+CharacterState CPlayer::GetState()
+{
+	return CharacterState();
 }
 
 void CPlayer::RegisterPlayer()
@@ -324,4 +460,113 @@ if (KeyUp(VK_SPACE))
 //
 //
 //	CreateObj(pMissile, GROUP_GAMEOBJ::MISSILE_PLAYER);
+//}
+
+
+//void CPlayer::OnCollisionEnter(CCollider* pOther)
+//{
+//	CGameObject* pOtherObj = pOther->GetObj();
+//	fVec2 vPos = GetPos();
+//	CTile* pTile = (CTile*)pOtherObj;
+//	GROUP_TILE Type = pTile->GetGroup();
+//
+//	if (pOtherObj->GetName() == L"Tile")
+//	{
+//
+//		switch (Type)
+//		{
+//		case GROUP_TILE::GROUND:
+//		{
+//			if (abs(GetCollider()->GetFinalPos().y - pOther->GetFinalPos().y) + 2.f
+//				>= GetCollider()->GetScale().y / 2.f + pOther->GetScale().y / 2.f)
+//			{
+//				++m_Ground;
+//			}
+//			else
+//			{
+//				if (GetCollider()->GetFinalPos().x < pOther->GetFinalPos().x)
+//				{
+//					vPos.x -= 2.f;
+//				}
+//				else if (GetCollider()->GetFinalPos().x > pOther->GetFinalPos().x)
+//				{
+//					vPos.x += 2.f;
+//				}
+//				++m_Ground;
+//			}
+//
+//			break;
+//		}
+//		case GROUP_TILE::PLATFORM:
+//		{
+//			++m_Ground;
+//			break;
+//		}
+//		case GROUP_TILE::SPIKE:
+//		{break; }
+//		}
+//		SetPos(vPos);
+//	}
+//}
+//
+//void CPlayer::OnCollision(CCollider* pOther)
+//{
+//	CGameObject* pOtherObj = pOther->GetObj();
+//	fVec2 vPos = GetPos();
+//	CTile* pTile = (CTile*)pOtherObj;
+//	GROUP_TILE Type = pTile->GetGroup();
+//
+//	if (pOtherObj->GetName() == L"Tile")
+//	{
+//		switch (Type)
+//		{
+//		case GROUP_TILE::GROUND:
+//		{
+//			int yCol1 = abs((int)(GetCollider()->GetFinalPos().y - pOther->GetFinalPos().y));
+//			int yCol2 = (int)(GetCollider()->GetScale().y / 2.f + pOther->GetScale().y / 2.f);
+//			int ysum = abs(yCol1 - yCol2);
+//			if (1 < ysum)
+//				vPos.y -= 1;
+//			break;
+//		}
+//		case GROUP_TILE::PLATFORM:
+//		{
+//			break;
+//		}
+//		case GROUP_TILE::SPIKE:
+//		{
+//			break;
+//		}
+//		}
+//	}
+//	SetPos(vPos);
+//}
+//
+//void CPlayer::OnCollisionExit(CCollider* pOther)
+//{
+//	CGameObject* pOtherObj = pOther->GetObj();
+//	fVec2 vPos = GetPos();
+//	CTile* pTile = (CTile*)pOtherObj;
+//	GROUP_TILE Type = pTile->GetGroup();
+//	if (pOtherObj->GetName() == L"Tile")
+//	{
+//
+//		switch (Type)
+//		{
+//		case GROUP_TILE::GROUND:
+//		{
+//			--m_Ground;
+//			break;
+//		}
+//		case GROUP_TILE::PLATFORM:
+//		{
+//			--m_Ground;
+//			break;
+//		}
+//		case GROUP_TILE::SPIKE:
+//		{
+//			break;
+//		}
+//		}
+//	}
 //}

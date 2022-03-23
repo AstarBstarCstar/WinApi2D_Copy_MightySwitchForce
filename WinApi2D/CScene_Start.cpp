@@ -8,6 +8,10 @@
 #include "CMap.h"
 #include "CBackGround.h"
 #include "CHooligan.h"
+#include "CHooligan2.h"
+#include "CHooligan3.h"
+#include "CHooligan4.h"
+#include "CHooligan5.h"
 
 #include "CSound.h"
 #include "CD2DImage.h"
@@ -54,12 +58,24 @@ void CScene_Start::Enter()
 
 		// Monster 추가
 		CMonster* pMonster = new CMonster;
-		pMonster->SetPos(fPoint(1100, 1200));
+		pMonster->SetPos(fPoint(1100, 1200)); 
 		AddObject(pMonster, GROUP_GAMEOBJ::HOOLIGAN);
 
 		CHooligan* pHooligan = new CHooligan;
-		pHooligan->SetPos(fPoint(1100, 1000));
+		pHooligan->SetPos(fPoint(950, 1000));
 		AddObject(pHooligan, GROUP_GAMEOBJ::HOOLIGAN);
+		CHooligan2* pHooligan2 = new CHooligan2;
+		pHooligan2->SetPos(fPoint(1050, 1000));
+		AddObject(pHooligan2, GROUP_GAMEOBJ::HOOLIGAN);
+		CHooligan3* pHooligan3 = new CHooligan3;
+		pHooligan3->SetPos(fPoint(1150, 1000));
+		AddObject(pHooligan3, GROUP_GAMEOBJ::HOOLIGAN);
+		CHooligan4* pHooligan4 = new CHooligan4;
+		pHooligan4->SetPos(fPoint(1250, 1000));
+		AddObject(pHooligan4, GROUP_GAMEOBJ::HOOLIGAN);
+		CHooligan5* pHooligan5 = new CHooligan5;
+		pHooligan5->SetPos(fPoint(1350, 1000));
+		AddObject(pHooligan5, GROUP_GAMEOBJ::HOOLIGAN);
 
 		CMonster* pCloneMonster = pMonster->Clone();
 		pCloneMonster->SetPos(fPoint(500, 1350));
@@ -77,6 +93,7 @@ void CScene_Start::Enter()
 		CCollisionManager::GetInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::MONSTER);
 		CCollisionManager::GetInst()->CheckGroup(GROUP_GAMEOBJ::MISSILE_PLAYER, GROUP_GAMEOBJ::MONSTER);
 		CCollisionManager::GetInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::TILE);
+		CCollisionManager::GetInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::HOOLIGAN);
 
 		// Camera Look 지정
 		CCameraManager::GetInst()->SetLookAt(fPoint(WINSIZEX / 2.f, WINSIZEY / 2.f));

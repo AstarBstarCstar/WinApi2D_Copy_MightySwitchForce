@@ -14,10 +14,10 @@ CMonster::CMonster()
 	m_pAI = nullptr;
 
 	SetName(L"Monster");
-	SetScale(fPoint(100, 100));
+	SetScale(fPoint(292*0.7, 220*0.7));
 
 	CreateCollider();
-	GetCollider()->SetScale(fPoint(90.f, 90.f));
+	GetCollider()->SetScale(fPoint(50.f, 50.f));
 
 	CreateAnimator();
 	GetAnimator()->CreateAnimation(L"PlayerStand", m_pImg, fPoint(0, 0), fPoint(292.f, 220.f), fPoint(292.f, 0), 0.1f, 7, true);

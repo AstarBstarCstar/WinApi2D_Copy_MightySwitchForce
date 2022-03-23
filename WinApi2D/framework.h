@@ -19,6 +19,7 @@
 #include <math.h>
 #include <assert.h>
 #include <stdlib.h>
+#include <time.h>
 
 // STL
 #include <vector>
@@ -43,9 +44,10 @@ enum class GROUP_GAMEOBJ
 	BACKGROUND,
 	MAP,
 	TILE,
-	PLAYER,
-	MONSTER,
 	HOOLIGAN,
+	MONSTER,
+	PLAYER,
+
 	MISSILE_PLAYER,
 	MISSILE_MONSTER,
 
@@ -134,6 +136,9 @@ enum class PLAYER_STATE
 #define WINSTARTY   100
 #define WINSIZEX	1280
 #define	WINSIZEY	720
+#define GRAVITY	1000.f
+#define MAX_SPEED 300
+#define UPPER 800
 #define WINSTYLE	WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX
 
 #define DT				CTimeManager::GetInst()->GetDT()
@@ -149,6 +154,8 @@ enum class PLAYER_STATE
 #define DeleteObj(pObj)				CEventManager::GetInst()->EventDeleteObject(pObj)
 #define ChangeScn(scene)			CEventManager::GetInst()->EventChangeScene(scene)
 #define ChangeAIState(ai, state)	CEventManager::GetInst()->EventChangeAIState(ai, state)
+
+
 
 //========================================
 //## 전역변수(인스턴스, 윈도우 핸들)	##

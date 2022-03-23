@@ -9,6 +9,7 @@ CTile::CTile()
 	m_iY = 0;
 	m_iIdx = 0;
 	m_eGroup = GROUP_TILE::NONE;
+	SetName(L"Tile");
 	SetScale(fPoint(SIZE_TILE, SIZE_TILE));
 }
 
@@ -86,6 +87,10 @@ void CTile::SetGroup(GROUP_TILE group)
 {
 	m_eGroup = group;
 }
+GROUP_TILE CTile::GetGroup()
+{
+	return m_eGroup;
+}
 
 int CTile::GetIdx()
 {
@@ -102,10 +107,7 @@ int CTile::GetY()
 	return m_iY;
 }
 
-GROUP_TILE CTile::GetGroup()
-{
-	return m_eGroup;
-}
+
 
 void CTile::Save(FILE* pFile)
 {

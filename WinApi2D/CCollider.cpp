@@ -108,3 +108,8 @@ void CCollider::OnCollisionExit(CCollider* pOther)
 	m_pOwner->OnCollisionExit(pOther);
 	m_iColCount--;
 }
+
+RECT CCollider::GetBorderPos()
+{
+	return m_rtCollider;
+}

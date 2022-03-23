@@ -222,6 +222,18 @@
     <ClInclude Include="CHooligan.h">
       <Filter>Object\Hooligan</Filter>
     </ClInclude>
+    <ClInclude Include="CHooligan2.h">
+      <Filter>Object\Hooligan</Filter>
+    </ClInclude>
+    <ClInclude Include="CHooligan3.h">
+      <Filter>Object\Hooligan</Filter>
+    </ClInclude>
+    <ClInclude Include="CHooligan5.h">
+      <Filter>Object\Hooligan</Filter>
+    </ClInclude>
+    <ClInclude Include="CHooligan4.h">
+      <Filter>Object\Hooligan</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinApi2D.cpp">
@@ -351,6 +363,18 @@
       <Filter>Object</Filter>
     </ClCompile>
     <ClCompile Include="CHooligan.cpp">
+      <Filter>Object\Hooligan</Filter>
+    </ClCompile>
+    <ClCompile Include="CHooligan5.cpp">
+      <Filter>Object\Hooligan</Filter>
+    </ClCompile>
+    <ClCompile Include="CHooligan4.cpp">
+      <Filter>Object\Hooligan</Filter>
+    </ClCompile>
+    <ClCompile Include="CHooligan3.cpp">
+      <Filter>Object\Hooligan</Filter>
+    </ClCompile>
+    <ClCompile Include="CHooligan2.cpp">
       <Filter>Object\Hooligan</Filter>
     </ClCompile>
   </ItemGroup>
