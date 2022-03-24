@@ -12,24 +12,54 @@ CPlayer* CPlayer::instance = nullptr;
 
 CPlayer::CPlayer()
 {
+	//1. 포토샵질(이미지수정)
+	//2. 함수수정(애니메이션 수정 ->정해진 크기 TODO:)
 	SetScale(fPoint(100.f, 200.f));
-	SetName(L"Player");
+	SetName(L"Player");//Object그룹->
 	CD2DImage* m_Idle = CResourceManager::GetInst()->LoadD2DImage(L"Idle", L"texture\\Animation\\PatriciaWagon\\Resting_Idle\\Resting_Idle_104_216.png");
 	CD2DImage* m_Run = CResourceManager::GetInst()->LoadD2DImage(L"Run", L"texture\\Animation\\PatriciaWagon\\Run\\Run_196_204.png");
 	CD2DImage* m_Fire = CResourceManager::GetInst()->LoadD2DImage(L"Fire", L"texture\\Animation\\PatriciaWagon\\Fire\\Fire_172_212.png");
+	CD2DImage* m_FiretoIdle = CResourceManager::GetInst()->LoadD2DImage(L"FiretoIdle", L"texture\\Animation\\PatriciaWagon\\Fire_Idle_to_Rest\\Fire_Rest_144_212.png");
+	CD2DImage* m_JumpRise = CResourceManager::GetInst()->LoadD2DImage(L"JumpRise", L"texture\\Animation\\PatriciaWagon\\Jump_Rise\\JumpRise_144_228.png");
+	CD2DImage* m_JumpFall = CResourceManager::GetInst()->LoadD2DImage(L"JumpFall", L"texture\\Animation\\PatriciaWagon\\Jump_Fall\\Fall_156_216.png");
+	CD2DImage* m_Die = CResourceManager::GetInst()->LoadD2DImage(L"Die", L"texture\\Animation\\PatriciaWagon\\Die\\Die_176_263.png");//Hit 같이
+	CD2DImage* m_Sweat = CResourceManager::GetInst()->LoadD2DImage(L"Sweat", L"texture\\Animation\\PatriciaWagon\\Sweat\\Sweat_216_224.png");
+	CD2DImage* m_Spiked = CResourceManager::GetInst()->LoadD2DImage(L"Spikec", L"texture\\Animation\\PatriciaWagon\\Spiked\\Spiked_212_268.png");
+	CD2DImage* m_Enter = CResourceManager::GetInst()->LoadD2DImage(L"Spikec", L"texture\\Animation\\PatriciaWagon\\Enter\\Enter_208_280.png");
 	
 
 	CreateCollider();
-	GetCollider()->SetScale(fPoint(70.f, 100.f));
+	GetCollider()->SetScale(fPoint(70.f, 100.f)); 
 	GetCollider()->SetOffsetPos(fPoint(0.f, 10.f));//TODO:
 
 	CreateAnimator();
 	GetAnimator()->CreateAnimation(L"Idle", m_Idle, fPoint(0.f, 0.f), fPoint(104.f, 216.f), fPoint(104.f, 0.f), 0.1f, 7);
-	GetAnimator()->Play(L"Idle");
+	GetAnimator()->CreateAnimation(L"R_Idle", m_Idle, fPoint(0.f, 0.f), fPoint(104.f, 216.f), fPoint(104.f, 0.f), 0.1f, 7,true);
+
 	GetAnimator()->CreateAnimation(L"Run", m_Run, fPoint(0.f, 0.f), fPoint(196.f, 204.f), fPoint(196.f, 0.f), 0.1f, 12);
 	GetAnimator()->CreateAnimation(L"R_Run", m_Run, fPoint(0.f, 0.f), fPoint(196.f, 204.f), fPoint(196.f, 0.f), 0.1f, 12, true);
+
 	GetAnimator()->CreateAnimation(L"Fire", m_Fire, fPoint(0.f, 0.f), fPoint(172.f, 212.f), fPoint(172.f, 0.f), 0.1f, 5);
 	GetAnimator()->CreateAnimation(L"R_Fire", m_Fire, fPoint(0.f, 0.f), fPoint(172.f, 212.f), fPoint(172.f, 0.f), 0.1f, 5,true);
+
+	GetAnimator()->CreateAnimation(L"FiretoIdle", m_FiretoIdle, fPoint(0.f, 0.f), fPoint(144.f, 212.f), fPoint(144.f, 0.f), 0.1f, 4);
+	GetAnimator()->CreateAnimation(L"R_FiretoIdle", m_FiretoIdle, fPoint(0.f, 0.f), fPoint(144.f, 212.f), fPoint(144.f, 0.f), 0.1f, 4, true);
+
+	GetAnimator()->CreateAnimation(L"JumpRise", m_JumpRise, fPoint(0.f, 0.f), fPoint(144.f, 228.f), fPoint(144.f, 0.f), 0.1f, 4);
+	GetAnimator()->CreateAnimation(L"R_JumpRise", m_JumpRise, fPoint(0.f, 0.f), fPoint(144.f, 228.f), fPoint(144.f, 0.f), 0.1f, 4, true);
+	GetAnimator()->CreateAnimation(L"JumpFall", m_JumpFall, fPoint(0.f, 0.f), fPoint(156.f, 216.f), fPoint(156.f, 0.f), 0.1f, 4);
+	GetAnimator()->CreateAnimation(L"R_JumpFall", m_JumpFall, fPoint(0.f, 0.f), fPoint(156.f, 216.f), fPoint(156.f, 0.f), 0.1f, 4, true);
+
+	GetAnimator()->CreateAnimation(L"Die", m_Die, fPoint(0.f, 0.f), fPoint(176.f, 263.f), fPoint(176.f, 0.f), 0.1f, 72);
+	GetAnimator()->CreateAnimation(L"R_Die", m_Die, fPoint(0.f, 0.f), fPoint(176.f, 263.f), fPoint(176.f, 0.f), 0.1f, 72, true);
+
+	GetAnimator()->CreateAnimation(L"Sweat", m_Sweat, fPoint(0.f, 0.f), fPoint(216.f, 224.f), fPoint(216.f, 0.f), 0.1f, 13);
+	GetAnimator()->CreateAnimation(L"R_Sweat", m_Sweat, fPoint(0.f, 0.f), fPoint(216.f, 224.f), fPoint(216.f, 0.f), 0.1f, 13, true);
+
+	GetAnimator()->CreateAnimation(L"Hit", m_Die, fPoint(0.f, 0.f), fPoint(176.f, 263.f), fPoint(172.f, 0.f), 0.1f, 4);
+	GetAnimator()->CreateAnimation(L"R_Hit", m_Die, fPoint(0.f, 0.f), fPoint(176.f, 263.f), fPoint(172.f, 0.f), 0.1f, 4, true);
+
+	GetAnimator()->CreateAnimation(L"Enter", m_Enter, fPoint(0.f, 0.f), fPoint(208.f, 280.f), fPoint(208.f, 0.f), 0.1f, 15);
 
 	//CAnimation* pAni;
 	////pAni = GetAnimator()->FindAnimation(L"LeftMove");
@@ -48,6 +78,9 @@ CPlayer::CPlayer()
 	m_fMaxVelocity = MAX_SPEED;
 	m_gravity = GRAVITY;
 	m_State = CharacterState::IDLE;
+	m_Ground = 0;
+	m_Spike = 0;
+	m_Wall = 0;
 }
 
 CPlayer::~CPlayer()
@@ -55,130 +88,6 @@ CPlayer::~CPlayer()
 	instance = nullptr;
 }
 
-CPlayer* CPlayer::Clone()
-{
-	return new CPlayer(*this);
-}
-
-void CPlayer::OnCollisionEnter(CCollider* pOther)
-{
-	CGameObject* pOtherObj = pOther->GetObj();
-			fVec2 vPos = GetPos();
-		CTile* pTile = (CTile*)pOtherObj;
-		GROUP_TILE Type = pTile->GetGroup();
-
-	if (pOtherObj->GetName() == L"Tile")
-	{
-
-		switch (Type)
-		{
-		case GROUP_TILE::GROUND:
-		{
-			if (abs(GetCollider()->GetFinalPos().y - pOther->GetFinalPos().y) + 2.f >= GetCollider()->GetScale().y / 2.f + pOther->GetScale().y / 2.f)
-			{
-				++m_Ground;
-			}
-			else
-			{
-				if (GetCollider()->GetFinalPos().x < pOther->GetFinalPos().x)
-				{
-					vPos.x -= 2.f;
-				}
-				else if (GetCollider()->GetFinalPos().x > pOther->GetFinalPos().x)
-				{
-					vPos.x += 2.f;
-				}
-				++m_Ground;
-			}
-			
-				break;
-		}
-		case GROUP_TILE::PLATFORM:
-		{	
-			if (abs(GetCollider()->GetFinalPos().y - pOther->GetFinalPos().y) + 2.f >= GetCollider()->GetScale().y / 2.f + pOther->GetScale().y / 2.f)
-			{
-				++m_Plat;
-			}
-		}
-		case GROUP_TILE::SPIKE:
-		{
-			break;
-		}
-		}
-		SetPos(vPos);
-	}
-}
-
-void CPlayer::OnCollision(CCollider* pOther)
-{
-	CGameObject* pOtherObj = pOther->GetObj();
-	fVec2 vPos = GetPos();
-	CTile* pTile = (CTile*)pOtherObj;
-	GROUP_TILE Type = pTile->GetGroup();
-
-	if (pOtherObj->GetName() == L"Tile")
-	{
-		switch (Type)
-		{
-		case GROUP_TILE::GROUND:
-		{
-				if (GetCollider()->GetFinalPos().y < pOther->GetFinalPos().y)
-				{
-					vPos.y -= 2.f;
-				}
-				else if (GetCollider()->GetFinalPos().y > pOther->GetFinalPos().y)
-				{
-					vPos.y += 2.f;
-				}
-
-			break;
-		}
-		case GROUP_TILE::PLATFORM:
-		{
-			if (GetCollider()->GetFinalPos().y < pOther->GetFinalPos().y)
-			{
-				vPos.y -= 2.f;
-			}
-			break;
-		}
-		case GROUP_TILE::SPIKE:
-		{
-			break;
-		}
-		}
-	}
-	SetPos(vPos);
-
-}
-
-void CPlayer::OnCollisionExit(CCollider* pOther)
-{
-	CGameObject* pOtherObj = pOther->GetObj();
-	fVec2 vPos = GetPos();
-	CTile* pTile = (CTile*)pOtherObj;
-	GROUP_TILE Type = pTile->GetGroup();
-	if (pOtherObj->GetName() == L"Tile")
-	{
-
-		switch (Type)
-		{
-		case GROUP_TILE::GROUND:
-		{
-			--m_Ground;
-			break;
-		}
-		case GROUP_TILE::PLATFORM:
-		{
-			--m_Plat;
-			break;
-		}
-		case GROUP_TILE::SPIKE:
-		{
-			break;
-		}
-		}
-	}
-}
 
 /*
 TODO:
@@ -230,7 +139,7 @@ void CPlayer::update()
 	if (Key('X'))
 	{
 		m_Upper = UPPER;
-		pos.y -= 20.f;
+		pos.y -= 10.f;
 	}
 	if (KeyDown('Z'))
 	{
@@ -252,6 +161,7 @@ void CPlayer::update()
 	}
 	if (KeyDown('C'))
 	{
+		
 		CSoundManager::GetInst()->Play(L"Switch");
 		CSoundManager::GetInst()->Play(L"Flip");
 	}
@@ -307,6 +217,170 @@ void CPlayer::CreateMissile()
 void CPlayer::Jump()
 {
 
+}
+
+CPlayer* CPlayer::Clone()
+{
+	return new CPlayer(*this);
+}
+
+void CPlayer::OnCollisionEnter(CCollider* pOther)
+{
+	CGameObject* pOtherObj = pOther->GetObj();
+	fVec2 vPos = GetPos();
+	CTile* pTile = (CTile*)pOtherObj;
+	GROUP_TILE Type = pTile->GetGroup();
+
+	if (pOtherObj->GetName() == L"Tile")
+	{
+
+		switch (Type)
+		{
+		case GROUP_TILE::GROUND:
+		{
+			if (abs(GetCollider()->GetFinalPos().y - pOther->GetFinalPos().y) + 2.f >= GetCollider()->GetScale().y / 2.f + pOther->GetScale().y / 2.f)
+			{
+				++m_Ground;
+			}
+			else
+			{
+				if (GetCollider()->GetFinalPos().x < pOther->GetFinalPos().x)
+				{
+					vPos.x -= 2.f;
+				}
+				else if (GetCollider()->GetFinalPos().x > pOther->GetFinalPos().x)
+				{
+					vPos.x += 2.f;
+				}
+				++m_Ground;
+			}
+
+			break;
+		}
+		case GROUP_TILE::WALL:
+		{
+			if (abs(GetCollider()->GetFinalPos().y - pOther->GetFinalPos().y) + 2.f >= GetCollider()->GetScale().y / 2.f + pOther->GetScale().y / 2.f)
+			{
+				++m_Wall;
+			}
+			else
+			{
+				if (GetCollider()->GetFinalPos().x < pOther->GetFinalPos().x)
+				{
+					vPos.x -= 2.f;
+				}
+				else if (GetCollider()->GetFinalPos().x > pOther->GetFinalPos().x)
+				{
+					vPos.x += 2.f;
+				}
+				++m_Wall;
+			}
+			break;
+		}
+		case GROUP_TILE::PLATFORM:
+		{
+			if (abs(GetCollider()->GetFinalPos().y - pOther->GetFinalPos().y) + 2.f >= GetCollider()->GetScale().y / 2.f + pOther->GetScale().y / 2.f)
+			{
+				++m_Plat;
+			}
+		}
+		case GROUP_TILE::SPIKE:
+		{
+			break;
+		}
+	}
+		SetPos(vPos);
+	}
+}
+
+void CPlayer::OnCollision(CCollider* pOther)
+{
+	CGameObject* pOtherObj = pOther->GetObj();
+	fVec2 vPos = GetPos();
+	CTile* pTile = (CTile*)pOtherObj;
+	GROUP_TILE Type = pTile->GetGroup();
+
+	if (pOtherObj->GetName() == L"Tile")
+	{
+		switch (Type)
+		{
+		case GROUP_TILE::GROUND:
+		{
+			if (GetCollider()->GetFinalPos().y < pOther->GetFinalPos().y)
+			{
+				vPos.y -= 2.f;
+			}
+			else if (GetCollider()->GetFinalPos().y > pOther->GetFinalPos().y)
+			{
+				vPos.y += 2.f;
+			}
+
+			break;
+		}
+		case GROUP_TILE::WALL:
+		{		
+			if (GetCollider()->GetFinalPos().y < pOther->GetFinalPos().y)
+		{
+			vPos.y -= 2.f;
+		}
+		else if (GetCollider()->GetFinalPos().y > pOther->GetFinalPos().y)
+		{
+			vPos.y += 2.f;
+		}
+
+		break;
+
+		}
+		case GROUP_TILE::PLATFORM:
+		{
+			if (GetCollider()->GetFinalPos().y < pOther->GetFinalPos().y)
+			{
+				vPos.y -= 2.f;
+			}
+			break;
+		}
+		case GROUP_TILE::SPIKE:
+		{
+			break;
+		}
+		}
+	}
+	SetPos(vPos);
+
+}
+
+void CPlayer::OnCollisionExit(CCollider* pOther)
+{
+	CGameObject* pOtherObj = pOther->GetObj();
+	fVec2 vPos = GetPos();
+	CTile* pTile = (CTile*)pOtherObj;
+	GROUP_TILE Type = pTile->GetGroup();
+	if (pOtherObj->GetName() == L"Tile")
+	{
+
+		switch (Type)
+		{
+		case GROUP_TILE::GROUND:
+		{
+			--m_Ground;
+			break;
+		}
+		case GROUP_TILE::WALL:
+		{
+			--m_Wall;
+			break;
+		}
+		case GROUP_TILE::PLATFORM:
+		{
+			--m_Plat;
+			break;
+		}
+		case GROUP_TILE::SPIKE:
+		{
+			break;
+		}
+		}
+	}
 }
 
 void CPlayer::CameraRelease()

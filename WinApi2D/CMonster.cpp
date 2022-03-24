@@ -57,7 +57,7 @@ CMonster* CMonster::Create(MON_TYPE type, fPoint pos)
 		info.fAtt = 10.f;
 		info.fAttRange = 50.f;
 		info.fRecogRange = 300.f;
-		info.fHP = 100.f;
+		info.fHP = 1.f;
 		info.fSpeed = 150.f;
 
 		AI* pAI = new AI;

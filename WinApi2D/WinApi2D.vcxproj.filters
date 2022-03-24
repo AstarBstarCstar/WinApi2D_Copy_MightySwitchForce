@@ -73,6 +73,12 @@
     <Filter Include="Object\Hooligan">
       <UniqueIdentifier>{b0c22b89-6f88-4ce4-8d65-12efb1faddec}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object\SwitchBlock">
+      <UniqueIdentifier>{d9b95319-b7c2-4cd8-b71d-51f4789a56b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Monster">
+      <UniqueIdentifier>{420d0a9c-29f5-4b74-bf0e-3aad66a70842}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -162,9 +168,6 @@
     <ClInclude Include="CMissile.h">
       <Filter>Object\Character</Filter>
     </ClInclude>
-    <ClInclude Include="CMonster.h">
-      <Filter>Object\Character</Filter>
-    </ClInclude>
     <ClInclude Include="CPlayer.h">
       <Filter>Object\Character</Filter>
     </ClInclude>
@@ -233,6 +236,15 @@
     </ClInclude>
     <ClInclude Include="CHooligan4.h">
       <Filter>Object\Hooligan</Filter>
+    </ClInclude>
+    <ClInclude Include="SwitchBlock.h">
+      <Filter>Object\SwitchBlock</Filter>
+    </ClInclude>
+    <ClInclude Include="CMonster.h">
+      <Filter>Object\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="CTurtle.h">
+      <Filter>Object\Monster</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -305,9 +317,6 @@
     <ClCompile Include="CMissile.cpp">
       <Filter>Object\Character</Filter>
     </ClCompile>
-    <ClCompile Include="CMonster.cpp">
-      <Filter>Object\Character</Filter>
-    </ClCompile>
     <ClCompile Include="CPlayer.cpp">
       <Filter>Object\Character</Filter>
     </ClCompile>
@@ -376,6 +385,15 @@
     </ClCompile>
     <ClCompile Include="CHooligan2.cpp">
       <Filter>Object\Hooligan</Filter>
+    </ClCompile>
+    <ClCompile Include="SwitchBlock.cpp">
+      <Filter>Object\SwitchBlock</Filter>
+    </ClCompile>
+    <ClCompile Include="CMonster.cpp">
+      <Filter>Object\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="CTurtle.cpp">
+      <Filter>Object\Monster</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

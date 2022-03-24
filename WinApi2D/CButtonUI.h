@@ -11,6 +11,7 @@ private:
 	DWORD_PTR m_pParam1;
 	DWORD_PTR m_pParam2;
 	wstring m_strText;
+	wstring m_strColor;
 
 public:
 	CButtonUI();
@@ -25,6 +26,7 @@ public:
 	virtual void MouseLbtnClicked();
 
 	void SetText(const wstring& str);
+	void SetColor(const wstring& str);
 	void SetClickedCallBack(BTN_FUNC pFunc, DWORD_PTR param1, DWORD_PTR param2);
 };
 

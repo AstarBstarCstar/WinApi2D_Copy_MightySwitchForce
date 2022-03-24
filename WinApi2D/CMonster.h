@@ -4,23 +4,6 @@
 class CD2DImage;
 class AI;
 
-struct tMonInfo
-{
-	float fSpeed;
-	float fHP;
-	float fRecogRange;
-	float fAttRange;
-	float fAtt;
-};
-
-enum class MON_TYPE
-{
-	NORMAL,
-	RANGE,
-
-	SIZE,
-};
-
 class CMonster : public CGameObject
 {
 private:

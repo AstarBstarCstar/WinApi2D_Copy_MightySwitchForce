@@ -59,6 +59,10 @@ void CButtonUI::SetText(const wstring& str)
 {
 	m_strText = str;
 }
+void CButtonUI::SetColor(const wstring& str)
+{
+	m_strColor = str;
+}
 
 
 void CButtonUI::SetClickedCallBack(BTN_FUNC pFunc, DWORD_PTR param1, DWORD_PTR param2)

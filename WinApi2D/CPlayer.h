@@ -27,6 +27,7 @@ private:
 	float m_gravity;
 	float m_Upper;
 	UINT m_Ground;
+	UINT m_Wall;
 	UINT m_Plat;
 	UINT m_Spike;
 	

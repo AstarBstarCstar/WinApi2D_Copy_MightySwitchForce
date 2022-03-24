@@ -38,7 +38,7 @@ using namespace std;
 //## 게임 그룹						##
 //========================================
 
-enum class GROUP_GAMEOBJ
+enum class GROUP_GAMEOBJ//TODO: 가려져있는 반투명 오브젝트. 스위치 눌린상태로 보여지는그룹 bool time managetfDT -> 한프레임당 시간이 짧게 걸렸
 {
 	DEFAULT,
 	BACKGROUND,
@@ -105,6 +105,14 @@ enum class STATE_MON
 	SIZE,
 };
 
+enum class MON_TYPE
+{
+	NORMAL,
+	RANGE,
+
+	SIZE,
+};
+
 enum class PLAYER_STATE
 {
 	IDLE,
@@ -112,6 +120,15 @@ enum class PLAYER_STATE
 	ATTACK,
 	JUMP,
 	DEAD,
+};
+
+struct tMonInfo
+{
+	float fSpeed;
+	float fHP;
+	float fRecogRange;
+	float fAttRange;
+	float fAtt;
 };
 
 // Core & Manager
@@ -136,7 +153,7 @@ enum class PLAYER_STATE
 #define WINSTARTY   100
 #define WINSIZEX	1280
 #define	WINSIZEY	720
-#define GRAVITY	1000.f
+#define GRAVITY	600.f
 #define MAX_SPEED 300
 #define UPPER 800
 #define WINSTYLE	WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX

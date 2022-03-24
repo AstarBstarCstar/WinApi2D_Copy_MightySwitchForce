@@ -5,6 +5,7 @@
 #include "CGameObject.h"
 #include "CPlayer.h"
 #include "CMonster.h"
+#include "CTurtle.h"
 #include "CMap.h"
 #include "CBackGround.h"
 #include "CHooligan.h"
@@ -58,8 +59,18 @@ void CScene_Start::Enter()
 
 		// Monster 추가
 		CMonster* pMonster = new CMonster;
-		pMonster->SetPos(fPoint(1100, 1200)); 
-		AddObject(pMonster, GROUP_GAMEOBJ::HOOLIGAN);
+		CMonster* pMon = CMonster::Create(MON_TYPE::NORMAL, fPoint(1100.f, 1000.f));
+		CMonster* pCloneMonster = pMonster->Clone();
+		pCloneMonster->SetPos(fPoint(500, 1350));
+		AddObject(pCloneMonster, GROUP_GAMEOBJ::MONSTER);
+		AddObject(pMon, GROUP_GAMEOBJ::MONSTER);
+
+		//CTurtle* pTurtle = new CTurtle;
+		//CTurtle* pTur = CTurtle::Create(MON_TYPE::NORMAL, fPoint(1100.f, 1000.f));
+		//CTurtle* pCloneTurtle = pTurtle->Clone();
+		//pCloneTurtle->SetPos(fPoint(500, 1350));
+		//AddObject(pCloneTurtle, GROUP_GAMEOBJ::MONSTER);
+		//AddObject(pTur, GROUP_GAMEOBJ::MONSTER);
 
 		CHooligan* pHooligan = new CHooligan;
 		pHooligan->SetPos(fPoint(950, 1000));
@@ -77,9 +88,7 @@ void CScene_Start::Enter()
 		pHooligan5->SetPos(fPoint(1350, 1000));
 		AddObject(pHooligan5, GROUP_GAMEOBJ::HOOLIGAN);
 
-		CMonster* pCloneMonster = pMonster->Clone();
-		pCloneMonster->SetPos(fPoint(500, 1350));
-		AddObject(pCloneMonster, GROUP_GAMEOBJ::MONSTER);
+
 
 		CMap* map = new CMap;
 		map->Load(L"Map_Start", L"texture\\map\\IncLevel1.png");
@@ -102,8 +111,6 @@ void CScene_Start::Enter()
 		//CCameraManager::GetInst()->FadeIn(1.f);
 
 		// 몬스터 배치
-		CMonster* pMon = CMonster::Create(MON_TYPE::NORMAL, fPoint(1100.f, 2000.f));
-		AddObject(pMon, GROUP_GAMEOBJ::MONSTER);
 	}
 }
 

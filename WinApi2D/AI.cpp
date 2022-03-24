@@ -22,6 +22,11 @@ CMonster* AI::GetOwnerAI()
 	return m_pOwner;
 }
 
+CTurtle* AI::GetOwnerTurtleAI()
+{
+	return m_pOwnTurtle;
+}
+
 void AI::SetCurState(STATE_MON state)
 {
 	m_pCurState = GetState(state);

@@ -31,7 +31,7 @@ void CTraceState::update()
 	}
 
 	fPoint pos = pMonster->GetPos();
-	pos += fvDiff.Normalize() * 100 * fDT;
+	pos += fvDiff.Normalize() * 1000 * fDT;
 	pMonster->SetPos(pos);
 }
 
