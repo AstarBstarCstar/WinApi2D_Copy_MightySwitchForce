@@ -2,12 +2,11 @@
 #include "CButtonUI.h"
 
 CButtonUI::CButtonUI()
-	: CUI(false)
 {
 	m_pFunc = nullptr;
-	m_pParam1 = 0;
-	m_pParam2 = 0;
-	m_strText = L"NONE";
+	m_pParam1 = {};
+	m_pParam2 = {};
+	m_FontSize = 36;
 }
 
 CButtonUI::~CButtonUI()
@@ -21,22 +20,35 @@ CButtonUI* CButtonUI::Clone()
 
 void CButtonUI::render()
 {
-	CUI::render();
-
-	if (m_strText.size() > 0)
+	if (GetText() != L"")
 	{
-		CRenderManager::GetInst()->RenderText(
-			m_strText,
-			GetFinalPos().x,
-			GetFinalPos().y,
-			GetFinalPos().x + GetScale().x,
-			GetFinalPos().y + GetScale().y
-		);
+		CRenderManager::GetInst()->RenderText(GetText(),
+			GetPos().x - GetScale().x,
+			GetPos().y - GetScale().y + 2.f,
+			GetPos().x + GetScale().x * 2.f,
+			(GetPos().y + GetScale().y * 2.f) + 2.f,
+			m_FontSize, GetTxtShadowColor());
+
+		CRenderManager::GetInst()->RenderText(GetText(),
+			GetPos().x - GetScale().x,
+			GetPos().y - GetScale().y,
+			GetPos().x + GetScale().x * 2.f,
+			GetPos().y + GetScale().y * 2.f,
+			m_FontSize, GetTextColor());
+		CUI::render();
+	}
+	else
+	{
+		CUI::render();
 	}
 }
-
+void CButtonUI::SetFontSize(int size)
+{
+	m_FontSize = size;
+}
 void CButtonUI::MouseOn()
 {
+
 }
 
 void CButtonUI::MouseLbtnDown()
@@ -45,6 +57,7 @@ void CButtonUI::MouseLbtnDown()
 
 void CButtonUI::MouseLbtnUp()
 {
+
 }
 
 void CButtonUI::MouseLbtnClicked()
@@ -55,14 +68,7 @@ void CButtonUI::MouseLbtnClicked()
 	}
 }
 
-void CButtonUI::SetText(const wstring& str)
-{
-	m_strText = str;
-}
-void CButtonUI::SetColor(const wstring& str)
-{
-	m_strColor = str;
-}
+//
 
 
 void CButtonUI::SetClickedCallBack(BTN_FUNC pFunc, DWORD_PTR param1, DWORD_PTR param2)

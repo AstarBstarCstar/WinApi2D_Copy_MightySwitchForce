@@ -1,12 +1,17 @@
 #include "framework.h"
 #include "CUI.h"
 
-CUI::CUI(bool bCameraAffected)
+CUI::CUI()
 {
 	m_pParentUI = nullptr;
 	m_bCameraAffected = false;
 	m_bMouseOn = false;
 	m_bLbtnDown = false;
+
+	m_pImg = nullptr;
+	m_strText = L"";
+	m_rgbTxtColor = RGB(255, 255, 255);
+	m_rgbTxtShadowColor = RGB(0, 0, 0);
 }
 
 CUI::CUI(const CUI& other)
@@ -16,7 +21,10 @@ CUI::CUI(const CUI& other)
 	m_bCameraAffected = other.m_bCameraAffected;
 	m_bMouseOn = false;
 	m_bLbtnDown = false;
-
+	m_pImg = nullptr;
+	m_strText = L"";
+	m_rgbTxtColor = RGB(255, 255, 255);
+	m_rgbTxtShadowColor = RGB(0, 0, 0);
 	for (UINT i = 0; i < other.m_vecChildUI.size(); i++)
 	{
 		AddChild(other.m_vecChildUI[i]->Clone());
@@ -55,45 +63,13 @@ void CUI::finalupdate()
 
 void CUI::render()
 {
-	fPoint fptPos = GetFinalPos();
+	fPoint fptPos = GetPos();
+	fPoint fptFPos = GetFinalPos();
 	fPoint fptScale = GetScale();
 
 	if (m_bCameraAffected)	// 카메라 영향 받으면 랜더링 좌표로
 	{
-		fptPos = CCameraManager::GetInst()->GetRenderPos(fptPos);
-	}
-
-	if (m_bLbtnDown)
-	{
-		CRenderManager::GetInst()->RenderFillRectangle(
-			fptPos.x,
-			fptPos.y,
-			fptPos.x + fptScale.x,
-			fptPos.y + fptScale.y,
-			RGB(255, 255, 255)
-		);
-		CRenderManager::GetInst()->RenderRectangle(
-			fptPos.x,
-			fptPos.y,
-			fptPos.x + fptScale.x,
-			fptPos.y + fptScale.y,
-			RGB(0, 255, 0));
-	}
-	else
-	{
-		CRenderManager::GetInst()->RenderFillRectangle(
-			fptPos.x,
-			fptPos.y,
-			fptPos.x + fptScale.x,
-			fptPos.y + fptScale.y,
-			RGB(255, 255, 255)
-		);
-		CRenderManager::GetInst()->RenderRectangle(
-			fptPos.x,
-			fptPos.y,
-			fptPos.x + fptScale.x,
-			fptPos.y + fptScale.y,
-			RGB(0, 0, 0));
+		fptFPos = CCameraManager::GetInst()->GetRenderPos(fptFPos);
 	}
 
 	render_child();
@@ -153,6 +129,11 @@ bool CUI::GetCameraAffected()
 	return m_bCameraAffected;
 }
 
+void CUI::SetCameraAffected(bool isAffected)
+{
+	m_bCameraAffected = isAffected;
+}
+
 bool CUI::IsMouseOn()
 {
 	return m_bMouseOn;
@@ -172,11 +153,58 @@ void CUI::AddChild(CUI* pUI)
 {
 	m_vecChildUI.push_back(pUI);
 	pUI->m_pParentUI = this;
+	pUI->SetCameraAffected(this->m_bCameraAffected);
 }
 
 const vector<CUI*>& CUI::GetChildUI()
 {
 	return m_vecChildUI;
+}
+
+void CUI::LoadImg(const wstring& strKey, const wstring& strRelativePath)
+{
+	m_pImg = CResourceManager::GetInst()->LoadD2DImage(strKey, strRelativePath);
+}
+
+void CUI::SetText(const wstring& text)
+{
+	m_strText = text;
+}
+
+const wstring& CUI::GetText()
+{
+	return m_strText;
+}
+
+void CUI::SetTextColor(const COLORREF color)
+{
+	m_rgbTxtColor = color;
+}
+
+const COLORREF CUI::GetTextColor()
+{
+	return m_rgbTxtColor;
+}
+
+void CUI::SetTxtShadowColor(const COLORREF color)
+{
+	m_rgbTxtShadowColor = color;
+}
+
+const COLORREF CUI::GetTxtShadowColor()
+{
+	return m_rgbTxtShadowColor;
+}
+
+void CUI::SelectUI()
+{
+	m_bMouseOn = true;
+	CUIManager::GetInst()->SetFocusedUI(this);
+}
+
+void CUI::DeselectUI()
+{
+	m_bMouseOn = false;
 }
 
 void CUI::MouseOnCheck()

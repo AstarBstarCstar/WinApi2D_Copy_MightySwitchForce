@@ -18,7 +18,7 @@ CHooligan3::CHooligan3()
 	GetCollider()->SetScale(fPoint(40.f, 120.f));
 
 	CreateAnimator();
-	GetAnimator()->CreateAnimation(L"IdleHool3", m_pImg, fPoint(0, 0), fPoint(168.f, 236.f), fPoint(168.f, 0), 0.1f, 12);
+	GetAnimator()->CreateAnimation(L"IdleHool3", m_pImg, fPoint(0, 0), fPoint(168.f, 236.f), fPoint(168.f, 0), fPoint(168.f, 236.f),0, 0.1f, 12,true,false);
 
 	CSoundManager::GetInst()->AddSound(L"JusticeServed1", L"Sound\\JUSTICESERVED1.wav", false, false);
 	CSoundManager::GetInst()->AddSound(L"JusticeServed1", L"Sound\\JUSTICESERVED2.wav", false, false);

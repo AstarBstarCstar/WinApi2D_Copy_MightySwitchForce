@@ -12,10 +12,8 @@ CPlayer* CPlayer::instance = nullptr;
 
 CPlayer::CPlayer()
 {
-	//1. 포토샵질(이미지수정)
-	//2. 함수수정(애니메이션 수정 ->정해진 크기 TODO:)
-	SetScale(fPoint(100.f, 200.f));
 	SetName(L"Player");//Object그룹->
+	//SetScale(fPoint(100.f, 200.f));
 	CD2DImage* m_Idle = CResourceManager::GetInst()->LoadD2DImage(L"Idle", L"texture\\Animation\\PatriciaWagon\\Resting_Idle\\Resting_Idle_104_216.png");
 	CD2DImage* m_Run = CResourceManager::GetInst()->LoadD2DImage(L"Run", L"texture\\Animation\\PatriciaWagon\\Run\\Run_196_204.png");
 	CD2DImage* m_Fire = CResourceManager::GetInst()->LoadD2DImage(L"Fire", L"texture\\Animation\\PatriciaWagon\\Fire\\Fire_172_212.png");
@@ -26,40 +24,40 @@ CPlayer::CPlayer()
 	CD2DImage* m_Sweat = CResourceManager::GetInst()->LoadD2DImage(L"Sweat", L"texture\\Animation\\PatriciaWagon\\Sweat\\Sweat_216_224.png");
 	CD2DImage* m_Spiked = CResourceManager::GetInst()->LoadD2DImage(L"Spikec", L"texture\\Animation\\PatriciaWagon\\Spiked\\Spiked_212_268.png");
 	CD2DImage* m_Enter = CResourceManager::GetInst()->LoadD2DImage(L"Spikec", L"texture\\Animation\\PatriciaWagon\\Enter\\Enter_208_280.png");
-	
 
 	CreateCollider();
-	GetCollider()->SetScale(fPoint(70.f, 100.f)); 
-	GetCollider()->SetOffsetPos(fPoint(0.f, 10.f));//TODO:
+	GetCollider()->SetScale(fPoint(55.f, 160.f)); 
+	GetCollider()->SetOffsetPos(fPoint(0.f, 25.f));//TODO:
 
 	CreateAnimator();
-	GetAnimator()->CreateAnimation(L"Idle", m_Idle, fPoint(0.f, 0.f), fPoint(104.f, 216.f), fPoint(104.f, 0.f), 0.1f, 7);
-	GetAnimator()->CreateAnimation(L"R_Idle", m_Idle, fPoint(0.f, 0.f), fPoint(104.f, 216.f), fPoint(104.f, 0.f), 0.1f, 7,true);
+	GetAnimator()->CreateAnimation(L"Idle", m_Idle, fPoint(0.f, 0.f), fPoint(104.f, 216.f), fPoint(104.f, 0.f), fPoint(104.f, 216.f),0, 0.08f, 7,true,false);
+	GetAnimator()->CreateAnimation(L"R_Idle", m_Idle, fPoint(0.f, 0.f), fPoint(104.f, 216.f), fPoint(104.f, 0.f), fPoint(104.f, 216.f),0,0.05f, 7,true,true);
 
-	GetAnimator()->CreateAnimation(L"Run", m_Run, fPoint(0.f, 0.f), fPoint(196.f, 204.f), fPoint(196.f, 0.f), 0.1f, 12);
-	GetAnimator()->CreateAnimation(L"R_Run", m_Run, fPoint(0.f, 0.f), fPoint(196.f, 204.f), fPoint(196.f, 0.f), 0.1f, 12, true);
+	GetAnimator()->CreateAnimation(L"Run", m_Run, fPoint(0.f, 0.f), fPoint(196.f, 204.f), fPoint(196.f, 0.f), fPoint(196.f, 204.f),0, 0.1f, 12,true,false);
+	GetAnimator()->CreateAnimation(L"R_Run", m_Run, fPoint(0.f, 0.f), fPoint(196.f, 204.f), fPoint(196.f, 0.f), fPoint(196.f, 204.f),0, 0.1f, 12, true,true);
 
-	GetAnimator()->CreateAnimation(L"Fire", m_Fire, fPoint(0.f, 0.f), fPoint(172.f, 212.f), fPoint(172.f, 0.f), 0.1f, 5);
-	GetAnimator()->CreateAnimation(L"R_Fire", m_Fire, fPoint(0.f, 0.f), fPoint(172.f, 212.f), fPoint(172.f, 0.f), 0.1f, 5,true);
+	GetAnimator()->CreateAnimation(L"Fire", m_Fire, fPoint(0.f, 0.f), fPoint(172.f, 212.f), fPoint(172.f, 0.f), fPoint(172.f, 212.f),0, 0.1f, 5,true,false);
+	GetAnimator()->CreateAnimation(L"R_Fire", m_Fire, fPoint(0.f, 0.f), fPoint(172.f, 212.f), fPoint(172.f, 0.f), fPoint(172.f, 212.f),0, 0.1f, 5,false,true);
 
-	GetAnimator()->CreateAnimation(L"FiretoIdle", m_FiretoIdle, fPoint(0.f, 0.f), fPoint(144.f, 212.f), fPoint(144.f, 0.f), 0.1f, 4);
-	GetAnimator()->CreateAnimation(L"R_FiretoIdle", m_FiretoIdle, fPoint(0.f, 0.f), fPoint(144.f, 212.f), fPoint(144.f, 0.f), 0.1f, 4, true);
+	GetAnimator()->CreateAnimation(L"FiretoIdle", m_FiretoIdle, fPoint(0.f, 0.f), fPoint(144.f, 212.f), fPoint(144.f, 0.f), fPoint(144.f, 212.f),0, 0.1f, 4,true,false);
+	GetAnimator()->CreateAnimation(L"R_FiretoIdle", m_FiretoIdle, fPoint(0.f, 0.f), fPoint(144.f, 212.f), fPoint(144.f, 0.f), fPoint(144.f, 212.f),0, 0.1f, 4, false,true);
 
-	GetAnimator()->CreateAnimation(L"JumpRise", m_JumpRise, fPoint(0.f, 0.f), fPoint(144.f, 228.f), fPoint(144.f, 0.f), 0.1f, 4);
-	GetAnimator()->CreateAnimation(L"R_JumpRise", m_JumpRise, fPoint(0.f, 0.f), fPoint(144.f, 228.f), fPoint(144.f, 0.f), 0.1f, 4, true);
-	GetAnimator()->CreateAnimation(L"JumpFall", m_JumpFall, fPoint(0.f, 0.f), fPoint(156.f, 216.f), fPoint(156.f, 0.f), 0.1f, 4);
-	GetAnimator()->CreateAnimation(L"R_JumpFall", m_JumpFall, fPoint(0.f, 0.f), fPoint(156.f, 216.f), fPoint(156.f, 0.f), 0.1f, 4, true);
+	GetAnimator()->CreateAnimation(L"JumpRise", m_JumpRise, fPoint(0.f, 0.f), fPoint(144.f, 228.f), fPoint(144.f, 0.f), fPoint(144.f, 228.f),0, 0.1f, 4,true,false);
+	GetAnimator()->CreateAnimation(L"R_JumpRise", m_JumpRise, fPoint(0.f, 0.f), fPoint(144.f, 228.f), fPoint(144.f, 0.f), fPoint(144.f, 228.f),0, 0.1f, 4, false,true);
+	GetAnimator()->CreateAnimation(L"JumpFall", m_JumpFall, fPoint(0.f, 0.f), fPoint(156.f, 216.f), fPoint(156.f, 0.f), fPoint(156.f, 216.f),0, 0.1f, 4,true,false);
+	GetAnimator()->CreateAnimation(L"R_JumpFall", m_JumpFall, fPoint(0.f, 0.f), fPoint(156.f, 216.f), fPoint(156.f, 0.f), fPoint(156.f, 216.f),0, 0.1f, 4,false, true);
 
-	GetAnimator()->CreateAnimation(L"Die", m_Die, fPoint(0.f, 0.f), fPoint(176.f, 263.f), fPoint(176.f, 0.f), 0.1f, 72);
-	GetAnimator()->CreateAnimation(L"R_Die", m_Die, fPoint(0.f, 0.f), fPoint(176.f, 263.f), fPoint(176.f, 0.f), 0.1f, 72, true);
+	GetAnimator()->CreateAnimation(L"Die", m_Die, fPoint(0.f, 0.f), fPoint(176.f, 263.f), fPoint(176.f, 0.f), fPoint(176.f, 263.f),0, 0.1f, 72,true,false);
+	GetAnimator()->CreateAnimation(L"R_Die", m_Die, fPoint(0.f, 0.f), fPoint(176.f, 263.f), fPoint(176.f, 0.f), fPoint(176.f, 263.f),0, 0.1f, 72, false,true);
 
-	GetAnimator()->CreateAnimation(L"Sweat", m_Sweat, fPoint(0.f, 0.f), fPoint(216.f, 224.f), fPoint(216.f, 0.f), 0.1f, 13);
-	GetAnimator()->CreateAnimation(L"R_Sweat", m_Sweat, fPoint(0.f, 0.f), fPoint(216.f, 224.f), fPoint(216.f, 0.f), 0.1f, 13, true);
+	GetAnimator()->CreateAnimation(L"Sweat", m_Sweat, fPoint(0.f, 0.f), fPoint(216.f, 224.f), fPoint(216.f, 0.f), fPoint(216.f, 224.f),0, 0.1f, 13,true,false);
+	GetAnimator()->CreateAnimation(L"R_Sweat", m_Sweat, fPoint(0.f, 0.f), fPoint(216.f, 224.f), fPoint(216.f, 0.f), fPoint(216.f, 224.f),0, 0.1f, 13, false,true);
 
-	GetAnimator()->CreateAnimation(L"Hit", m_Die, fPoint(0.f, 0.f), fPoint(176.f, 263.f), fPoint(172.f, 0.f), 0.1f, 4);
-	GetAnimator()->CreateAnimation(L"R_Hit", m_Die, fPoint(0.f, 0.f), fPoint(176.f, 263.f), fPoint(172.f, 0.f), 0.1f, 4, true);
+	GetAnimator()->CreateAnimation(L"Hit", m_Die, fPoint(0.f, 0.f), fPoint(176.f, 263.f), fPoint(176.f, 0.f), fPoint(176.f, 263.f),0, 0.1f, 4,true,false);
+	GetAnimator()->CreateAnimation(L"R_Hit", m_Die, fPoint(0.f, 0.f), fPoint(176.f, 263.f), fPoint(176.f, 0.f), fPoint(176.f, 263.f),0, 0.1f, 4, true,true);
 
-	GetAnimator()->CreateAnimation(L"Enter", m_Enter, fPoint(0.f, 0.f), fPoint(208.f, 280.f), fPoint(208.f, 0.f), 0.1f, 15);
+	GetAnimator()->CreateAnimation(L"Enter", m_Enter, fPoint(0.f, 0.f), fPoint(208.f, 280.f), fPoint(208.f, 0.f), fPoint(208.f, 280.f),0, 0.1f, 15,false,false);
+	GetAnimator()->Play(L"Idle");
 
 	//CAnimation* pAni;
 	////pAni = GetAnimator()->FindAnimation(L"LeftMove");
@@ -139,7 +137,7 @@ void CPlayer::update()
 	if (Key('X'))
 	{
 		m_Upper = UPPER;
-		pos.y -= 10.f;
+		pos.y -= 5.f;
 	}
 	if (KeyDown('Z'))
 	{

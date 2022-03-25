@@ -15,7 +15,7 @@ CBackGround::~CBackGround()
 void CBackGround::Load(wstring strKey, wstring strPath)
 {
     m_pImg = CResourceManager::GetInst()->LoadD2DImage(strKey, strPath);
-    SetScale(fPoint(m_pImg->GetWidth() * 1.4f, m_pImg->GetHeight() * 1.4f));
+    SetScale(fPoint(m_pImg->GetWidth() * 1.3f, m_pImg->GetHeight() * 1.3f));
 }
 
 CBackGround* CBackGround::Clone()
@@ -36,13 +36,13 @@ void CBackGround::render()
     fPoint pos = GetPos();
     fPoint scale = GetScale();
     fPoint renderPos = CCameraManager::GetInst()->GetRenderPos(pos);
-    renderPos = pos + (renderPos - pos) / 5;    // ¹è°æÀº »ìÂ¦ ´À¸®°Ô ÀÌµ¿
+    renderPos = pos + (renderPos - pos) / 5;   
 
     CRenderManager::GetInst()->RenderImage(
         m_pImg,
         renderPos.x,
-        renderPos.y,
-        renderPos.x + scale.x,
-        renderPos.y + scale.y
+        renderPos.y+300,
+        renderPos.x+300 + scale.x,
+        renderPos.y +300+ scale.y
     );
 }

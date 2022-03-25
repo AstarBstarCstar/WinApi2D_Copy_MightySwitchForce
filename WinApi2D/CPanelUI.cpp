@@ -2,7 +2,6 @@
 #include "CPanelUI.h"
 
 CPanelUI::CPanelUI()
-	: CUI(false)
 {
 	m_fptDragStart = {};
 }

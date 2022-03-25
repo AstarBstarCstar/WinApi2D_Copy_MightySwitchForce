@@ -15,17 +15,16 @@ private:
 
 public:
 	CAnimator();
-	CAnimator(const CAnimator& pOther);
 	~CAnimator();
-
-	CGameObject* GetObj();
 
 	void update();
 	void render();
 
-	void CreateAnimation(const wstring& strName, CD2DImage* tex, fPoint lt, fPoint slice,
-						fPoint step, float duration, UINT frmCount,bool reverse = false);
+	void CreateAnimation(const wstring& strName, CD2DImage* pImg, fPoint leftTop, fPoint scale,
+		fPoint step,fPoint size, UINT column, float duration, UINT frmCount, bool isLoop, bool bReverse);
 	CAnimation* FindAnimation(const wstring& strName);
 	void Play(const wstring& strName);
+
+	CGameObject* GetObj();
 };
 

@@ -4,25 +4,14 @@
 
 CAnimator::CAnimator()
 {
+	m_pOwner = nullptr;
 	m_pCurAni = nullptr;
-	m_pOwner = nullptr;
-}
-
-CAnimator::CAnimator(const CAnimator& pOther)
-{
-	for (map<wstring, CAnimation*>::const_iterator iter = pOther.m_mapAni.begin(); iter != pOther.m_mapAni.end(); iter++)
-	{
-		CAnimation* newAni = new CAnimation(*iter->second);
-		m_mapAni.insert(make_pair(newAni->GetName(), newAni));
-		newAni->m_pAnimator = this;
-	}
-	m_pCurAni = FindAnimation(pOther.m_pCurAni->GetName());
-	m_pOwner = nullptr;
 }
 
 CAnimator::~CAnimator()
 {
-	for (map<wstring, CAnimation*>::iterator iter = m_mapAni.begin(); iter != m_mapAni.end(); iter++)
+	// 등록되어있던 애니메이션들 지워주기
+	for (map<wstring, CAnimation*>::iterator iter = m_mapAni.begin(); iter != m_mapAni.end(); ++iter)
 	{
 		if (nullptr != iter->second)
 			delete iter->second;
@@ -30,40 +19,35 @@ CAnimator::~CAnimator()
 	m_mapAni.clear();
 }
 
-CGameObject* CAnimator::GetObj()
-{
-	return m_pOwner;
-}
-
 void CAnimator::update()
 {
 	if (nullptr != m_pCurAni)
-	{
 		m_pCurAni->update();
-	}
 }
 
 void CAnimator::render()
 {
 	if (nullptr != m_pCurAni)
-	{
 		m_pCurAni->render();
-	}
 }
 
-void CAnimator::CreateAnimation(const wstring& strName, CD2DImage* tex, fPoint lt, fPoint slice, fPoint step, float duration, UINT frmCount, bool reverse)
+void CAnimator::CreateAnimation(const wstring& strName, CD2DImage* pImg, fPoint leftTop, fPoint scale,
+	fPoint step,fPoint size, UINT column, float duration, UINT frmCount, bool isLoop, bool bReverse)
 {
-	CAnimation* pAni = FindAnimation(strName);
-	assert(nullptr == pAni);
+	CAnimation* pAnim = FindAnimation(strName);
 
-	pAni = new CAnimation;
+	// 이름이 똑같은 애니메이션을 넣을 때의 반응
+	assert(pAnim == nullptr);
 
-	pAni->SetName(strName);
-	pAni->m_pAnimator = this;
-	pAni->Create(tex, lt, slice, step, duration, frmCount);
-	pAni->m_bReverse = reverse;
+	pAnim = new CAnimation;
 
-	m_mapAni.insert(make_pair(strName, pAni));
+	pAnim->SetName(strName);
+	pAnim->m_pAnimator = this;
+	pAnim->Create(pImg, leftTop, scale, step,size, column, duration, frmCount);
+	pAnim->SetLoop(isLoop);
+	pAnim->m_bReverse = bReverse;
+
+	m_mapAni.insert(make_pair(strName, pAnim));
 }
 
 CAnimation* CAnimator::FindAnimation(const wstring& strName)
@@ -71,13 +55,17 @@ CAnimation* CAnimator::FindAnimation(const wstring& strName)
 	map<wstring, CAnimation*>::iterator iter = m_mapAni.find(strName);
 
 	if (iter == m_mapAni.end())
-	{
 		return nullptr;
-	}
+
 	return iter->second;
 }
 
 void CAnimator::Play(const wstring& strName)
 {
 	m_pCurAni = FindAnimation(strName);
+}
+
+CGameObject* CAnimator::GetObj()
+{
+	return m_pOwner;
 }

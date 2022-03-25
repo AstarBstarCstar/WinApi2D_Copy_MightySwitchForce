@@ -1,6 +1,8 @@
 #pragma once
 #include "CUI.h"
 
+class CD2DImage;
+
 // 함수포인터를 위한 타입정의
 typedef void(*BTN_FUNC) (DWORD_PTR, DWORD_PTR);
 
@@ -10,8 +12,7 @@ private:
 	BTN_FUNC m_pFunc;
 	DWORD_PTR m_pParam1;
 	DWORD_PTR m_pParam2;
-	wstring m_strText;
-	wstring m_strColor;
+	int m_FontSize;
 
 public:
 	CButtonUI();
@@ -20,13 +21,14 @@ public:
 	virtual CButtonUI* Clone();
 
 	virtual void render();
+
+	void SetFontSize(int size);
+
 	virtual void MouseOn();
 	virtual void MouseLbtnDown();
 	virtual void MouseLbtnUp();
 	virtual void MouseLbtnClicked();
 
-	void SetText(const wstring& str);
-	void SetColor(const wstring& str);
 	void SetClickedCallBack(BTN_FUNC pFunc, DWORD_PTR param1, DWORD_PTR param2);
 };
 

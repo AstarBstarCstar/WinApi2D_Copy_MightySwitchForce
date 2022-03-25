@@ -49,5 +49,5 @@ void CMap::render()
 void CMap::TitleLoad(wstring strKey, wstring strPath)
 {
     m_pImg = CResourceManager::GetInst()->LoadD2DImage(strKey, strPath);
-    SetScale(fPoint(m_pImg->GetWidth() / 1.5, m_pImg->GetHeight() / 1.5));
+    SetScale(fPoint(m_pImg->GetWidth() / 1.2, m_pImg->GetHeight() / 1.2));
 }

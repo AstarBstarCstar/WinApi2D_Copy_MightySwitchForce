@@ -20,8 +20,8 @@ CTurtle::CTurtle()
 	GetCollider()->SetScale(fPoint(70.f, 70.f));
 
 	CreateAnimator();
-	GetAnimator()->CreateAnimation(L"TurtleWalk", m_Tpatrol, fPoint(0, 0), fPoint(212.f, 204.f), fPoint(212.f, 0), 0.1f, 10);
-	GetAnimator()->CreateAnimation(L"R_TurtleWalk", m_Tpatrol, fPoint(0, 0), fPoint(212.f, 204.f), fPoint(212.f, 0), 0.1f, 10, true);
+	GetAnimator()->CreateAnimation(L"TurtleWalk", m_Tpatrol, fPoint(0, 0), fPoint(212.f, 204.f), fPoint(212.f, 0), fPoint(212.f, 204.f),0, 0.1f, 10,true,false);
+	GetAnimator()->CreateAnimation(L"R_TurtleWalk", m_Tpatrol, fPoint(0, 0), fPoint(212.f, 204.f), fPoint(212.f, 0), fPoint(212.f, 204.f),0, 0.1f, 10, true,true);
 	GetAnimator()->Play(L"TurtleWalk");
 }
 

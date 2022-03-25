@@ -68,57 +68,67 @@ void CScene_Select::Enter()
 
 	CButtonUI* m_pINCIDENT01 = new CButtonUI;
 	m_pINCIDENT01->SetScale(fPoint(200.f, 50.f));
-	m_pINCIDENT01->SetText(L"I N C I D E N T   . 0 1");
-	m_pINCIDENT01->SetPos(fPoint(WINSIZEX / 2.f + 335.f, WINSIZEY / 2.f -210.f));
+	m_pINCIDENT01->SetText(L"INCIDENT .01");
+	m_pINCIDENT01->SetFontSize(25);
+	m_pINCIDENT01->SetPos(fPoint(WINSIZEX / 2.f + 445.f, WINSIZEY / 2.f -255.f));
 	m_pINCIDENT01->SetClickedCallBack(ClickINC, 0, 0);
 	AddObject(m_pINCIDENT01, GROUP_GAMEOBJ::UI);
 
 	CButtonUI* m_pINCIDENT02 = new CButtonUI;
 	m_pINCIDENT02->SetScale(fPoint(200.f, 50.f));
-	m_pINCIDENT02->SetText(L"L O C K E D !");
-	m_pINCIDENT02->SetPos(fPoint(WINSIZEX / 2.f + 335.f, WINSIZEY / 2.f + 162.f));
+	m_pINCIDENT02->SetText(L"LOCKED!");
+	m_pINCIDENT02->SetFontSize(25);
+	m_pINCIDENT02->SetPos(fPoint(WINSIZEX / 2.f + 445.f, WINSIZEY / 2.f - 165.f));
 	AddObject(m_pINCIDENT02, GROUP_GAMEOBJ::UI);
 
 	CButtonUI* m_pINCIDENT03 = new CButtonUI;
 	m_pINCIDENT03->SetScale(fPoint(200.f, 50.f));
-	m_pINCIDENT03->SetText(L"L O C K E D !");
-	m_pINCIDENT03->SetPos(fPoint(WINSIZEX / 2.f + 335.f, WINSIZEY / 2.f + 87.f));
+	m_pINCIDENT03->SetText(L"LOCKED!");
+	m_pINCIDENT03->SetFontSize(25);
+	m_pINCIDENT03->SetPos(fPoint(WINSIZEX / 2.f + 445.f, WINSIZEY / 2.f - 75.f));
 	AddObject(m_pINCIDENT03, GROUP_GAMEOBJ::UI);
 
 	CButtonUI* m_pINCIDENT04 = new CButtonUI;
 	m_pINCIDENT04->SetScale(fPoint(200.f, 50.f));
-	m_pINCIDENT04->SetText(L"L O C K E D !");
-	m_pINCIDENT04->SetPos(fPoint(WINSIZEX / 2.f +335.f, WINSIZEY / 2.f +15.f));
+	m_pINCIDENT04->SetText(L"LOCKED!");
+	m_pINCIDENT04->SetFontSize(25);
+	m_pINCIDENT04->SetPos(fPoint(WINSIZEX / 2.f +445.f, WINSIZEY / 2.f +17.f));
 	AddObject(m_pINCIDENT04, GROUP_GAMEOBJ::UI);
 
 	CButtonUI* m_pINCIDENT05 = new CButtonUI;
 	m_pINCIDENT05->SetScale(fPoint(200.f, 50.f));
-	m_pINCIDENT05->SetText(L"L O C K E D !");
-	m_pINCIDENT05->SetPos(fPoint(WINSIZEX / 2.f + 335.f, WINSIZEY / 2.f - 60.f));
+	m_pINCIDENT05->SetText(L"LOCKED!");
+	m_pINCIDENT05->SetFontSize(25);
+	m_pINCIDENT05->SetPos(fPoint(WINSIZEX / 2.f + 445.f, WINSIZEY / 2.f +109.f));
 	AddObject(m_pINCIDENT05, GROUP_GAMEOBJ::UI);
 
 	CButtonUI* m_pINCIDENT06 = new CButtonUI;
 	m_pINCIDENT06->SetScale(fPoint(200.f, 50.f));
-	m_pINCIDENT06->SetText(L"L O C K E D !");
-	m_pINCIDENT06->SetPos(fPoint(WINSIZEX / 2.f +335.f, WINSIZEY / 2.f - 135.f));
+	m_pINCIDENT06->SetText(L"LOCKED!");
+	m_pINCIDENT06->SetFontSize(25);
+	m_pINCIDENT06->SetPos(fPoint(WINSIZEX / 2.f +445.f, WINSIZEY / 2.f +200.f));
 	AddObject(m_pINCIDENT06, GROUP_GAMEOBJ::UI);
 
 	CButtonUI* m_pPAR = new CButtonUI;
 	m_pPAR->SetScale(fPoint(200.f, 50.f));
-	m_pPAR->SetText(L"N / A");
-	m_pPAR->SetPos(fPoint(WINSIZEX / 2.f - 375.f, WINSIZEY / 2.f +145.f));
+	m_pPAR->SetTextColor(RGB(255, 255, 0));
+	m_pPAR->SetFontSize(75);
+	m_pPAR->SetText(L"01:00.00");
+	m_pPAR->SetPos(fPoint(WINSIZEX / 2.f - 405.f, WINSIZEY / 2.f +185.f));
 	AddObject(m_pPAR, GROUP_GAMEOBJ::UI);
 
 	CButtonUI* m_pBestTime = new CButtonUI;
 	m_pBestTime->SetScale(fPoint(200.f, 50.f));
-	m_pBestTime->SetText(L"N / A");
-	m_pBestTime->SetPos(fPoint(WINSIZEX / 2.f -375.f, WINSIZEY / 2.f + 80.f));
+	m_pBestTime->SetTextColor(RGB(255, 255, 0));
+	m_pBestTime->SetFontSize(75);
+	m_pBestTime->SetText(L"--:--.--");
+	m_pBestTime->SetPos(fPoint(WINSIZEX / 2.f -405.f, WINSIZEY / 2.f + 100.f));
 	AddObject(m_pBestTime, GROUP_GAMEOBJ::UI);
 
 	CButtonUI* Back = new CButtonUI;
 	Back->SetScale(fPoint(100.f, 50.f));
-	Back->SetText(L"B A C K");
-	Back->SetPos(fPoint(WINSIZEX / 2.f - 505.f, WINSIZEY / 2.f +275.f));
+	Back->SetText(L"BACK");
+	Back->SetPos(fPoint(WINSIZEX / 2.f - 635.f, WINSIZEY / 2.f +345.f));
 	Back->SetClickedCallBack(ClickQuit, 0, 0);
 	AddObject(Back, GROUP_GAMEOBJ::UI);
 

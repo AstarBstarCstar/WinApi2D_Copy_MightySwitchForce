@@ -49,8 +49,8 @@ void CScene_Title::Enter()
 
 	CButtonUI* m_pExitButton = new CButtonUI;
 	m_pExitButton->SetScale(fPoint(100.f, 50.f));
-	m_pExitButton->SetText(L"EXIT");
-	m_pExitButton->SetPos(fPoint(WINSIZEX / 2.f - 550.f, WINSIZEY / 2.f + 285.f));
+	m_pExitButton->SetText(L"Exit");
+	m_pExitButton->SetPos(fPoint(WINSIZEX / 2.f - 675.f, WINSIZEY / 2.f + 360.f));
 	m_pExitButton->SetClickedCallBack(ClickExitButton, 0, 0);
 	AddObject(m_pExitButton, GROUP_GAMEOBJ::UI);
 

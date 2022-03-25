@@ -124,7 +124,7 @@ void CRenderManager::RenderText(wstring str, float dstX, float dstY, float dstW,
 	{
 		m_pTextFormat->Release();
 		m_pWriteFactory->CreateTextFormat(
-			L"±¼¸²",
+			L"HYGTRE",
 			NULL,
 			DWRITE_FONT_WEIGHT_NORMAL,
 			DWRITE_FONT_STYLE_NORMAL,

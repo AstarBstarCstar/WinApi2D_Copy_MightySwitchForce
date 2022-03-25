@@ -1,6 +1,8 @@
 #pragma once
 #include "CScene.h"
 
+class CD2DImage;
+
 class CScene_Start : public CScene
 {
 public:

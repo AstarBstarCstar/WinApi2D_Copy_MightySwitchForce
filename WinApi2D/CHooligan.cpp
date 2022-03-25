@@ -22,8 +22,8 @@ CHooligan::CHooligan()
 	GetCollider()->SetScale(fPoint(40.f, 120.f));
 
 	CreateAnimator();
-	GetAnimator()->CreateAnimation(L"IdleHool", m_pImg, fPoint(0, 0), fPoint(144.f, 240.f), fPoint(144.f, 0), 0.1f, 20);
-
+	GetAnimator()->CreateAnimation(L"IdleHool", m_pImg, fPoint(0, 0), fPoint(144.f, 240.f), fPoint(144.f, 0),fPoint(144.f, 240.f),0, 0.1f, 20,true,false);
+	/*애니메이션이름,다렉이름,왼쪽위,*/
 }
 
 CHooligan::~CHooligan()

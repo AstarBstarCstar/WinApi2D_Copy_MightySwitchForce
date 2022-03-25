@@ -20,7 +20,7 @@ CMonster::CMonster()
 	GetCollider()->SetScale(fPoint(50.f, 50.f));
 
 	CreateAnimator();
-	GetAnimator()->CreateAnimation(L"PlayerStand", m_pImg, fPoint(0, 0), fPoint(292.f, 220.f), fPoint(292.f, 0), 0.1f, 7, true);
+	GetAnimator()->CreateAnimation(L"PlayerStand", m_pImg, fPoint(0, 0), fPoint(292.f, 220.f), fPoint(292.f, 0), fPoint(292.f, 220.f),0, 0.1f, 7,true, true);
 	GetAnimator()->Play(L"PlayerStand");
 }
 

@@ -103,6 +103,11 @@ wstring CScene::GetName()
     return m_strName;
 }
 
+void CScene::RegisterUI(CUI* pUI)
+{
+    m_vecUI.push_back(pUI);
+}
+
 void CScene::AddObject(CGameObject* pObj, GROUP_GAMEOBJ type)
 {
     m_arrObj[(int)type].push_back(pObj);

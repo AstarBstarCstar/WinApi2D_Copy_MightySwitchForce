@@ -19,9 +19,9 @@ SwitchBlock::SwitchBlock()
 	GetCollider()->SetScale(fPoint(100.f, 100.f));
 
 	CreateAnimator();
-	GetAnimator()->CreateAnimation(L"IdleHool", m_pActSW, fPoint(0, 0), fPoint(192.f, 192.f), fPoint(192.f, 0), 1.f, 1);
+	//GetAnimator()->CreateAnimation(L"IdleHool", m_pActSW, fPoint(0, 0), fPoint(192.f, 192.f), fPoint(192.f, 0), 1.f, 1);
 
-	GetAnimator()->CreateAnimation(L"IdleHool", m_pUnActSW, fPoint(0, 0), fPoint(192.f, 192.f), fPoint(192.f, 0), 1.f, 1);
+	//GetAnimator()->CreateAnimation(L"IdleHool", m_pUnActSW, fPoint(0, 0), fPoint(192.f, 192.f), fPoint(192.f, 0), 1.f, 1);
 
 	SW = 0;
 }
