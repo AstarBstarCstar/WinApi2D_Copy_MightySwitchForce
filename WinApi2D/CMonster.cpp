@@ -6,7 +6,7 @@
 #include "AI.h"
 #include "CIdleState.h"
 #include "CTraceState.h"
-
+//신경치료 아프다 아프기보다 기분이 뒤지게 나쁘다
 CMonster::CMonster()
 {
 	CD2DImage* m_pImg = CResourceManager::GetInst()->LoadD2DImage(L"MonsterTex", L"texture\\Animation\\Monster\\Bat\\Fly\\Bat_292_220.png");
