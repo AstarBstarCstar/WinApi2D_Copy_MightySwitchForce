@@ -2,6 +2,7 @@
 
 class CCollider;
 class CAnimator;
+enum class GROUP_GAMEOBJ;
 
 class CGameObject
 {
@@ -35,10 +36,13 @@ public:
 
 	bool isDead();
 
+
 	virtual void update() = 0;			// 반드시 상속받은 객체가 update를 구현하도록 순수가상함수로 선언
 	virtual void finalupdate();			// 상속받는 클래스가 오버라이딩 할 수 없게 막는 final 키워드
 	virtual void render();
 	virtual void component_render();	// 컴포넌트들의 영역을 표시하기 위해
+
+	void debug_render();
 
 	CCollider* GetCollider();				// 충돌체 반환
 	void CreateCollider();					// 충돌체 생성

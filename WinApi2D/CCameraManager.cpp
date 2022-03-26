@@ -5,12 +5,14 @@
 
 CCameraManager::CCameraManager()
 {
-	m_fptLookAt = fPoint(WINSIZEX / 2.f, WINSIZEY / 2.f);
-	m_fptCurLookAt = m_fptLookAt;
-	m_fptPrevLookAt = m_fptLookAt;
+	m_fptLookAt = {};
+	//m_fptCurLookAt = m_fptLookAt;
+	//m_fptPrevLookAt = m_fptLookAt;
+	m_fTime = 2.f;
 	m_pTargetObj = nullptr;
 	m_fAccTime = m_fTime;
-	m_fSpeed = 0;
+	m_fSpeed = 1500;
+	m_pImg = nullptr;
 }
 
 CCameraManager::~CCameraManager()
@@ -20,62 +22,69 @@ CCameraManager::~CCameraManager()
 
 void CCameraManager::init()
 {
+	m_pImg = CResourceManager::GetInst()->CreateTexture(L"CameraTexure", WINSIZEX, WINSIZEY);
 }
 
 void CCameraManager::update()
 {
-	if (m_pTargetObj)
+	if (m_bBoundary)
 	{
-		if (m_pTargetObj->isDead())
+		CheckBoundary();
+	}
+	else
+	{
+		if (m_pTargetObj != nullptr)
 		{
-			m_pTargetObj = nullptr;
-		}
-		else
-		{
-			SetLookAt(m_pTargetObj->GetPos());
+			if (m_pTargetObj->isDead())
+			{
+				m_pTargetObj = nullptr;
+			}
+			else
+			{
+				if (m_bContectX)
+					m_fptLookAt.x = m_pTargetObj->GetPos().x;
+
+				if (m_bContectY)
+					m_fptLookAt.y = m_pTargetObj->GetPos().y;
+			}
 		}
 	}
 
-	// 화면 중앙과 카메라 LookAt 좌표 사이의 차이 계산
 	CalDiff();
 }
 
 void CCameraManager::render()
 {
-	if (m_listCamEffect.empty())
+	if (CAM_EFFECT::NONE == m_eEffect) return;
+
+	fCurTime += (float)fDT;
+	if (fDuration < fCurTime)
 	{
+		m_eEffect = CAM_EFFECT::NONE;
 		return;
 	}
 
-	tCamEffect& effect = m_listCamEffect.front();
-	effect.fCurTime += fDT;
-
-	float fRatio = 0.f;
-	fRatio = effect.fCurTime / effect.fDuration;
-	if (fRatio < 0.f)
-		fRatio = 0.f;
-	else if (fRatio > 1.f)
-		fRatio = 1.f;
-
-	else if (CAM_EFFECT::FADE_IN == effect.m_eEffect)
-		fRatio = 1.f - fRatio;
-
-	CRenderManager::GetInst()->RenderFillRectangle(0, 0, WINSIZEX, WINSIZEY, RGB(0, 0, 0), fRatio);
-
-	//AlphaBlend(hDC
-	//	, 0, 0
-	//	, (int)(m_pImg->GetBmpWidth())
-	//	, (int)(m_pImg->GetBmpHeight())
-	//	, m_pImg->GetDC()
-	//	, 0, 0
-	//	, (int)(m_pImg->GetBmpWidth())
-	//	, (int)(m_pImg->GetBmpHeight())
-	//	, bf);
-
-	if (effect.fDuration < effect.fCurTime)
+	float fRatio = fCurTime / fDuration;
+	float fAlpha = 0;
+	if (CAM_EFFECT::FADE_OUT == m_eEffect)
 	{
-		m_listCamEffect.pop_front();
+		fAlpha = fRatio;
 	}
+	else if (CAM_EFFECT::FADE_IN == m_eEffect)
+	{
+		fAlpha = 1.f - fRatio;
+	}
+
+	CRenderManager::GetInst()->RenderFillRectangle(
+		-1.f, -1.f,
+		WINSIZEX + 1, WINSIZEY + 1,
+		RGB(0, 0, 0), fAlpha
+	);
+}
+
+void CCameraManager::InitCameraPos(fPoint pos)
+{
+	m_fptPrevLookAt = pos;
 }
 
 void CCameraManager::SetLookAt(fPoint lookAt)
@@ -83,18 +92,25 @@ void CCameraManager::SetLookAt(fPoint lookAt)
 	m_fptLookAt = lookAt;
 	float fMoveDist = (m_fptLookAt - m_fptPrevLookAt).Length();
 
-	m_fSpeed = fMoveDist / m_fTime;
+	m_fTime = fMoveDist / m_fSpeed;
 	m_fAccTime = 0.f;
 }
 
-void CCameraManager::SetTargetObj(CGameObject* target)
+void CCameraManager::FollowTargetObj(CGameObject* targetObj, bool flwX, bool flwY)
 {
-	m_pTargetObj = target;
+	m_pTargetObj = targetObj;
+	m_bContectX = flwX;
+	m_bContectY = flwY;
 }
+
+//void CCameraManager::SetTargetObj(CGameObject* target)
+//{
+//	//m_pTargetObj = target;
+//}
 
 fPoint CCameraManager::GetLookAt()
 {
-	return m_fptCurLookAt;
+	return m_fptLookAt;
 }
 
 fPoint CCameraManager::GetRenderPos(fPoint objPos)
@@ -108,34 +124,23 @@ fPoint CCameraManager::GetRealPos(fPoint renderPos)
 	return renderPos + m_fptDiff;
 }
 
+fPoint CCameraManager::GetLerpPoint()
+{
+	return m_fCollection;
+}
+
 void CCameraManager::FadeIn(float duration)
 {
-	tCamEffect ef = {};
-	ef.m_eEffect = CAM_EFFECT::FADE_IN;
-	ef.fDuration = duration;
-	ef.fCurTime = 0.f;
-
-	m_listCamEffect.push_back(ef);
-
-	if (0.f == duration)
-	{
-		assert(nullptr);
-	}
+	m_eEffect = CAM_EFFECT::FADE_IN;
+	fDuration = duration;
+	fCurTime = 0.f;
 }
 
 void CCameraManager::FadeOut(float duration)
 {
-	tCamEffect ef = {};
-	ef.m_eEffect = CAM_EFFECT::FADE_OUT;
-	ef.fDuration = duration;
-	ef.fCurTime = 0.f;
-
-	m_listCamEffect.push_back(ef);
-
-	if (0.f == duration)
-	{
-		assert(nullptr);
-	}
+	m_eEffect = CAM_EFFECT::FADE_OUT;
+	fDuration = duration;
+	fCurTime = 0.f;
 }
 
 void CCameraManager::Scroll(fVec2 vec, float velocity)
@@ -147,21 +152,84 @@ void CCameraManager::Scroll(fVec2 vec, float velocity)
 	m_fptDiff = m_fptCurLookAt - fptCenter;
 }
 
+void CCameraManager::LerpDiff(fPoint targetPos)
+{
+	if (targetPos.x == 0 && targetPos.y == 0)
+	{
+		m_fCollection = m_pTargetObj->GetPos();
+		return;
+	}
+
+	float x = (targetPos.x - m_pTargetObj->GetPos().x) / 2.f;
+	float y = (targetPos.y - m_pTargetObj->GetPos().y) / 2.f;
+	m_fCollection = fPoint(x, y);
+}
+
 void CCameraManager::CalDiff()
 {
 	m_fAccTime += fDT;
+	fVec2 lookDir = m_fptLookAt - m_fptPrevLookAt;
 
-	// 시간이 지나면, 도착한것으로 간주
+	//시간이 지나면 도착한것으로 간주
 	if (m_fTime <= m_fAccTime)
 	{
 		m_fptCurLookAt = m_fptLookAt;
 	}
 	else
 	{
-		fPoint fptCenter = fPoint(WINSIZEX / 2.f, WINSIZEY / 2.f);
-
-		m_fptCurLookAt = m_fptPrevLookAt + (m_fptLookAt - m_fptPrevLookAt).Normalize() * m_fSpeed * fDT;
-		m_fptDiff = m_fptCurLookAt - fptCenter;
+		m_fptCurLookAt = m_fptPrevLookAt + lookDir.Normalize() * m_fSpeed * fDT;
 		m_fptPrevLookAt = m_fptCurLookAt;
 	}
+
+	fPoint fptCenter = fPoint(WINSIZEX / 2.f, WINSIZEY / 2.f);
+	m_fptDiff = m_fptCurLookAt - fptCenter;
+}
+
+void CCameraManager::CheckBoundary()
+{
+	if (m_pTargetObj != nullptr)
+	{
+		if (m_bContectX)
+			m_fptLookAt.x = m_pTargetObj->GetPos().x;
+
+		if (m_bContectY)
+			m_fptLookAt.y = m_pTargetObj->GetPos().y;
+	}
+
+	if (m_fptLookAt.x - WINSIZEX / 2.f < m_fptLastLT.x)
+	{
+		m_fptLookAt.x = m_fptLastLT.x + WINSIZEX / 2.f;
+	}
+
+	if (m_fptLookAt.y - WINSIZEY / 2.f < m_fptLastLT.y)
+	{
+		m_fptLookAt.y = m_fptLastLT.y + WINSIZEY / 2.f;
+	}
+
+	if (m_fptLookAt.x + WINSIZEX / 2.f > m_fptLastRB.x)
+	{
+		m_fptLookAt.x = m_fptLastRB.x - WINSIZEX / 2.f;
+	}
+
+	if (m_fptLookAt.y + WINSIZEY / 2.f > m_fptLastRB.y)
+	{
+		m_fptLookAt.y = m_fptLastRB.y - WINSIZEY / 2.f;
+	}
+
+	float fMoveDist = (m_fptLookAt - m_fptPrevLookAt).Length();
+	m_fTime = fMoveDist / m_fSpeed;
+	m_fAccTime = 0;
+}
+
+void CCameraManager::SetBoundary(fPoint LT, fPoint RB)
+{
+	m_bBoundary = true;
+
+	m_fptLastLT = LT;
+	m_fptLastRB = RB;
+}
+
+void CCameraManager::SetBoundary(bool Boundary)
+{
+	m_bBoundary = Boundary;
 }

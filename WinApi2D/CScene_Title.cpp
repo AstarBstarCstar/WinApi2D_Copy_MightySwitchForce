@@ -9,6 +9,8 @@
 #include "CButtonUI.h"
 CScene_Title::CScene_Title()
 {
+	m_Count = 0;
+
 }
 
 CScene_Title::~CScene_Title()
@@ -22,9 +24,11 @@ void ClickExitButton(DWORD_PTR, DWORD_PTR)
 
 void CScene_Title::update()
 {
-	if (KeyDown('A'))
+	m_Count += fDT;
+	if (KeyDown('A') && m_Count >= 1.5f)
 	{
-		CCameraManager::GetInst()->FadeOut(0.5f);
+		m_Trigger = true;
+		CCameraManager::GetInst()->FadeOut(0.1f);
 		CSoundManager::GetInst()->Play(L"Click");
 		CSoundManager::GetInst()->Play(L"EnterVoice");
 		CSoundManager::GetInst()->Stop(L"TitleBGM");
@@ -35,17 +39,19 @@ void CScene_Title::update()
 
 void CScene_Title::Enter()
 {
-	CSoundManager::GetInst()->AddSound(L"StartVoice", L"sound\\MSFC.wav", false);
-	CSoundManager::GetInst()->AddSound(L"EnterVoice", L"sound\\IntroStart.wav", false);
-	CSoundManager::GetInst()->AddSound(L"Click", L"sound\\MAKE_CHOICE.wav", false);
+	CSoundManager::GetInst()->AddSound(L"StartVoice", L"sound\\MSFC.wav", false,false);
+	CSoundManager::GetInst()->AddSound(L"EnterVoice", L"sound\\IntroStart.wav", false,false);
+	CSoundManager::GetInst()->AddSound(L"Click", L"sound\\MAKE_CHOICE.wav", false,false);
 	CSoundManager::GetInst()->AddSound(L"TitleBGM", L"sound\\Title.wav", false,true);
 	CSoundManager::GetInst()->Play(L"TitleBGM");
 
 	CMap* Title = new CMap;
-	Title->TitleLoad(L"Map_Title", L"texture\\background\\en_Title_BG.png");
+	Title->Load(L"Map_Title", L"texture\\background\\en_Title_BG.png");
 	Title->SetPos(fPoint(0, 0));
 	AddObject(Title, GROUP_GAMEOBJ::MAP);
 	CCameraManager::GetInst()->FadeIn(2.0f);
+	CCameraManager::GetInst()->SetLookAt(fPoint(WINSIZEX / 2, WINSIZEY / 2));
+	CCameraManager::GetInst()->InitCameraPos(fPoint(WINSIZEX / 2, WINSIZEY / 2));
 
 	CButtonUI* m_pExitButton = new CButtonUI;
 	m_pExitButton->SetScale(fPoint(100.f, 50.f));

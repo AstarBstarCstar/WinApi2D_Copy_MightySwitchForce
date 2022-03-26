@@ -169,6 +169,7 @@ void CPlayer::update()
 	}
 	SetPos(pos);
 	GetAnimator()->update();
+	CCameraManager::GetInst()->SetLookAt(GetPos());
 }
 void CPlayer::render()
 {

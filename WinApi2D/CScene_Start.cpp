@@ -41,7 +41,7 @@ void CScene_Start::update()
 void CScene_Start::Enter()
 {
 	{
-		CSoundManager::GetInst()->AddSound(L"Stbgm", L"sound\\MSF_ST2.wav", false, true);
+		CSoundManager::GetInst()->AddSound(L"Stbgm", L"sound\\MSF_ST2.wav", true, true);
 		CSoundManager::GetInst()->Play(L"Stbgm");
 
 		/*맵의 최좌측 최하단: 0,2400*/
@@ -53,7 +53,7 @@ void CScene_Start::Enter()
 
 		// Player 추가
 		CPlayer* pPlayer = new CPlayer;
-		pPlayer->SetPos(fPoint(700, 1300));
+		pPlayer->SetPos(fPoint(3520, 2200));
 		AddObject(pPlayer, GROUP_GAMEOBJ::PLAYER);
 		pPlayer->RegisterPlayer();
 
@@ -73,19 +73,19 @@ void CScene_Start::Enter()
 		//AddObject(pTur, GROUP_GAMEOBJ::MONSTER);
 
 		CHooligan* pHooligan = new CHooligan;
-		pHooligan->SetPos(fPoint(950, 1000));
+		pHooligan->SetPos(fPoint(350, 330));
 		AddObject(pHooligan, GROUP_GAMEOBJ::HOOLIGAN);
 		CHooligan2* pHooligan2 = new CHooligan2;
-		pHooligan2->SetPos(fPoint(1050, 1000));
+		pHooligan2->SetPos(fPoint(1200, 1470));
 		AddObject(pHooligan2, GROUP_GAMEOBJ::HOOLIGAN);
 		CHooligan3* pHooligan3 = new CHooligan3;
-		pHooligan3->SetPos(fPoint(1150, 1000));
+		pHooligan3->SetPos(fPoint(3520, 720));
 		AddObject(pHooligan3, GROUP_GAMEOBJ::HOOLIGAN);
 		CHooligan4* pHooligan4 = new CHooligan4;
-		pHooligan4->SetPos(fPoint(1250, 1000));
+		pHooligan4->SetPos(fPoint(5900, 1510));
 		AddObject(pHooligan4, GROUP_GAMEOBJ::HOOLIGAN);
 		CHooligan5* pHooligan5 = new CHooligan5;
-		pHooligan5->SetPos(fPoint(1350, 1000));
+		pHooligan5->SetPos(fPoint(6687, 330));
 		AddObject(pHooligan5, GROUP_GAMEOBJ::HOOLIGAN);
 
 
@@ -105,10 +105,10 @@ void CScene_Start::Enter()
 		CCollisionManager::GetInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::HOOLIGAN);
 
 		// Camera Look 지정
-		CCameraManager::GetInst()->SetLookAt(fPoint(WINSIZEX / 2.f, WINSIZEY / 2.f));
-		CCameraManager::GetInst()->SetTargetObj(pPlayer);
-		//CCameraManager::GetInst()->FadeOut(1.f);
-		//CCameraManager::GetInst()->FadeIn(1.f);
+		CCameraManager::GetInst()->InitCameraPos(pPlayer->GetPos());
+		CCameraManager::GetInst()->SetBoundary(fPoint(0.f, 0.f), fPoint(map->GetPos().x + map->GetScale().x, map->GetPos().y + map->GetScale().y));
+		/*CCameraManager::GetInst()->SetLookAt(fPoint(WINSIZEX , WINSIZEY ));*/
+		//CCameraManager::GetInst()->SetTargetObj(pPlayer);
 
 		// 몬스터 배치
 	}

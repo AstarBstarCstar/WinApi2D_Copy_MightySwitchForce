@@ -44,7 +44,7 @@ void CEventManager::Execute(const tEvent& event)
 	{
 		// lParam : scene ±×·ì
 		GROUP_SCENE scene = (GROUP_SCENE)event.lParam;
-		CCameraManager::GetInst()->SetTargetObj(nullptr);
+		//CCameraManager::GetInst()->SetTargetObj(nullptr);
 		CUIManager::GetInst()->SetFocusedUI(nullptr);
 		CSceneManager::GetInst()->ChangeScene(scene);
 	}

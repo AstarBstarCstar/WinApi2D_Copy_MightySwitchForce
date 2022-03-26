@@ -26,7 +26,7 @@ void CScene_Select::update()
 	{
 		CSoundManager::GetInst()->Play(L"CursorMove");
 	}
-	if (KeyDown(VK_RETURN))
+	if (KeyDown('A'))
 	{
 		ChangeScn(GROUP_SCENE::START);
 		CSoundManager::GetInst()->Stop(L"SelectBGM");
@@ -62,7 +62,7 @@ void CScene_Select::Enter()
 	CSoundManager::GetInst()->AddSound(L"SelectBGM", L"sound\\LevelSelect.wav", false, true);
 	CSoundManager::GetInst()->Play(L"SelectBGM");
 	CMap* Select = new CMap;
-	Select->TitleLoad(L"Select", L"texture\\background\\Street.png");
+	Select->Load(L"Select", L"texture\\background\\Street.png");
 	Select->SetPos(fPoint(0, 0));
 	AddObject(Select, GROUP_GAMEOBJ::MAP);
 
@@ -128,9 +128,16 @@ void CScene_Select::Enter()
 	CButtonUI* Back = new CButtonUI;
 	Back->SetScale(fPoint(100.f, 50.f));
 	Back->SetText(L"BACK");
-	Back->SetPos(fPoint(WINSIZEX / 2.f - 635.f, WINSIZEY / 2.f +345.f));
+	Back->SetPos(fPoint(WINSIZEX / 2.f - 655.f, WINSIZEY / 2.f +345.f));
 	Back->SetClickedCallBack(ClickQuit, 0, 0);
 	AddObject(Back, GROUP_GAMEOBJ::UI);
+
+	CButtonUI* SelectButton = new CButtonUI;
+	SelectButton->SetScale(fPoint(100.f, 50.f));
+	SelectButton->SetText(L"SELECT");
+	SelectButton->SetPos(fPoint(WINSIZEX / 2.f +530.f, WINSIZEY / 2.f + 345.f));
+	SelectButton->SetClickedCallBack(ClickINC, 0, 0);
+	AddObject(SelectButton, GROUP_GAMEOBJ::UI);
 
 }
 
