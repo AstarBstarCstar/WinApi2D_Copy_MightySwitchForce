@@ -113,14 +113,14 @@ enum class MON_TYPE
 	SIZE,
 };
 
-enum class PLAYER_STATE
-{
-	IDLE,
-	WALK,
-	ATTACK,
-	JUMP,
-	DEAD,
-};
+//enum class PLAYER_STATE
+//{
+//	IDLE,
+//	WALK,
+//	ATTACK,
+//	JUMP,
+//	DEAD,
+//};
 
 struct tMonInfo
 {
@@ -154,7 +154,7 @@ struct tMonInfo
 #define WINSIZEX	1600
 #define	WINSIZEY	900
 #define GRAVITY	600.f
-#define MAX_SPEED 300
+#define MAX_SPEED 600
 #define UPPER 800
 #define WINSTYLE	WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX
 

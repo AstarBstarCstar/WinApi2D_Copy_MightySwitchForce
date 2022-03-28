@@ -1,7 +1,7 @@
 #include "framework.h"
 #include "CMissile.h"
 #include "CCollider.h"
-
+#include "CTile.h"
 CMissile* CMissile::Clone()
 {
 	return new CMissile(*this);
@@ -9,12 +9,12 @@ CMissile* CMissile::Clone()
 
 CMissile::CMissile()
 {
-	SetScale(fPoint(25.f, 25.f));
+	SetScale(fPoint(70.f, 35.f));
 	m_fvDir = fVec2(0, 0);
 	SetName(L"Missile_Player");
 
 	CreateCollider();
-	GetCollider()->SetScale(fPoint(15.f, 15.f));
+	GetCollider()->SetScale(fPoint(50.f, 25.f));
 }
 
 CMissile::~CMissile()
@@ -30,9 +30,9 @@ void CMissile::update()
 
 	SetPos(pos);
 
-	if (pos.x < 0 || pos.x > 30000
-		|| pos.y < 0 || pos.y >30000)
-		DeleteObj(this);
+	//if (pos.x < 0 || pos.x > 30000
+	//	|| pos.y < 0 || pos.y >30000)
+	//	DeleteObj(this);
 }
 
 void CMissile::render()
@@ -65,7 +65,12 @@ void CMissile::SetDir(float theta)
 void CMissile::OnCollisionEnter(CCollider* pOther)
 {
 	CGameObject* pOtherObj = pOther->GetObj();
+	CTile* pTile = (CTile*)pOtherObj;
 	if (pOtherObj->GetName() == L"Monster")
+	{
+		DeleteObj(this);
+	}
+	else if (pOtherObj->GetName() == L"Tile")
 	{
 		DeleteObj(this);
 	}

@@ -30,7 +30,14 @@ struct fPoint
 
 		return *this;
 	}
-
+	bool operator==(const fPoint& other)
+	{
+		return (x == other.x && y == other.y);
+	}
+	bool operator!=(const fPoint& other)
+	{
+		return *this == other;
+	}
 	fPoint operator+(const fPoint& other)
 	{
 		return fPoint(x + other.x, y + other.y);

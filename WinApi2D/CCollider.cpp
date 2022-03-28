@@ -113,3 +113,8 @@ RECT CCollider::GetBorderPos()
 {
 	return m_rtCollider;
 }
+
+GROUP_GAMEOBJ CGameObject::GetGroup()
+{
+	return objGroup;
+}

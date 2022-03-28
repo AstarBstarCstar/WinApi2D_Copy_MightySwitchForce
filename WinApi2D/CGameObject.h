@@ -12,6 +12,7 @@ private:
 	wstring m_strName;
 	fPoint m_fptPos;
 	fPoint m_fptScale;
+	GROUP_GAMEOBJ objGroup;
 
 	// Component
 	CCollider* m_pCollider;
@@ -52,6 +53,8 @@ public:
 	virtual void OnCollisionExit(CCollider* _pOther) {}		// 재정의용 탈충돌 가상함수
 
 	CAnimator* GetAnimator();				// 애니메이터 반환
-	void CreateAnimator();					// 애니메이터 생성
+	void CreateAnimator();
+	GROUP_GAMEOBJ GetGroup();
+	// 애니메이터 생성
 };
 

@@ -5,16 +5,18 @@
 
 class CD2DImage;
 
-enum class CharacterState
+enum class PLAYER_STATE
 {
 	IDLE,
 	HIT,
-	DEAD,
+	DIE,
 
-	LANDMOVE,
+	MOVE,
 	ATTACK,
-	JUMP,
-	FALL,
+	JUMPRISE,
+	JUMPFALL,
+	JUMPEND,
+	FIRE,
 
 	SIZE
 };
@@ -23,9 +25,28 @@ class CPlayer : public CGameObject
 {
 private:
 	static CPlayer* instance;
-	float m_fSpeed = 300;
-	float m_gravity;
+	
+	float m_fCurHp;
+	float m_fFullHp;
+
+	fVec2 m_fCurDir;
+	fVec2 m_fPrevDir;
+	float m_fSpeed;
+	float m_fAccelGravity;
 	float m_Upper;
+
+	bool m_bActing;
+	bool m_bAttacking;
+	bool m_bGrounding;
+
+	bool m_bJustHit;
+	bool isLeft;
+	bool Run;
+	bool CameraLock;
+	bool Count = 1 ;
+
+	float m_gravity;
+
 	UINT m_Ground;
 	UINT m_Wall;
 	UINT m_Plat;
@@ -34,12 +55,9 @@ private:
 	fPoint m_fvCurDir;
 	fPoint m_fvPrevDir;
 
-	CharacterState m_State;
+	PLAYER_STATE m_State;
+	PLAYER_STATE m_PrevState;
 
-	float m_fAccelGravity;
-	float m_fVelocity;
-	float m_fMaxVelocity;
-	bool  m_bIsGrounded;
 	
 
 	void CreateMissile();
@@ -53,19 +71,20 @@ public:
 	virtual void update();
 	virtual void render();
 
-	CharacterState GetState();
+	PLAYER_STATE GetState();
 	void RegisterPlayer();
 	void CameraRelease();
+
+	void update_State();
+	void update_Move();
+	void update_Animation();
 	virtual void OnCollisionEnter(CCollider* pOther);
 	virtual void OnCollision(CCollider* pOther);
 	virtual void OnCollisionExit(CCollider* pOther);
 
 	static CPlayer* GetPlayer();	// 게임 내에 하나만 있는 플레이어 객체 확인(임의로 싱글톤 선언)
 
-	bool isLeft;
-	bool Run;
-	bool CameraLock;
-	bool Count = 1;
+
 };
 
 
