@@ -37,7 +37,7 @@ void CAnimator::CreateAnimation(const wstring& strName, CD2DImage* pImg, fPoint 
 	CAnimation* pAnim = FindAnimation(strName);
 
 	// 이름이 똑같은 애니메이션을 넣을 때의 반응
-	assert(pAnim == nullptr);
+	/*assert(pAnim == nullptr);*/
 
 	pAnim = new CAnimation;
 

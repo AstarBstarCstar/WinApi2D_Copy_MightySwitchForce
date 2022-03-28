@@ -1,6 +1,7 @@
 #include "framework.h"
 #include "CTile.h"
 #include "CD2DImage.h"
+#include "CCollider.h"
 
 CTile::CTile()
 {
@@ -11,6 +12,12 @@ CTile::CTile()
 	m_eGroup = GROUP_TILE::NONE;
 	SetName(L"Tile");
 	SetScale(fPoint(SIZE_TILE, SIZE_TILE));
+
+	CreateCollider();
+	GetCollider()->GetBorderPos();
+	GetCollider()->SetFinalPos(GetPos());
+	GetCollider()->SetScale(fPoint(SIZE_TILE, SIZE_TILE));
+
 }
 
 CTile::~CTile()

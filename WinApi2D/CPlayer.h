@@ -17,6 +17,8 @@ enum class PLAYER_STATE
 	JUMPFALL,
 	JUMPEND,
 	FIRE,
+	MOVEFIRE,
+	JUMPFIRE,
 
 	SIZE
 };
@@ -47,7 +49,6 @@ private:
 
 	float m_gravity;
 
-	UINT m_Ground;
 	UINT m_Wall;
 	UINT m_Plat;
 	UINT m_Spike;

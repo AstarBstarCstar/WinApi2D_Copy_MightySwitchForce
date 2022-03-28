@@ -153,9 +153,9 @@ struct tMonInfo
 #define WINSTARTY   100
 #define WINSIZEX	1600
 #define	WINSIZEY	900
-#define GRAVITY	600.f
+#define GRAVITY	5000.f
 #define MAX_SPEED 600
-#define UPPER 800
+#define UPPER		-1600
 #define WINSTYLE	WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX
 
 #define DT				CTimeManager::GetInst()->GetDT()

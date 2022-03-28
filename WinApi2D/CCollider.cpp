@@ -70,8 +70,13 @@ UINT CCollider::GetID()
 
 void CCollider::finalupdate()
 {
-	fPoint fptObjectPos = m_pOwner->GetPos();
-	m_fptFinalPos = fptObjectPos + m_fptOffsetPos;
+	fPoint fptObjPos = m_pOwner->GetPos();
+	m_fptFinalPos = fptObjPos + m_fptOffsetPos;
+
+	m_rtCollider.left = (LONG)(m_fptFinalPos.x - m_fptScale.x / 2.f);
+	m_rtCollider.right = (LONG)(m_fptFinalPos.x + m_fptScale.x / 2.f);
+	m_rtCollider.top = (LONG)(m_fptFinalPos.y - m_fptScale.y / 2.f);
+	m_rtCollider.bottom = (LONG)(m_fptFinalPos.y + m_fptScale.y / 2.f);
 }
 
 void CCollider::render()

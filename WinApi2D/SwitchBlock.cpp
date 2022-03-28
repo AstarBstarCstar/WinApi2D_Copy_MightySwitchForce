@@ -59,3 +59,49 @@ void SwitchBlock::Switch()
 //TODO:애니메이션 개편하기
 //TODO:스위치 블럭 충돌처리
 //TODO++:x y 좌표 나오게 디버그 모드 만들기
+//#include "framework.h"
+//#include "CPlatform.h"
+//#include "CTexture.h"
+//#include "CCollider.h"
+//
+//CPlatform::CPlatform()
+//{
+//	m_pImg = CResourceManager::GetInst()->LoadD2DImage(L"Platform_Floor", L"texture\\Map\\TutorialScene\\Floor\\brotherhood_floor.png");
+//
+//	InitObject(fPoint(627.f, 370.f), fPoint(403.f, 110.f));
+//
+//	CreateCollider();
+//	GetCollider()->SetFinalPos(GetPos());
+//	GetCollider()->SetOffsetPos(fPoint(0.f, 60.f));
+//	GetCollider()->SetScale(fPoint(GetScale().x * 2.f, GetScale().y - 10.f));
+//}
+//
+//CPlatform::~CPlatform()
+//{
+//}
+//
+//CPlatform* CPlatform::Clone()
+//{
+//	return new CPlatform(*this);
+//}
+//
+//void CPlatform::update()
+//{
+//}
+//
+//void CPlatform::render()
+//{
+//	fPoint fptRenderPos = CCameraManager::GetInst()->GetRenderPos(GetPos());
+//
+//	CRenderManager::GetInst()->RenderFrame(
+//		m_pImg,
+//		fptRenderPos.x - GetScale().x,
+//		fptRenderPos.y - GetScale().y * 1.3f,
+//		fptRenderPos.x + GetScale().x,
+//		fptRenderPos.y + GetScale().y,
+//		0.f, 0.f,
+//		GetScale().x, GetScale().y
+//	);
+//
+//	component_render();
+//}
