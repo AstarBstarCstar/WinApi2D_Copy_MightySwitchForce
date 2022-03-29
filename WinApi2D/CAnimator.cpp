@@ -37,7 +37,7 @@ void CAnimator::CreateAnimation(const wstring& strName, CD2DImage* pImg, fPoint 
 	CAnimation* pAnim = FindAnimation(strName);
 
 	// 이름이 똑같은 애니메이션을 넣을 때의 반응
-	/*assert(pAnim == nullptr);*/
+	assert(pAnim == nullptr);
 
 	pAnim = new CAnimation;
 
@@ -60,9 +60,13 @@ CAnimation* CAnimator::FindAnimation(const wstring& strName)
 	return iter->second;
 }
 
-void CAnimator::Play(const wstring& strName)
+void CAnimator::Play(const wstring& strName, bool reset)
 {
 	m_pCurAni = FindAnimation(strName);
+	//if (reset == true)
+	//{
+	//	m_pCurAni->SetFrame(0);
+	//}
 }
 
 CGameObject* CAnimator::GetObj()

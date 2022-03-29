@@ -17,6 +17,7 @@ public:
 
 	void SetDir(fVec2 vec);
 	void SetDir(float theta);
+	void SetSpeed(float speed) { m_fSpeed = speed; }
 
 	void OnCollisionEnter(CCollider* pOther);
 };

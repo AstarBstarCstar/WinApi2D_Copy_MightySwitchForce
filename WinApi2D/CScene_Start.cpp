@@ -8,6 +8,7 @@
 #include "CTurtle.h"
 #include "CMap.h"
 #include "CBackGround.h"
+#include "SwitchBlock.h"
 #include "CHooligan.h"
 #include "CHooligan2.h"
 #include "CHooligan3.h"
@@ -58,12 +59,20 @@ void CScene_Start::Enter()
 		pPlayer->RegisterPlayer();
 
 		// Monster 추가
+
 		CMonster* pMonster = new CMonster;
 		CMonster* pMon = CMonster::Create(MON_TYPE::NORMAL, fPoint(1100.f, 1000.f));
 		CMonster* pCloneMonster = pMonster->Clone();
 		pCloneMonster->SetPos(fPoint(500, 1350));
 		AddObject(pCloneMonster, GROUP_GAMEOBJ::MONSTER);
 		AddObject(pMon, GROUP_GAMEOBJ::MONSTER);
+
+		SwitchBlock* pSwitch = new SwitchBlock;
+		SwitchBlock* pSwitchClone1 = pSwitch->Clone();
+		pSwitch->SetPos(fPoint(3000, 2000));
+		pSwitchClone1->SetPos(fPoint(3200, 2000));
+		AddObject(pSwitch, GROUP_GAMEOBJ::SWITCHBLOCK);
+		AddObject(pSwitchClone1, GROUP_GAMEOBJ::SWITCHBLOCK);
 
 		//CTurtle* pTurtle = new CTurtle;
 		//CTurtle* pTur = CTurtle::Create(MON_TYPE::NORMAL, fPoint(1100.f, 1000.f));
@@ -104,6 +113,7 @@ void CScene_Start::Enter()
 		CCollisionManager::GetInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::TILE);
 		CCollisionManager::GetInst()->CheckGroup(GROUP_GAMEOBJ::MISSILE_PLAYER, GROUP_GAMEOBJ::TILE);
 		CCollisionManager::GetInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::HOOLIGAN);
+		CCollisionManager::GetInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::SWITCHBLOCK);
 
 		// Camera Look 지정
 		CCameraManager::GetInst()->InitCameraPos(pPlayer->GetPos());

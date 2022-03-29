@@ -8,50 +8,73 @@
 
 SwitchBlock::SwitchBlock()
 {
-	CD2DImage* m_pActSW = CResourceManager::GetInst()->LoadD2DImage(L"ACT_SW", L"texture\\Object\\SwitchBlock\\SwitchBlock.png");
-	CD2DImage* m_pUnActSW = CResourceManager::GetInst()->LoadD2DImage(L"UNACT_SW", L"texture\\Object\\SwitchBlock\\SwitchBlock_unAct.png");
+	m_pImg = CResourceManager::GetInst()->LoadD2DImage(L"SWBlock", L"texture\\Object\\SwitchBlock\\SwitchBlock.png");
 	CSoundManager::GetInst()->AddSound(L"Switching", L"sound\\Switch.wav", false, false);
 	CSoundManager::GetInst()->AddSound(L"Flip", L"sound\\Flip.wav", false, false);
 	SetName(L"SwitchBlock");
-	SetScale(fPoint(192 * 0.7, 192 * 0.7));
+	SetScale(fPoint(192, 192));
 
 	CreateCollider();
-	GetCollider()->SetScale(fPoint(100.f, 100.f));
+	GetCollider()->SetScale(fPoint(190.f, 190.f));
 
-	CreateAnimator();
-	//GetAnimator()->CreateAnimation(L"IdleHool", m_pActSW, fPoint(0, 0), fPoint(192.f, 192.f), fPoint(192.f, 0), 1.f, 1);
-
-	//GetAnimator()->CreateAnimation(L"IdleHool", m_pUnActSW, fPoint(0, 0), fPoint(192.f, 192.f), fPoint(192.f, 0), 1.f, 1);
-
-	SW = 0;
+	m_bSW = true;
+	m_fAlp = 100.f;
 }
 
 SwitchBlock::~SwitchBlock()
 {
 }
 
+SwitchBlock* SwitchBlock::Clone()
+{
+	return new SwitchBlock(*this);
+}
+
 void SwitchBlock::update()
 {
+	if (KeyDown('C'))
+	{
+		CSoundManager::GetInst()->Play(L"Switching");
+		CSoundManager::GetInst()->Play(L"Flip");
+		if (m_fAlp >= 100)//활성화 된 스위치블럭 상태에서 c 누를시
+		{
+			m_bSW = false;
+			m_fAlp = 40;
+		}
+		else//활성화 안 된 스위치블럭 상태에서 c 누를시
+		{
+			m_bSW = true;
+			m_fAlp = 100;
+		}
+	}
+	//swPress 변화를 시작하는 변수 지속시간 몇초동안? 0.5~0.7
+	if (m_bSW = false)//블럭을 반투명하게 하는 처리
+	{
+	}
+	else
+	{
+	}
 }
 
 void SwitchBlock::render()
 {
-	fPoint pos = GetPos();
+	//fPoint fptRenderPos = CCameraManager::GetInst()->GetRenderPos(GetPos());
 	fPoint scale = GetScale();
-	pos = CCameraManager::GetInst()->GetRenderPos(pos);
+	fPoint pos = CCameraManager::GetInst()->GetRenderPos(GetPos());
+	CRenderManager::GetInst()->RenderImage(m_pImg, pos.x - scale.x*0.5, pos.y - scale.y*0.5, pos.x + scale.x*0.5, pos.y + scale.y*0.5, m_fAlp*0.01);//그냥 값넣으면 하면 원래 크기의 두배를 렌더 하지 않아?
 
 	component_render();
 }
 
 void SwitchBlock::Switch()
 {
-	if (SW == 0)
+	if (m_bSW == 0)
 	{
-		SW = 1;
+		m_bSW = 1;
 	}
-	else if (SW == 1)
+	else if (m_bSW == 1)
 	{
-		SW = 0;
+		m_bSW = 0;
 	}
 	CSoundManager::GetInst()->Play(L"Switching");
 	CSoundManager::GetInst()->Play(L"Flip");
@@ -68,7 +91,7 @@ void SwitchBlock::Switch()
 //{
 //	m_pImg = CResourceManager::GetInst()->LoadD2DImage(L"Platform_Floor", L"texture\\Map\\TutorialScene\\Floor\\brotherhood_floor.png");
 //
-//	InitObject(fPoint(627.f, 370.f), fPoint(403.f, 110.f));
+//InitObject(fPoint(627.f, 370.f), fPoint(403.f, 110.f));
 //
 //	CreateCollider();
 //	GetCollider()->SetFinalPos(GetPos());

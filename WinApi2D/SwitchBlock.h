@@ -5,12 +5,17 @@ class CD2DImage;
 class SwitchBlock : public CGameObject
 {
 public:
-	bool SW;
+	CD2DImage* m_pImg;
+
+	bool m_bSW;
+	float m_fAlp;
 	SwitchBlock();
 	~SwitchBlock();
+	virtual SwitchBlock* Clone();
 
 	virtual void update();
 	virtual void render();
+
 	void Switch();
 };
 

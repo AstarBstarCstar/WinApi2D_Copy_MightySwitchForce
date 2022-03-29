@@ -26,7 +26,7 @@ private:
 	bool				m_bReverse;
 
 public:
-	CAnimation();
+	CAnimation();//셋겟 . 프레임카운트 0
 	~CAnimation();
 
 	void SetName(const wstring& strName);

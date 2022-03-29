@@ -77,7 +77,7 @@ void CRenderManager::init()
 	m_pRenderTarget->CreateSolidColorBrush(D2D1::ColorF(0.f, 0.f, 0.f), &m_pBrush);
 }
 
-void CRenderManager::RenderImage(CD2DImage* img, float dstX, float dstY, float dstW, float dstH, float alpha)
+void CRenderManager::RenderImage(CD2DImage* img, float dstX, float dstY, float dstW, float dstH, float alpha)//alpha ≈ı∏Ìµµ 
 {
 	D2D1_RECT_F imgRect = { dstX, dstY, dstW, dstH };
 	if (nullptr != img)

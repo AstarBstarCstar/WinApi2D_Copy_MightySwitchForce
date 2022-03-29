@@ -45,6 +45,7 @@ enum class GROUP_GAMEOBJ//TODO: 가려져있는 반투명 오브젝트. 스위�
 	MAP,
 	TILE,
 	HOOLIGAN,
+	SWITCHBLOCK,
 	MONSTER,
 	PLAYER,
 

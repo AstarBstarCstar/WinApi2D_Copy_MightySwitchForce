@@ -99,9 +99,6 @@
     <ClInclude Include="SingleTon.h">
       <Filter>Util</Filter>
     </ClInclude>
-    <ClInclude Include="CGameObject.h">
-      <Filter>Object</Filter>
-    </ClInclude>
     <ClInclude Include="struct.h">
       <Filter>Util</Filter>
     </ClInclude>
@@ -245,6 +242,9 @@
     </ClInclude>
     <ClInclude Include="CTurtle.h">
       <Filter>Object\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="CGameObject.h">
+      <Filter>Resouce</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

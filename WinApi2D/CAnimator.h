@@ -23,7 +23,7 @@ public:
 	void CreateAnimation(const wstring& strName, CD2DImage* pImg, fPoint leftTop, fPoint scale,
 		fPoint step,fPoint size, UINT column, float duration, UINT frmCount, bool isLoop, bool bReverse);
 	CAnimation* FindAnimation(const wstring& strName);
-	void Play(const wstring& strName);
+	void Play(const wstring& strName, bool reset = false);
 
 	CGameObject* GetObj();
 };
