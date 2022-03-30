@@ -5,7 +5,7 @@
 #include "CD2DImage.h"
 #include "CAnimator.h"
 #include "SwitchBlock.h"
-
+/*push*/
 SwitchBlock::SwitchBlock()
 {
 	m_pImg = CResourceManager::GetInst()->LoadD2DImage(L"SWBlock", L"texture\\Object\\SwitchBlock\\SwitchBlock.png");
@@ -39,7 +39,7 @@ void SwitchBlock::update()
 		if (m_fAlp >= 100)//활성화 된 스위치블럭 상태에서 c 누를시
 		{
 			m_bSW = false;
-			m_fAlp = 40;
+			m_fAlp = 50;
 		}
 		else//활성화 안 된 스위치블럭 상태에서 c 누를시
 		{
