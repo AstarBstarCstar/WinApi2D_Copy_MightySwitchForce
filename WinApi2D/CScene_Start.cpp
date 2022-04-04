@@ -9,6 +9,7 @@
 #include "CMap.h"
 #include "CBackGround.h"
 #include "SwitchBlock.h"
+#include "SwitchBlock2.h"
 #include "CHooligan.h"
 #include "CHooligan2.h"
 #include "CHooligan3.h"
@@ -61,16 +62,27 @@ void CScene_Start::Enter()
 		// Monster 추가
 
 		CMonster* pMonster = new CMonster;
-		CMonster* pMon = CMonster::Create(MON_TYPE::NORMAL, fPoint(1100.f, 1000.f));
+		CMonster* pMon = CMonster::Create(MON_TYPE::NORMAL, fPoint(1100.f, 2000.f));
 		CMonster* pCloneMonster = pMonster->Clone();
-		pCloneMonster->SetPos(fPoint(500, 1350));
+		pCloneMonster->SetPos(fPoint(500, 10350));
 		AddObject(pCloneMonster, GROUP_GAMEOBJ::MONSTER);
 		AddObject(pMon, GROUP_GAMEOBJ::MONSTER);
 
 		SwitchBlock* pSwitch = new SwitchBlock;
-		SwitchBlock* pSwitchClone1 = pSwitch->Clone();
-		pSwitch->SetPos(fPoint(3000, 2000));
-		pSwitchClone1->SetPos(fPoint(3200, 2000));
+		SwitchBlock2* pSwitchClone1 = new SwitchBlock2;
+		//pSwitchClone2->SetName(L"SWB");
+		//pSwitchClone3->SetName(L"SwitchBlock");
+		//pSwitchClone4->SetName(L"SwitchBlock");
+		////SwitchBlock* pSwitchCone2 = pSwitch->Clone();
+		////SwitchBlock* pSwitchCone2 = pSwitch->Clone();
+		////SwitchBlock* pSwitchCone2 = pSwitch->Clone();
+		////SwitchBlock* pSwitchCone2 = pSwitch->Clone();
+		////SwitchBlock* pSwitchCone2 = pSwitch->Clone();
+		////SwitchBlock* pSwitchCone2 = pSwitch->Clone();
+		////SwitchBlock* pSwitchCone2 = pSwitch->Clone();
+		////SwitchBlock* pSwitchCone2 = pSwitch->Clone();
+		pSwitch->SetPos(fPoint(350, 2270));
+		pSwitchClone1->SetPos(fPoint(750, 2270));
 		AddObject(pSwitch, GROUP_GAMEOBJ::SWITCHBLOCK);
 		AddObject(pSwitchClone1, GROUP_GAMEOBJ::SWITCHBLOCK);
 
@@ -97,8 +109,6 @@ void CScene_Start::Enter()
 		pHooligan5->SetPos(fPoint(6687, 330));
 		AddObject(pHooligan5, GROUP_GAMEOBJ::HOOLIGAN);
 
-
-
 		CMap* map = new CMap;
 		map->Load(L"Map_Start", L"texture\\map\\IncLevel1.png");
 		AddObject(map, GROUP_GAMEOBJ::MAP);
@@ -113,6 +123,7 @@ void CScene_Start::Enter()
 		CCollisionManager::GetInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::TILE);
 		CCollisionManager::GetInst()->CheckGroup(GROUP_GAMEOBJ::MISSILE_PLAYER, GROUP_GAMEOBJ::TILE);
 		CCollisionManager::GetInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::HOOLIGAN);
+		CCollisionManager::GetInst()->CheckGroup(GROUP_GAMEOBJ::MISSILE_PLAYER, GROUP_GAMEOBJ::SWITCHBLOCK);
 		CCollisionManager::GetInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::SWITCHBLOCK);
 
 		// Camera Look 지정

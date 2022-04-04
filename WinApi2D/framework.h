@@ -114,6 +114,14 @@ enum class MON_TYPE
 	SIZE,
 };
 
+enum class BLOCK_CHANGE
+{
+	OPEN,
+	CLOSE,
+
+	NONE
+};
+
 //enum class PLAYER_STATE
 //{
 //	IDLE,

@@ -2,9 +2,7 @@
 #include "CGameObject.h"
 class CD2DImage;
 
-
-
-class SwitchBlock : public CGameObject
+class SwitchBlock2 : public CGameObject
 {
 public:
 	CD2DImage* m_pImg;
@@ -14,9 +12,9 @@ public:
 	float fDuration;
 	float fCurTime;
 
-	SwitchBlock();
-	~SwitchBlock();
-	virtual SwitchBlock* Clone();
+	SwitchBlock2();
+	~SwitchBlock2();
+	virtual SwitchBlock2* Clone();
 
 	virtual void update();
 	virtual void render();

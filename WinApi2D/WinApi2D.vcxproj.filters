@@ -246,6 +246,9 @@
     <ClInclude Include="CGameObject.h">
       <Filter>Resouce</Filter>
     </ClInclude>
+    <ClInclude Include="SwitchBlock2.h">
+      <Filter>Object\SwitchBlock</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinApi2D.cpp">
@@ -386,14 +389,17 @@
     <ClCompile Include="CHooligan2.cpp">
       <Filter>Object\Hooligan</Filter>
     </ClCompile>
-    <ClCompile Include="SwitchBlock.cpp">
-      <Filter>Object\SwitchBlock</Filter>
-    </ClCompile>
     <ClCompile Include="CMonster.cpp">
       <Filter>Object\Monster</Filter>
     </ClCompile>
     <ClCompile Include="CTurtle.cpp">
       <Filter>Object\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="SwitchBlock2.cpp">
+      <Filter>Object\SwitchBlock</Filter>
+    </ClCompile>
+    <ClCompile Include="SwitchBlock.cpp">
+      <Filter>Object\SwitchBlock</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

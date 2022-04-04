@@ -110,6 +110,7 @@ void CPlayer::update()
 void CPlayer::render()
 {
 	component_render();
+	CGameObject::debug_render();//디버그용 정보 표시
 }
 
 void CPlayer::update_State()
@@ -230,11 +231,11 @@ void CPlayer::update_Animation()
 	{
 		static float fIdleTime = 0.f;
 		fIdleTime += fDT;
-		if (-1 == m_fvCurDir.x && fIdleTime < 3)
+		if (-1 == m_fvCurDir.x)
 		{
 			GetAnimator()->Play(L"R_Idle");
 		}
-		else if (1 == m_fvCurDir.x && fIdleTime < 3)
+		else if (1 == m_fvCurDir.x)
 		{
 			GetAnimator()->Play(L"Idle");
 		}
@@ -374,6 +375,7 @@ void CPlayer::CreateMissile()
 		pMissile->SetName(L"Missile_Player");
 		CreateObj(pMissile, GROUP_GAMEOBJ::MISSILE_PLAYER);
 	}
+	CSoundManager::GetInst()->Play(L"FireSound");
 }
 
 void CPlayer::Jump()
@@ -425,6 +427,86 @@ void CPlayer::OnCollision(CCollider* pOther)
 	CGameObject* pOtherObj = pOther->GetObj();
 	CTile* pTile = (CTile*)pOtherObj;
 	GROUP_TILE Type = pTile->GetGroup();
+	if (pOtherObj->GetName() == L"SwitchBlock")
+	{
+		{
+			LONG yDiff = 0;
+			LONG xDiff = 0;
+			if (pOther->GetBorderPos().left > GetCollider()->GetBorderPos().left)
+			{
+				xDiff = (GetCollider()->GetBorderPos().right - pOther->GetBorderPos().left);
+			}
+			else if (pOther->GetBorderPos().right < GetCollider()->GetBorderPos().right)
+			{
+				xDiff = (pOther->GetBorderPos().right - GetCollider()->GetBorderPos().left);
+			}
+			else
+				xDiff = (GetCollider()->GetBorderPos().right - GetCollider()->GetBorderPos().left);
+
+
+			if (m_fvCurDir.x < 0.f)
+			{
+				if (pOther->GetBorderPos().top < GetCollider()->GetBorderPos().bottom
+					&& pOther->GetBorderPos().bottom > GetCollider()->GetBorderPos().top)
+				{
+					yDiff = (GetCollider()->GetBorderPos().bottom - pOther->GetBorderPos().top);
+
+					if (yDiff > xDiff && GetCollider()->GetBorderPos().right > pOther->GetBorderPos().right)
+					{
+						fPoint fptPos = GetPos();
+						fptPos.x += (float)(pOther->GetBorderPos().right - GetCollider()->GetBorderPos().left);
+						SetPos(fptPos);
+					}
+				}
+			}
+			if (m_fvCurDir.x > 0.f)
+			{
+				if (pOther->GetBorderPos().top < GetCollider()->GetBorderPos().bottom
+					&& pOther->GetBorderPos().bottom > GetCollider()->GetBorderPos().top)
+				{
+					yDiff = (GetCollider()->GetBorderPos().bottom - pOther->GetBorderPos().top);
+
+					if (yDiff > xDiff && GetCollider()->GetBorderPos().left < pOther->GetBorderPos().left
+						&& GetCollider()->GetBorderPos().right > pOther->GetBorderPos().left)
+					{
+						fPoint fptPos = GetPos();
+						fptPos.x -= (float)(GetCollider()->GetBorderPos().right - pOther->GetBorderPos().left);
+						SetPos(fptPos);
+					}
+				}
+			}
+
+
+			if (GetCollider()->GetBorderPos().bottom > pOther->GetBorderPos().bottom &&
+				GetCollider()->GetBorderPos().top <= pOther->GetBorderPos().bottom)
+			{
+				yDiff = (pOther->GetBorderPos().bottom - GetCollider()->GetBorderPos().top);
+
+				if (yDiff < xDiff)
+				{
+					fPoint fptPos = GetPos();
+					fptPos.y += (float)(pOther->GetBorderPos().bottom - GetCollider()->GetBorderPos().top);
+					SetPos(fptPos);
+				}
+
+			}
+			if (GetCollider()->GetBorderPos().top < pOther->GetBorderPos().top
+				&& GetCollider()->GetBorderPos().bottom >= pOther->GetBorderPos().top)
+			{
+				yDiff = (GetCollider()->GetBorderPos().bottom - pOther->GetBorderPos().top);
+
+				if (yDiff < xDiff)
+				{
+					fPoint fptPos = GetPos();
+					fptPos.y -= (float)(GetCollider()->GetBorderPos().bottom - pOther->GetBorderPos().top);
+					SetPos(fptPos);
+
+					m_bGrounding = true;
+					m_fAccelGravity = 0.f;
+				}
+			}
+		}
+	}
 	if (pOtherObj->GetName() == L"Tile")
 	{
 		switch (Type)

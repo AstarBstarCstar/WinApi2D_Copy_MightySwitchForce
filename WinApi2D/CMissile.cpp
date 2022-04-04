@@ -83,4 +83,8 @@ void CMissile::OnCollisionEnter(CCollider* pOther)
 	{
 			DeleteObj(this);
 	}
+	else if (pOtherObj->GetName() == L"SwitchBlock")
+	{
+		DeleteObj(this);
+	}
 }
