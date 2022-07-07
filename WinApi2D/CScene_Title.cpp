@@ -25,14 +25,24 @@ void ClickExitButton(DWORD_PTR, DWORD_PTR)
 void CScene_Title::update()
 {
 	m_Count += fDT;
+	if (m_Trigger)
+	{
+
+		if (m_Count >= 0.6f)
+		{
+			ChangeScn(GROUP_SCENE::SELECT);
+			m_Trigger = false;
+		}
+		
+	}
 	if (KeyDown('A') && m_Count >= 1.5f)
 	{
+		m_Count = 0.f;
 		m_Trigger = true;
-		CCameraManager::GetInst()->FadeOut(0.1f);
+		CCameraManager::GetInst()->FadeOut(0.7f);
 		CSoundManager::GetInst()->Play(L"Click");
 		CSoundManager::GetInst()->Play(L"EnterVoice");
 		CSoundManager::GetInst()->Stop(L"TitleBGM");
-		ChangeScn(GROUP_SCENE::SELECT);
 	}
 	CScene::update();
 }
@@ -49,7 +59,7 @@ void CScene_Title::Enter()
 	Title->Load(L"Map_Title", L"texture\\background\\en_Title_BG.png");
 	Title->SetPos(fPoint(0, 0));
 	AddObject(Title, GROUP_GAMEOBJ::MAP);
-	CCameraManager::GetInst()->FadeIn(2.0f);
+	CCameraManager::GetInst()->FadeIn(1.0f);
 	CCameraManager::GetInst()->SetLookAt(fPoint(WINSIZEX / 2, WINSIZEY / 2));
 	CCameraManager::GetInst()->InitCameraPos(fPoint(WINSIZEX / 2, WINSIZEY / 2));
 

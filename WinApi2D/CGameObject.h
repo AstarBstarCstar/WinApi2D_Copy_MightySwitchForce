@@ -22,6 +22,7 @@ private:
 	void SetDead();
 
 public:
+	static bool Switching;
 	CGameObject();
 	CGameObject(const CGameObject& other);
 	virtual ~CGameObject();

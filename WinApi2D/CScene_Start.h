@@ -13,6 +13,7 @@ public:
 	virtual void Enter();
 
 	virtual void Exit();
+	fPoint playerPos;
 	bool CameraLock=false;
 	bool Count=false;
 };

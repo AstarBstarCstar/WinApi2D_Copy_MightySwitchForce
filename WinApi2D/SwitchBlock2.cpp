@@ -20,7 +20,6 @@ SwitchBlock2::SwitchBlock2()
 	m_eChanger = BLOCK_CHANGE::CLOSE;
 	fDuration = 0.5f;
 }
-
 SwitchBlock2::~SwitchBlock2()
 {
 }
@@ -50,7 +49,8 @@ void SwitchBlock2::update()
 			fDuration = 0.5;
 			fCurTime = 0.f;
 			m_bSW = true;
-			SetName(L"SwitchBlock");
+			SetName(L"Switching");
+			CGameObject::Switching = true;
 		}
 	}
 }
@@ -73,11 +73,16 @@ void SwitchBlock2::render()
 	else if (BLOCK_CHANGE::OPEN == m_eChanger)
 	{
 		fAlpha = 0.5f + fRatio;
+		if (fAlpha >= 1.f)
+		{
+			SetName(L"SwitchBlock");
+			CGameObject::Switching = false;
+		}
 	}
 
 	fPoint scale = GetScale();
 	fPoint pos = CCameraManager::GetInst()->GetRenderPos(GetPos());
-	CRenderManager::GetInst()->RenderImage(m_pImg, pos.x - scale.x * 0.5, pos.y - scale.y * 0.5, pos.x + scale.x * 0.5, pos.y + scale.y * 0.5, fAlpha);//그냥 값넣으면 하면 원래 크기의 두배를 렌더 하지 않아?
+	CRenderManager::GetInst()->RenderImage(m_pImg, pos.x - scale.x * 0.5, pos.y - scale.y * 0.5, pos.x + scale.x * 0.5, pos.y + scale.y * 0.5, fAlpha);//그냥 값넣으면 원래 크기의 두배를 렌더 하지 않아?
 
 	component_render();
 }

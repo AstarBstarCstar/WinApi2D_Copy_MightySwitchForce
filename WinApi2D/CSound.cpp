@@ -46,7 +46,7 @@ void CSound::Pause()
 
 void CSound::Stop()
 {
-	assert(m_pChannel); 
+	assert(m_pChannel); //TODO:
 	m_pChannel->stop();
 }
 

@@ -6,7 +6,6 @@
 #include "AI.h"
 #include "CIdleState.h"
 #include "CTraceState.h"
-//신경치료 아프다 아프기보다 기분이 뒤지게 나쁘다
 CMonster::CMonster()
 {
 	CD2DImage* m_pImg = CResourceManager::GetInst()->LoadD2DImage(L"MonsterTex", L"texture\\Animation\\Monster\\Bat\\Fly\\Bat_292_220.png");
@@ -14,7 +13,7 @@ CMonster::CMonster()
 	m_pAI = nullptr;
 
 	SetName(L"Monster");
-	SetScale(fPoint(292*0.7, 220*0.7));
+	SetScale(fPoint(292*0.6, 220*0.6));
 
 	CreateCollider();
 	GetCollider()->SetScale(fPoint(50.f, 50.f));
@@ -88,10 +87,15 @@ void CMonster::render()
 
 void CMonster::update()
 {
-	if (nullptr != GetAnimator())
-		GetAnimator()->update();
-	if (nullptr != m_pAI)
-		m_pAI->update();
+
+	if (CGameObject::Switching != true)
+	{
+		if (nullptr != GetAnimator())
+			GetAnimator()->update();
+		if (nullptr != m_pAI)
+			m_pAI->update();
+	}
+
 
 }
 

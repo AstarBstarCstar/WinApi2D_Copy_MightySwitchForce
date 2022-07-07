@@ -10,6 +10,7 @@
 
 CScene_Select::CScene_Select()
 {
+	m_isChanged = false;
 }
 
 CScene_Select::~CScene_Select()
@@ -18,6 +19,7 @@ CScene_Select::~CScene_Select()
 
 void CScene_Select::update()
 {
+	timer += fDT;
 	if (KeyDown(VK_UP))
 	{
 		CSoundManager::GetInst()->Play(L"CursorMove");
@@ -28,8 +30,9 @@ void CScene_Select::update()
 	}
 	if (KeyDown('A'))
 	{
-		ChangeScn(GROUP_SCENE::START);
-		CSoundManager::GetInst()->Stop(L"SelectBGM");
+		m_isChanged = true;
+		timer = 0.f;
+		CCameraManager::GetInst()->FadeOut(0.63f);
 		CSoundManager::GetInst()->Play(L"LevelSelected");
 	}
 	if (KeyDown('B'))
@@ -38,13 +41,24 @@ void CScene_Select::update()
 		CSoundManager::GetInst()->Play(L"BackButton");
 		CSoundManager::GetInst()->Stop(L"SelectBGM");
 	}
+	if (m_isChanged)
+	{
+		if (timer >= 0.6f)
+		{
+			ChangeScn(GROUP_SCENE::START);
+			CSoundManager::GetInst()->Stop(L"SelectBGM");
+			m_isChanged = false;
+		}
+	}
 	CScene::update();
 }
 void ClickINC(DWORD_PTR, DWORD_PTR)
 {
-	ChangeScn(GROUP_SCENE::START);
+	CCameraManager::GetInst()->FadeOut(0.7f);
 	CSoundManager::GetInst()->Stop(L"SelectBGM");
 	CSoundManager::GetInst()->Play(L"LevelSelected");
+
+	ChangeScn(GROUP_SCENE::START);
 }
 
 void ClickQuit(DWORD_PTR, DWORD_PTR)
@@ -56,6 +70,7 @@ void ClickQuit(DWORD_PTR, DWORD_PTR)
 
 void CScene_Select::Enter()
 {
+	CCameraManager::GetInst()->FadeIn(0.7f);
 	CSoundManager::GetInst()->AddSound(L"BackButton", L"sound\\BackButton.wav", false,false);
 	CSoundManager::GetInst()->AddSound(L"CursorMove", L"sound\\CursorMove.wav", false, false);
 	CSoundManager::GetInst()->AddSound(L"LevelSelected", L"sound\\LevelSelected.wav", false, false);

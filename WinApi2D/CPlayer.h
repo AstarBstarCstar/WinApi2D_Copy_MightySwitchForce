@@ -46,7 +46,7 @@ private:
 	bool Run;
 	bool CameraLock;
 	bool Count = 1 ;
-
+	bool statiti;
 	float m_gravity;
 
 	UINT m_Wall;
@@ -71,7 +71,7 @@ public:
 
 	virtual void update();
 	virtual void render();
-
+	void CreateSiren();
 	PLAYER_STATE GetState();
 	void RegisterPlayer();
 	void CameraRelease();

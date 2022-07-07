@@ -79,6 +79,15 @@ void CHooligan::render()
 
 void CHooligan::update()
 {
-	GetAnimator()->update();
-	GetAnimator()->Play(L"IdleHool");
+
+
+	if (CGameObject::Switching != true)
+	{
+		GetAnimator()->update();
+		GetAnimator()->Play(L"IdleHool");
+	}
+
+	else if (CGameObject::Switching == true)
+	{
+	}
 }

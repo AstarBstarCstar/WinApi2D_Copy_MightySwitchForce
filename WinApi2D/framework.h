@@ -187,5 +187,6 @@ struct tMonInfo
 //## 전역변수(인스턴스, 윈도우 핸들)	##
 //========================================
 
+
 extern HINSTANCE hInst;
 extern HWND hWnd;
