@@ -74,6 +74,19 @@ void CCameraManager::render()
 	{
 		fAlpha = 1.f - fRatio;
 	}
+	else if (CAM_EFFECT::SHAKINGPLUS == m_eEffect)
+	{
+		int random;
+		random = rand() % 30-15;
+		m_fptLookAt.x += random;
+	}
+	else if (CAM_EFFECT::SHAKINGMINUS == m_eEffect)
+	{
+		int random;
+		random = rand() % 30 - 15;
+		m_fptLookAt.x += random;
+		m_fptLookAt.y += random;
+	}
 
 	CRenderManager::GetInst()->RenderFillRectangle(
 		-1.f, -1.f,
@@ -81,6 +94,8 @@ void CCameraManager::render()
 		RGB(0, 0, 0), fAlpha
 	);
 }
+
+
 
 void CCameraManager::InitCameraPos(fPoint pos)
 {
@@ -135,10 +150,17 @@ void CCameraManager::FadeIn(float duration)
 	fDuration = duration;
 	fCurTime = 0.f;
 }
-void CCameraManager::Shake(float duration)
+void CCameraManager::ShakeP(float duration)
 {
-	m_eEffect = CAM_EFFECT::SHAKING;
+	m_eEffect = CAM_EFFECT::SHAKINGPLUS;
 	fDuration = duration;
+	fCurTime = 0.f;
+}
+void CCameraManager::ShakeM(float duration)
+{
+	m_eEffect = CAM_EFFECT::SHAKINGMINUS;
+	fDuration = duration;
+	fCurTime = 0.f;
 }
 
 void CCameraManager::FadeOut(float duration)

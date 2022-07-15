@@ -4,6 +4,8 @@
 #include "CAnimator.h"
 #include "CAnimation.h"
 
+short CGameObject::holiganSave = 0;
+
 CGameObject::CGameObject()
 {
 	m_fptPos = {};

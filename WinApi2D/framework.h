@@ -74,6 +74,7 @@ enum class GROUP_SCENE
 	TITLE,
 	SELECT,
 	START,
+	OPENING,
 	STAGE_01,
 	STAGE_02,
 

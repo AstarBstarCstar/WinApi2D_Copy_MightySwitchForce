@@ -14,6 +14,7 @@ public:
 
 	virtual void Exit();
 	fPoint playerPos;
+
 	bool CameraLock=false;
 	bool Count=false;
 };

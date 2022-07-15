@@ -1,11 +1,9 @@
 #include "framework.h"
 #include "CHooligan4.h"
-#include "CMonster.h"
 #include "CCollider.h"
 #include "CD2DImage.h"
 #include "CAnimator.h"
-#include "CIdleState.h"
-#include "CTraceState.h"
+
 
 CHooligan4::CHooligan4()
 {
@@ -41,6 +39,8 @@ void CHooligan4::OnCollisionEnter(CCollider* pOther)
 	if (pOtherObj->GetName() == L"Player")
 	{
 		Count++;
+		CGameObject::holiganSave;
+		CGameObject::holiganSave++;
 	}
 	if (Count > 1)
 	{

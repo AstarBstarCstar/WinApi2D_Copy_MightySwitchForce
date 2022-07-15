@@ -22,7 +22,6 @@
 
 CScene_Start::CScene_Start()
 {
-	
 }
 
 CScene_Start::~CScene_Start()
@@ -37,6 +36,12 @@ void CScene_Start::update()
 	{
 		ChangeScn(GROUP_SCENE::TOOL);
 		CSoundManager::GetInst()->Stop(L"Stbgm");
+	}
+	if (CPlayer::isGameOver)
+	{
+		CPlayer::isGameOver = false;
+		CSoundManager::GetInst()->Stop(L"Stbgm");
+		ChangeScn(GROUP_SCENE::TITLE);
 	}
 
 }

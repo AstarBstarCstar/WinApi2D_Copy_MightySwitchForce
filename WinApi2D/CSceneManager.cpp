@@ -4,6 +4,7 @@
 #include "CScene_Tool.h"
 #include "CScene_Title.h"
 #include "CScene_Select.h"
+#include "COpening.h"
 
 CSceneManager::CSceneManager()
 {
@@ -49,6 +50,9 @@ void CSceneManager::init()
 {
 	m_arrScene[(size_t)GROUP_SCENE::START] = new CScene_Start;
 	m_arrScene[(size_t)GROUP_SCENE::START]->SetName(L"Start_Scene");
+
+	m_arrScene[(size_t)GROUP_SCENE::OPENING] = new COpening;
+	m_arrScene[(size_t)GROUP_SCENE::OPENING]->SetName(L"Opening_Scene");
 
 	m_arrScene[(size_t)GROUP_SCENE::TITLE] = new CScene_Title;
 	m_arrScene[(size_t)GROUP_SCENE::TITLE]->SetName(L"Title_Scene");
