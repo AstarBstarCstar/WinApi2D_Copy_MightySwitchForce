@@ -16,6 +16,7 @@
 #include "CHooligan4.h"
 #include "CHooligan5.h"
 #include "CPlayerSiren.h"
+#include "CExitRobot.h"
 
 #include "CSound.h"
 #include "CD2DImage.h"
@@ -59,11 +60,7 @@ void CScene_Start::Enter()
 		path += L"tile\\Level1.tile";
 		LoadTile(path);
 
-		// Player 추가
-		CPlayer* pPlayer = new CPlayer;
-		pPlayer->SetPos(fPoint(3520, 2200));
-		AddObject(pPlayer, GROUP_GAMEOBJ::PLAYER);
-		pPlayer->RegisterPlayer();
+
 
 		// Monster 추가
 
@@ -139,6 +136,9 @@ void CScene_Start::Enter()
 		CHooligan5* pHooligan5 = new CHooligan5;
 		pHooligan5->SetPos(fPoint(6687, 330));
 		AddObject(pHooligan5, GROUP_GAMEOBJ::HOOLIGAN);
+		CExitRobot* pExitRobot = new CExitRobot;
+		pExitRobot->SetPos(fPoint(3520, 1930));
+		AddObject(pExitRobot, GROUP_GAMEOBJ::HOOLIGAN);
 
 		CMap* map = new CMap;
 		map->Load(L"Map_Start", L"texture\\map\\IncLevel1.png");
@@ -157,6 +157,12 @@ void CScene_Start::Enter()
 		CCollisionManager::GetInst()->CheckGroup(GROUP_GAMEOBJ::MISSILE_PLAYER, GROUP_GAMEOBJ::SWITCHBLOCK);
 		CCollisionManager::GetInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::SWITCHBLOCK);
 
+		// Player 추가
+		CPlayer* pPlayer = new CPlayer;
+		pPlayer->SetPos(fPoint(3520, 2200));
+		AddObject(pPlayer, GROUP_GAMEOBJ::PLAYER);
+		pPlayer->RegisterPlayer();
+
 		// Camera Look 지정
 		CCameraManager::GetInst()->InitCameraPos(pPlayer->GetPos());
 		CCameraManager::GetInst()->SetBoundary(fPoint(0.f, 0.f), fPoint(map->GetPos().x + map->GetScale().x, map->GetPos().y + map->GetScale().y));
@@ -164,7 +170,7 @@ void CScene_Start::Enter()
 		/*CCameraManager::GetInst()->SetLookAt(fPoint(WINSIZEX , WINSIZEY ));*/
 		//CCameraManager::GetInst()->SetTargetObj(pPlayer);
 
-		// 몬스터 배치
+
 	}
 }
 

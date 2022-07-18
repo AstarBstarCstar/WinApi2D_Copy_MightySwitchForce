@@ -47,6 +47,10 @@ CGameObject::~CGameObject()
 		delete m_pAnimator;
 	}
 }
+void CGameObject::SetHoligan(short num)
+{
+	holiganSave = num;
+}
 
 void CGameObject::SetPos(fPoint pos)
 {
@@ -182,7 +186,9 @@ void CGameObject::CreateCollider()
 CAnimator* CGameObject::GetAnimator()
 {
 	return m_pAnimator;
+	
 }
+
 
 void CGameObject::CreateAnimator()
 {

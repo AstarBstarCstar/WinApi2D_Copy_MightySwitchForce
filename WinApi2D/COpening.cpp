@@ -5,7 +5,7 @@
 
 COpening::COpening()
 {
-	isVideoFinished = false;
+	videoTrigger = false;
 }
 
 COpening::~COpening()
@@ -17,7 +17,7 @@ COpening::~COpening()
 void COpening::update()
 {
 	CScene::update();
-	if (KeyDown('Z') || KeyDown('X') || MCIWndGetLength(m_hVideo) <= MCIWndGetPosition(m_hVideo))
+	if (KeyDown('Z') || KeyDown('X') || MCIWndGetLength(m_Opening) <= MCIWndGetPosition(m_Opening))
 	{
 		ChangeScn(GROUP_SCENE::START);
 	}
@@ -32,18 +32,15 @@ void COpening::Enter()
 
 void COpening::Exit()
 {
-	CCore::GetInst()->SetRender(true);
-	MCIWndClose(m_hVideo);
+	MCIWndClose(m_Opening);
 	DeleteAll();
+	CCore::GetInst()->SetRender(true);
 }
 
 
 void COpening::Initialize()
 {
-	// 비디오 윈도우 핸들에 세팅 및 재생
-	m_hVideo = MCIWndCreate(hWnd, NULL, MCIWNDF_NOPLAYBAR | WS_VISIBLE | WS_CHILD
-		, L"contents\\Opening.wmv");
-	MoveWindow(m_hVideo, 0, 0, WINSIZEX, WINSIZEY, false);
-
-	MCIWndPlay(m_hVideo);
+	m_Opening = MCIWndCreate(hWnd, NULL, MCIWNDF_NOPLAYBAR | WS_VISIBLE | WS_CHILD, L"contents\\Opening.wmv");//TODO: 화질개선
+	MoveWindow(m_Opening, 0, 0, 1600, 900, true);
+	MCIWndPlay(m_Opening);
 }

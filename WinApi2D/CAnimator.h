@@ -18,6 +18,7 @@ public:
 	~CAnimator();
 
 	void update();
+	bool PlayEnd(const wstring& strName);
 	void render();
 
 	void CreateAnimation(const wstring& strName, CD2DImage* pImg, fPoint leftTop, fPoint scale,
