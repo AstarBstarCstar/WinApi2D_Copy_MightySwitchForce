@@ -129,7 +129,7 @@ void CScene_Select::Enter()
 	m_pPAR->SetScale(fPoint(200.f, 50.f));
 	m_pPAR->SetTextColor(RGB(255, 255, 0));
 	m_pPAR->SetFontSize(75);
-	m_pPAR->SetText(L"01:00.00");
+	m_pPAR->SetText(L"01:50.00");
 	m_pPAR->SetPos(fPoint(WINSIZEX / 2.f - 405.f, WINSIZEY / 2.f +185.f));
 	AddObject(m_pPAR, GROUP_GAMEOBJ::UI);
 

@@ -24,6 +24,8 @@ CExitRobot::CExitRobot()
 	GetAnimator()->CreateAnimation(L"EnterZero", m_EnterZero, fPoint(0, 0), fPoint(464.f, 364.f), fPoint(464.f, 0), fPoint(464.f, 364.f), 0, 0.1f, 12, false, false);
 	GetAnimator()->CreateAnimation(L"Fly", m_Fly, fPoint(0, 0), fPoint(336.f, 476.f), fPoint(336.f, 0), fPoint(336.f, 476.f), 0, 1.f, 1, true, false);
 	GetAnimator()->Play(L"RobotIdle");
+	CSoundManager::GetInst()->AddSound(L"Clear", L"sound\\Clear.wav", false, false);
+	CSoundManager::GetInst()->AddSound(L"Out", L"sound\\CLEAROUT.wav", false, false);
 }
 
 CExitRobot::~CExitRobot()
@@ -42,6 +44,8 @@ void CExitRobot::OnCollision(CCollider* pOther)
 			///*GetAnimator()->Play("");*/
 			DeleteObj(pOtherObj);
 			GetAnimator()->Play(L"EnterZero");
+			CSoundManager::GetInst()->Stop(L"Stbgm");
+			CSoundManager::GetInst()->Play(L"Clear");
 		}
 	}
 }
@@ -65,6 +69,14 @@ void CExitRobot::render()
 
 void CExitRobot::update()
 {
+	if (CGameObject::holiganSave == 6)
+	{
+		if (cleartrriger == true)
+		{
+			CSoundManager::GetInst()->Play(L"Out");
+			cleartrriger = false;
+		}
+	}
 	if (trriger)
 	{
 		if (GetAnimator()->PlayEnd(L"RobotIdle") == true)
@@ -83,7 +95,8 @@ void CExitRobot::update()
 	}
 	if (GetAnimator()->PlayEnd(L"TakeOff") == true)
 	{
-		CCameraManager::GetInst()->FadeOut(4.f);
+		CCameraManager::GetInst()->ShakeM(5.f);
+		CCameraManager::GetInst()->FadeOut(8.f);
 		GetAnimator()->Play(L"Fly");
 		End = true;
 		
@@ -93,12 +106,12 @@ void CExitRobot::update()
 	{
 		timer += fDT;
 		fPoint x = this->GetPos();
-		accel += fDT*1.5;
+		accel += fDT;
 		x.y -=accel;
 		SetPos(fPoint(x));//피벗 위치 오른쪽으로 
 		
 	}
-	if (timer >= 3.9f)
+	if (timer >= 7.8f)
 	{
 		timer = 0.f;
 		ChangeScn(GROUP_SCENE::END);

@@ -62,11 +62,12 @@ CPlayer::CPlayer()
 
 	CSoundManager::GetInst()->AddSound(L"FireSound", L"sound\\PELLET_FIRE.wav", false, false);
 	CSoundManager::GetInst()->AddSound(L"Switch", L"sound\\Switch.wav", false, false);
-	CSoundManager::GetInst()->AddSound(L"SLAM", L"sound\\Flip.wav", false, false);
 	CSoundManager::GetInst()->AddSound(L"Camera", L"sound\\SFX_CAMERA.wav", false, false);
 	CSoundManager::GetInst()->AddSound(L"CameraRelease", L"sound\\SFX_CAMERA_RELEASE.wav", false, false);
 	CSoundManager::GetInst()->AddSound(L"GlassHit", L"sound\\SFX_GLASS_SMASH.wav" , false, false);
-	CSoundManager::GetInst()->AddSound(L"Hit", L"sound\\OUCH_5.wav" , false, false);
+	CSoundManager::GetInst()->AddSound(L"Spike", L"sound\\SFX_DIE_SPIKES.wav" , false, false);
+	CSoundManager::GetInst()->AddSound(L"Hit", L"sound\\OUCH_5.wav", false, false);
+	CSoundManager::GetInst()->AddSound(L"Switching", L"sound\\Switch.wav", false, false);
 
 	CreateCollider();
 	GetCollider()->SetScale(fPoint(55.f, 160.f));
@@ -212,6 +213,7 @@ void CPlayer::update_State()
 			if (KeyDown('C'))
 			{
 				CreateSiren();
+				CSoundManager::GetInst()->Play(L"Switching");
 			}
 			if (Key(VK_LEFT) && KeyDown('Z') && m_bGrounding)
 			{
@@ -376,6 +378,7 @@ void CPlayer::update_Animation()
 			CCameraManager::GetInst()->ShakeM(1.0f);
 			CSoundManager::GetInst()->Play(L"Hit");
 			CSoundManager::GetInst()->Play(L"GlassHit");
+			CSoundManager::GetInst()->Stop(L"Stbgm");
 			crashTrriger = false;
 		}
 
@@ -576,6 +579,7 @@ void CPlayer::OnCollision(CCollider* pOther)
 		if (m_bJustHit == false)
 		{
 			CSoundManager::GetInst()->Play(L"Hit");
+			CSoundManager::GetInst()->Play(L"Spike");
 			GetAnimator()->FindAnimation(L"Hit")->SetFrame(0);
 			GetAnimator()->FindAnimation(L"R_Hit")->SetFrame(0);
 			m_fCurHp--;

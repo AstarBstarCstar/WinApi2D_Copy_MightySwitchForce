@@ -17,4 +17,5 @@ public:
 
 	bool CameraLock=false;
 	bool Count=false;
+	static float timer;
 };

@@ -23,7 +23,7 @@ void ClickExitButton(DWORD_PTR, DWORD_PTR)
 
 void CScene_Title::update()
 {
-	m_Count += fDT;
+	m_Count += DT;
 	if (m_Trigger)
 	{
 
