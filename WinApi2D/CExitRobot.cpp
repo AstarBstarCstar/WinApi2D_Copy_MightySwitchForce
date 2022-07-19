@@ -9,7 +9,7 @@ CExitRobot::CExitRobot()
 {	
 	SetName(L"EndRobot");
 	CreateCollider();
-	GetCollider()->SetScale(fPoint(100.f, 300.f));
+	GetCollider()->SetScale(fPoint(50.f, 50.f));
 
 	CD2DImage* m_OpenIdle = CResourceManager::GetInst()->LoadD2DImage(L"OpenIdle", L"texture\\Animation\\EndRobot\\OpenIdleClose\\Open.png"); 
 	CD2DImage* m_RobotIdle = CResourceManager::GetInst()->LoadD2DImage(L"RobotIdle", L"texture\\Animation\\EndRobot\\Idle\\Idle.png");
