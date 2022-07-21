@@ -11,7 +11,7 @@ CCameraManager::CCameraManager()
 	m_fTime = 2.f;
 	m_pTargetObj = nullptr;
 	m_fAccTime = m_fTime;
-	m_fSpeed = 1500;
+	m_fSpeed = 877;
 	m_pImg = nullptr;
 }
 

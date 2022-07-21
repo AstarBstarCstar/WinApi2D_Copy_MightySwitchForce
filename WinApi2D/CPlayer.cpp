@@ -12,6 +12,7 @@
 #include "CPlayerSiren.h"
 CPlayer* CPlayer::instance = nullptr;
 bool CPlayer::isGameOver = false;
+bool CPlayer::debugMode = false;
 CPlayer::CPlayer()
 {
 	SetName(L"Player");
@@ -112,6 +113,7 @@ TODO:
 UP DOWN 키 없음*/
 void CPlayer::update()
 {
+
 	//1,static영역
 	//2.scene swbl.관리
 	//3.플레이어가 해당 신에 있는 스위칭블럭 오브젝트들을 전부 확인후 변경
@@ -120,9 +122,12 @@ void CPlayer::update()
 	if (CGameObject::Switching != true || m_State==PLAYER_STATE::SMASHED)
 	{
 		update_Animation();
-		update_Move();
 		GetAnimator()->update();
 		update_State();
+		if (m_State != PLAYER_STATE::DIE)
+		{
+			update_Move();
+		}
 	}
 
 	else if (CGameObject::Switching == true || m_State == PLAYER_STATE::SMASHED)
@@ -132,11 +137,22 @@ void CPlayer::update()
 	CCameraManager::GetInst()->SetLookAt(GetPos());
 	m_PrevState = m_State;
 	m_fPrevDir = m_fCurDir;
+
+	if (KeyDown(VK_HOME))
+	{
+		if (CPlayer::debugMode == false)
+			CPlayer::debugMode = true;
+
+		else if (CPlayer::debugMode == true)
+			CPlayer::debugMode = false;
+	}
 }
 
 void CPlayer::render()
 {
 	component_render();
+
+	if(CPlayer::debugMode)
 	CGameObject::debug_render();//디버그용 정보 표시
 }
 
@@ -231,8 +247,8 @@ void CPlayer::update_State()
 				if (PLAYER_STATE::JUMPRISE != m_State)
 				{
 					CreateMissile();
-					GetAnimator()->FindAnimation(L"R_RunFire")->SetFrame(2);
-					GetAnimator()->FindAnimation(L"RunFire")->SetFrame(2);
+					GetAnimator()->FindAnimation(L"R_RunFire")->SetFrame(1);
+					GetAnimator()->FindAnimation(L"RunFire")->SetFrame(1);
 					m_State = PLAYER_STATE::MOVEFIRE;
 					m_bAttacking = true;
 				}
@@ -281,13 +297,15 @@ void CPlayer::update_Move()
 			Jump();
 		}
 
-		fPoint fptPos = GetPos();
-		fptPos.x += m_fvCurDir.x * m_fSpeed * fDT;
-		fptPos.y += m_fAccelGravity * fDT;
-		SetPos(fptPos);
-		m_fAccelGravity += GRAVITY * fDT;
-		if (m_fAccelGravity >= 6000.f)
-			m_fAccelGravity = 6000.f;
+
+			fPoint fptPos = GetPos();
+			fptPos.x += m_fvCurDir.x * m_fSpeed * fDT;
+			fptPos.y += m_fAccelGravity * fDT;
+			SetPos(fptPos);
+			m_fAccelGravity += GRAVITY * fDT;
+			if (m_fAccelGravity >= 6000.f)
+				m_fAccelGravity = 6000.f;
+		
 	}
 
 }
