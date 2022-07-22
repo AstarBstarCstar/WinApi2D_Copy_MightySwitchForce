@@ -13,6 +13,7 @@
 CPlayer* CPlayer::instance = nullptr;
 bool CPlayer::isGameOver = false;
 bool CPlayer::debugMode = false;
+float CPlayer::m_fCurHp;
 CPlayer::CPlayer()
 {
 	SetName(L"Player");
@@ -54,13 +55,6 @@ CPlayer::CPlayer()
 	GetAnimator()->CreateAnimation(L"Smashed", m_Smashed, fPoint(0.f, 0.f), fPoint(731.f, 846.f), fPoint(731.f, 0.f), fPoint(731.f, 846.f),0,0.07f,9, true, false);
 	GetAnimator()->Play(L"Idle");
 
-	//CAnimation* pAni;
-	//pAni = GetAnimator()->FindAnimation(L"JumpRise");
-	//for (int i = 0; i < 6; ++i)
-	//{
-	//	pAni->GetFrame(i);
-	//}
-
 	CSoundManager::GetInst()->AddSound(L"FireSound", L"sound\\PELLET_FIRE.wav", false, false);
 	CSoundManager::GetInst()->AddSound(L"Switch", L"sound\\Switch.wav", false, false);
 	CSoundManager::GetInst()->AddSound(L"Camera", L"sound\\SFX_CAMERA.wav", false, false);
@@ -71,7 +65,7 @@ CPlayer::CPlayer()
 	CSoundManager::GetInst()->AddSound(L"Switching", L"sound\\Switch.wav", false, false);
 
 	CreateCollider();
-	GetCollider()->SetScale(fPoint(55.f, 160.f));
+	GetCollider()->SetScale(fPoint(60.f, 160.f));
 	GetCollider()->SetOffsetPos(fPoint(0.f, 25.f));
 	
 	isLeft = false;

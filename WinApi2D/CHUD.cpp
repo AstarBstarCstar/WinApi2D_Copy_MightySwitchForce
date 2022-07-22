@@ -9,7 +9,7 @@ CHUD::CHUD()
 
 	m_pImg = CResourceManager::GetInst()->LoadD2DImage(L"Heart", L"texture\\HUD\\Heart\\3.png");
 	m_pImg->GetHeight();
-	m_fptScale = { (float)m_pImg->GetWidth(),(float)m_pImg->GetHeight()};
+	m_fptScale = { (float)m_pImg->GetWidth()*0.8f,(float)m_pImg->GetHeight()*0.8f};
 }
 
 CHUD::~CHUD()
