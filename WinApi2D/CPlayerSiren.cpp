@@ -41,6 +41,7 @@ void CPlayerSiren::update()
 		GetAnimator()->update();
 		pAni = GetAnimator()->FindAnimation(L"Siren");
 		DeleteObj(this);
+		CCameraManager::GetInst()->ShakeP(0.05f);
 	}
 	else if (CGameObject::Switching == true)
 	{
@@ -48,6 +49,7 @@ void CPlayerSiren::update()
 		GetAnimator()->Play(L"Siren");
 		
 		pAni = GetAnimator()->FindAnimation(L"Siren");
+
 
 	}
 }

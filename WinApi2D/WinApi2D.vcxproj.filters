@@ -252,6 +252,9 @@
     <ClInclude Include="CPlayerSiren.h">
       <Filter>Object\Character</Filter>
     </ClInclude>
+    <ClInclude Include="COpening.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinApi2D.cpp">
@@ -406,6 +409,9 @@
     </ClCompile>
     <ClCompile Include="CGameObject.cpp">
       <Filter>Resouce</Filter>
+    </ClCompile>
+    <ClCompile Include="COpening.cpp">
+      <Filter>Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -11,6 +11,7 @@
 #include "SwitchBlock.h"
 #include "CPlayerSiren.h"
 CPlayer* CPlayer::instance = nullptr;
+bool CPlayer::isGameOver = false;
 CPlayer::CPlayer()
 {
 	SetName(L"Player");
@@ -24,7 +25,7 @@ CPlayer::CPlayer()
 	CD2DImage* m_JumpFall = CResourceManager::GetInst()->LoadD2DImage(L"JumpFall", L"texture\\Animation\\PatriciaWagon\\Jump_Fall\\Jump_Fall_152_220.png");
 	CD2DImage* m_Die = CResourceManager::GetInst()->LoadD2DImage(L"Die", L"texture\\Animation\\PatriciaWagon\\Die\\Die_200_275.png");//Hit 같이
 	CD2DImage* m_Sweat = CResourceManager::GetInst()->LoadD2DImage(L"Sweat", L"texture\\Animation\\PatriciaWagon\\Sweat\\Sweat_260_236.png");
-
+	CD2DImage* m_Smashed = CResourceManager::GetInst()->LoadD2DImage(L"Smashed", L"texture\\Animation\\PatriciaWagon\\Smashed\\Smashed_731_846.png");
 	CreateAnimator();
 	GetAnimator()->CreateAnimation(L"Idle", m_Idle, fPoint(0.f, 0.f), fPoint(124.f, 224.f), fPoint(124.f, 0.f), fPoint(124.f, 224.f), 0, 0.065f, 7, true, false);
 	GetAnimator()->CreateAnimation(L"R_Idle", m_Idle, fPoint(0.f, 0.f), fPoint(124.f, 224.f), fPoint(124.f, 0.f), fPoint(124.f, 224.f), 0, 0.065f, 7, true, true);
@@ -48,6 +49,7 @@ CPlayer::CPlayer()
 	GetAnimator()->CreateAnimation(L"R_Sweat", m_Sweat, fPoint(0.f, 0.f), fPoint(260.f, 236.f), fPoint(260.f, 0.f), fPoint(260.f, 236.f), 0, 0.065f, 13, false, true);
 	GetAnimator()->CreateAnimation(L"Hit", m_Die, fPoint(0.f, 0.f), fPoint(220.f, 275.f), fPoint(220.f, 0.f), fPoint(220.f, 275.f), 0, 0.065f, 4, true, false);
 	GetAnimator()->CreateAnimation(L"R_Hit", m_Die, fPoint(0.f, 0.f), fPoint(220.f, 275.f), fPoint(220.f, 0.f), fPoint(220.f, 275.f), 0, 0.065f, 4, true, true);
+	GetAnimator()->CreateAnimation(L"Smashed", m_Smashed, fPoint(0.f, 0.f), fPoint(731.f, 846.f), fPoint(731.f, 0.f), fPoint(731.f, 846.f),0,0.07f,9, true, false);
 	GetAnimator()->Play(L"Idle");
 
 	//CAnimation* pAni;
@@ -62,6 +64,8 @@ CPlayer::CPlayer()
 	CSoundManager::GetInst()->AddSound(L"SLAM", L"sound\\Flip.wav", false, false);
 	CSoundManager::GetInst()->AddSound(L"Camera", L"sound\\SFX_CAMERA.wav", false, false);
 	CSoundManager::GetInst()->AddSound(L"CameraRelease", L"sound\\SFX_CAMERA_RELEASE.wav", false, false);
+	CSoundManager::GetInst()->AddSound(L"GlassHit", L"sound\\SFX_GLASS_SMASH.wav" , false, false);
+	CSoundManager::GetInst()->AddSound(L"Hit", L"sound\\OUCH_5.wav" , false, false);
 
 	CreateCollider();
 	GetCollider()->SetScale(fPoint(55.f, 160.f));
@@ -76,7 +80,7 @@ CPlayer::CPlayer()
 
 	m_fCurDir = { 1.f, 1.f };
 	m_fPrevDir = {};
-
+	timer=0;
 	m_fAccelGravity = 0.f;
 	m_fSpeed = MAX_SPEED;
 	m_gravity = GRAVITY;
@@ -88,6 +92,11 @@ CPlayer::CPlayer()
 
 CPlayer::~CPlayer()
 {
+}
+
+void CPlayer::SetPlayerPos()
+{
+	
 }
 
 /*
@@ -104,7 +113,7 @@ void CPlayer::update()
 	//3.플레이어가 해당 신에 있는 스위칭블럭 오브젝트들을 전부 확인후 변경
 	
 	CGameObject::Switching;
-	if (CGameObject::Switching != true)
+	if (CGameObject::Switching != true || m_State==PLAYER_STATE::SMASHED)
 	{
 		update_Animation();
 		update_Move();
@@ -112,14 +121,13 @@ void CPlayer::update()
 		update_State();
 	}
 
-	else if (CGameObject::Switching == true)
+	else if (CGameObject::Switching == true || m_State == PLAYER_STATE::SMASHED)
 	{
 		update_State();
 	}
 	CCameraManager::GetInst()->SetLookAt(GetPos());
 	m_PrevState = m_State;
 	m_fPrevDir = m_fCurDir;
-
 }
 
 void CPlayer::render()
@@ -130,116 +138,122 @@ void CPlayer::render()
 
 void CPlayer::update_State()
 {
-	if (m_fSpeed <= 0 && !m_bAttacking)
+	if (m_State != PLAYER_STATE::SMASHED)
 	{
-		if (m_State != PLAYER_STATE::JUMPRISE)
-			m_State = PLAYER_STATE::IDLE;
-	}
+		if (m_fSpeed <= 0 && !m_bAttacking)
+		{
+			if (m_State != PLAYER_STATE::JUMPRISE && m_State != PLAYER_STATE::SMASHED)
+				m_State = PLAYER_STATE::IDLE;
+		}
 
-	if (PLAYER_STATE::JUMPEND == m_State)
-	{
-		if (Key(VK_LEFT) || Key(VK_RIGHT))
+		if (PLAYER_STATE::JUMPEND == m_State)
 		{
-			m_State = PLAYER_STATE::MOVE;
+			if (Key(VK_LEFT) || Key(VK_RIGHT))
+			{
+				m_State = PLAYER_STATE::MOVE;
+			}
 		}
-	}
-	if (Key(VK_LEFT) && !m_bAttacking)
-	{
-		if (PLAYER_STATE::JUMPRISE != m_State)
+		if (Key(VK_LEFT) && !m_bAttacking)
 		{
-			m_State = PLAYER_STATE::MOVE;
+			if (PLAYER_STATE::JUMPRISE != m_State)
+			{
+				m_State = PLAYER_STATE::MOVE;
+			}
 		}
-	}
-	if (Key(VK_RIGHT) && !m_bAttacking)
-	{
-		if (PLAYER_STATE::JUMPRISE != m_State)
+		if (Key(VK_RIGHT) && !m_bAttacking)
 		{
-			m_State = PLAYER_STATE::MOVE;
+			if (PLAYER_STATE::JUMPRISE != m_State)
+			{
+				m_State = PLAYER_STATE::MOVE;
+			}
 		}
-	}
 
-	if (KeyDown('X') && m_bGrounding && !m_bAttacking)
-	{
-		m_State = PLAYER_STATE::JUMPRISE;
-	}
-	if (!m_bAttacking && m_fAccelGravity > 200)
-	{
-		m_State = PLAYER_STATE::JUMPFALL;
-	}
-	else
-	{
-		m_fSpeed = 0.f;
-	}
-	if (KeyDown('Z') && !m_bGrounding)
-	{
-		CreateMissile();
-		m_State = PLAYER_STATE::JUMPFIRE;
-		m_bAttacking = true;
-	}
-	if (KeyDown('Z') && m_bGrounding && m_fSpeed <= 0)
-	{
-		CreateMissile();
-		m_State = PLAYER_STATE::ATTACK;
-		m_bAttacking = true;
-	}
-	if (KeyDown('C'))
-	{
-		CreateSiren();
-	}
-	if (Key(VK_LEFT) && KeyDown('Z') && m_bGrounding && m_fSpeed > 500)
-	{
-		if (PLAYER_STATE::JUMPRISE != m_State)
+		if (KeyDown('X') && m_bGrounding && !m_bAttacking)
+		{
+			m_State = PLAYER_STATE::JUMPRISE;
+		}
+		if (!m_bAttacking && m_fAccelGravity > 200)
+		{
+			m_State = PLAYER_STATE::JUMPFALL;
+		}
+		else
+		{
+			m_fSpeed = 0.f;
+		}
+		if (KeyDown('Z') && !m_bGrounding)
 		{
 			CreateMissile();
-			m_State = PLAYER_STATE::MOVEFIRE;
+			m_State = PLAYER_STATE::JUMPFIRE;
 			m_bAttacking = true;
 		}
-	}
-	if (Key(VK_RIGHT) && KeyDown('Z') && m_bGrounding && m_fSpeed >= 500)
-	{
-		if (PLAYER_STATE::JUMPRISE != m_State)
+		if (KeyDown('Z') && m_bGrounding && m_fSpeed <= 0)
 		{
 			CreateMissile();
-			m_State = PLAYER_STATE::MOVEFIRE;
+			m_State = PLAYER_STATE::ATTACK;
 			m_bAttacking = true;
+		}
+		if (KeyDown('C'))
+		{
+			CreateSiren();
+		}
+		if (Key(VK_LEFT) && KeyDown('Z') && m_bGrounding && m_fSpeed > 500)
+		{
+			if (PLAYER_STATE::JUMPRISE != m_State)
+			{
+				CreateMissile();
+				m_State = PLAYER_STATE::MOVEFIRE;
+				m_bAttacking = true;
+			}
+		}
+		if (Key(VK_RIGHT) && KeyDown('Z') && m_bGrounding && m_fSpeed >= 500)
+		{
+			if (PLAYER_STATE::JUMPRISE != m_State)
+			{
+				CreateMissile();
+				m_State = PLAYER_STATE::MOVEFIRE;
+				m_bAttacking = true;
+			}
 		}
 	}
 
 }
 void CPlayer::update_Move()
 {
-	if (Key(VK_LEFT))
+	if (m_State != PLAYER_STATE::SMASHED)
 	{
-		m_fvCurDir.x = -1;
-		m_fSpeed = 600.f;
-	}
-	if (KeyUp(VK_LEFT))
-	{
-		m_fSpeed = 0.f;
-	}
+		if (Key(VK_LEFT))
+		{
+			m_fvCurDir.x = -1;
+			m_fSpeed = 600.f;
+		}
+		if (KeyUp(VK_LEFT))
+		{
+			m_fSpeed = 0.f;
+		}
 
-	if (Key(VK_RIGHT))
-	{
-		m_fvCurDir.x = 1;
-		m_fSpeed = 600.f;
-	}
-	if (KeyUp(VK_RIGHT))
-	{
-		m_fSpeed = 0.f;
-	}
+		if (Key(VK_RIGHT))
+		{
+			m_fvCurDir.x = 1;
+			m_fSpeed = 600.f;
+		}
+		if (KeyUp(VK_RIGHT))
+		{
+			m_fSpeed = 0.f;
+		}
 
-	if (m_State == PLAYER_STATE::JUMPRISE && m_bGrounding)
-	{
-		Jump();
-	}
+		if (m_State == PLAYER_STATE::JUMPRISE && m_bGrounding)
+		{
+			Jump();
+		}
 
-	fPoint fptPos = GetPos();
-	fptPos.x += m_fvCurDir.x * m_fSpeed * fDT;
-	fptPos.y += m_fAccelGravity * fDT;
-	SetPos(fptPos);
-	m_fAccelGravity += GRAVITY * fDT;
-	if (m_fAccelGravity >= 7000.f)
-		m_fAccelGravity = 7000.f;
+		fPoint fptPos = GetPos();
+		fptPos.x += m_fvCurDir.x * m_fSpeed * fDT;
+		fptPos.y += m_fAccelGravity * fDT;
+		SetPos(fptPos);
+		m_fAccelGravity += GRAVITY * fDT;
+		if (m_fAccelGravity >= 6000.f)
+			m_fAccelGravity = 6000.f;
+	}
 
 }
 void CPlayer::update_Animation()
@@ -288,6 +302,34 @@ void CPlayer::update_Animation()
 		break;
 	}
 
+	case PLAYER_STATE::SMASHED:
+	{
+		GetAnimator()->Play(L"Smashed");
+		if (crashTrriger)
+		{
+			CCameraManager::GetInst()->ShakeM(1.0f);
+			crashTrriger = false;
+		}
+
+		timer += fDT;
+		if (timer >= 1.5f)
+		{
+			if (alpTrriger)
+			{
+				CCameraManager::GetInst()->FadeOut(3.f);
+				alpTrriger = false;
+			}
+			if (timer >= 4.5f)
+			{
+				timer = 0.f;
+				isGameOver = true;
+				alpTrriger = true;
+				crashTrriger = true;
+			}
+		}
+		
+		break;
+	}
 	case PLAYER_STATE::JUMPRISE:
 	{
 		if (-1 == m_fvCurDir.x)
@@ -377,6 +419,7 @@ void CPlayer::update_Animation()
 	}
 	}
 }
+
 void CPlayer::CreateSiren()
 {
 	fPoint fSirenPos = GetPos();
@@ -389,6 +432,7 @@ void CPlayer::CreateSiren()
 		pSiren->SetName(L"PlayerSiren");
 		CreateObj(pSiren, GROUP_GAMEOBJ::UI);
 }
+
 void CPlayer::CreateMissile()
 {
 	fPoint fpMissilePos = GetPos();
@@ -421,10 +465,6 @@ void CPlayer::Jump()
 void CPlayer::OnCollisionEnter(CCollider* pOther)
 {
 	CGameObject* pOtherObj = pOther->GetObj();
-	if (pOtherObj->GetName() == L"Switching")
-	{
-		DeleteObj(this);
-	}
 	CTile* pTile = (CTile*)pOtherObj;
 	GROUP_TILE Type = pTile->GetGroup();
 	if (pOtherObj->GetName() == L"Tile")
@@ -465,6 +505,10 @@ void CPlayer::OnCollision(CCollider* pOther)
 	CGameObject* pOtherObj = pOther->GetObj();
 	CTile* pTile = (CTile*)pOtherObj;
 	GROUP_TILE Type = pTile->GetGroup();
+	if (pOtherObj->GetName() == L"Switching")												
+	{																																																
+		m_State = PLAYER_STATE::SMASHED;
+	}
 	if (pOtherObj->GetName() == L"SwitchBlock")
 	{
 		{

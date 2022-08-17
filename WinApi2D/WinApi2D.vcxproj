@@ -172,6 +172,7 @@
     <ClInclude Include="CMap.h" />
     <ClInclude Include="CMissile.h" />
     <ClInclude Include="CMonster.h" />
+    <ClInclude Include="COpening.h" />
     <ClInclude Include="CPanelUI.h" />
     <ClInclude Include="CPathManager.h" />
     <ClInclude Include="CPlayer.h" />
@@ -231,6 +232,7 @@
     <ClCompile Include="CMap.cpp" />
     <ClCompile Include="CMissile.cpp" />
     <ClCompile Include="CMonster.cpp" />
+    <ClCompile Include="COpening.cpp" />
     <ClCompile Include="CPanelUI.cpp" />
     <ClCompile Include="CPathManager.cpp" />
     <ClCompile Include="CPlayer.cpp" />

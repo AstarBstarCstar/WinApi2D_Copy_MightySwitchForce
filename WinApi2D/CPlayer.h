@@ -19,6 +19,7 @@ enum class PLAYER_STATE
 	FIRE,
 	MOVEFIRE,
 	JUMPFIRE,
+	SMASHED,
 
 	SIZE
 };
@@ -41,14 +42,17 @@ private:
 	bool m_bAttacking;
 	bool m_bGrounding;
 
+	bool alpTrriger=true;
+	bool crashTrriger = true;
 	bool m_bJustHit;
 	bool isLeft;
 	bool Run;
 	bool CameraLock;
 	bool Count = 1 ;
 	bool statiti;
+	
 	float m_gravity;
-
+	float timer = 0;
 	UINT m_Wall;
 	UINT m_Plat;
 	UINT m_Spike;
@@ -67,6 +71,7 @@ private:
 public:
 	CPlayer();
 	~CPlayer();
+	void SetPlayerPos();
 	virtual CPlayer* Clone();
 
 	virtual void update();
@@ -82,7 +87,7 @@ public:
 	virtual void OnCollisionEnter(CCollider* pOther);
 	virtual void OnCollision(CCollider* pOther);
 	virtual void OnCollisionExit(CCollider* pOther);
-
+	static bool isGameOver;
 	static CPlayer* GetPlayer();	// 게임 내에 하나만 있는 플레이어 객체 확인(임의로 싱글톤 선언)
 
 

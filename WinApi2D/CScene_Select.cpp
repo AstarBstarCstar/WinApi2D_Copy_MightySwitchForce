@@ -45,7 +45,8 @@ void CScene_Select::update()
 	{
 		if (timer >= 0.6f)
 		{
-			ChangeScn(GROUP_SCENE::START);
+			timer = 0;
+			ChangeScn(GROUP_SCENE::OPENING);
 			CSoundManager::GetInst()->Stop(L"SelectBGM");
 			m_isChanged = false;
 		}
@@ -58,7 +59,7 @@ void ClickINC(DWORD_PTR, DWORD_PTR)
 	CSoundManager::GetInst()->Stop(L"SelectBGM");
 	CSoundManager::GetInst()->Play(L"LevelSelected");
 
-	ChangeScn(GROUP_SCENE::START);
+	ChangeScn(GROUP_SCENE::OPENING);
 }
 
 void ClickQuit(DWORD_PTR, DWORD_PTR)
