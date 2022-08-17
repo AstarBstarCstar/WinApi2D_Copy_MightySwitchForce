@@ -20,6 +20,9 @@ private:
 	CD2DImage* m_pImg;				// 애니메이션 이미지
 	vector<tAnimFrm>	m_vecAnimFrm;		// 모든 프레임의 자르기 영역 및 유지시간
 	int					m_iCurFrm;			// 현재 프레임
+	int					m_FrmChecker;
+	int					m_Count;
+	bool				m_isFin;
 	float				m_fAccTime;			// 현재 프레임의 축적 시간
 	float				m_fCurAnimDuration;	// 현재 플레이 중인 애니메이션의 총 유지 시간
 	bool				m_bIsLoop;

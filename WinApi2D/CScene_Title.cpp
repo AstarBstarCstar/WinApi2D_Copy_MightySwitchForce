@@ -10,7 +10,6 @@
 CScene_Title::CScene_Title()
 {
 	m_Count = 0;
-
 }
 
 CScene_Title::~CScene_Title()

@@ -24,6 +24,18 @@ void CAnimator::update()
 	if (nullptr != m_pCurAni)
 		m_pCurAni->update();
 }
+bool CAnimator::PlayEnd(const wstring& strName)
+{
+	CAnimation* pAnim = FindAnimation(strName);
+	 pAnim->m_iCurFrm;
+	 pAnim->m_vecAnimFrm.size();
+	 if (pAnim->m_iCurFrm == pAnim->m_vecAnimFrm.size() - 1)
+	 {
+		 pAnim->m_iCurFrm = 0;
+		 return true;
+	 }
+
+}
 
 void CAnimator::render()
 {
@@ -35,12 +47,12 @@ void CAnimator::CreateAnimation(const wstring& strName, CD2DImage* pImg, fPoint 
 	fPoint step,fPoint size, UINT column, float duration, UINT frmCount, bool isLoop, bool bReverse)
 {
 	CAnimation* pAnim = FindAnimation(strName);
-
+	
 	// 이름이 똑같은 애니메이션을 넣을 때의 반응
 	assert(pAnim == nullptr);
 
 	pAnim = new CAnimation;
-
+	pAnim->m_Count = frmCount;
 	pAnim->SetName(strName);
 	pAnim->m_pAnimator = this;
 	pAnim->Create(pImg, leftTop, scale, step,size, column, duration, frmCount);
@@ -68,6 +80,7 @@ void CAnimator::Play(const wstring& strName, bool reset)
 	//	m_pCurAni->SetFrame(0);
 	//}
 }
+
 
 CGameObject* CAnimator::GetObj()
 {

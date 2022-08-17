@@ -27,6 +27,7 @@ public:
 	CGameObject();
 	CGameObject(const CGameObject& other);
 	virtual ~CGameObject();
+	void SetHoligan(short num);
 	virtual CGameObject* Clone() = 0;
 
 	void SetPos(fPoint pos);

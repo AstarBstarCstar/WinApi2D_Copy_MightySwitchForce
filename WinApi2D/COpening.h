@@ -4,8 +4,8 @@ class COpening :
 	public CScene
 {
 private:
-	HWND m_hVideo;
-	bool isVideoFinished;
+	HWND m_Opening;
+	bool videoTrigger;
 public:
 	void Initialize();
 public:

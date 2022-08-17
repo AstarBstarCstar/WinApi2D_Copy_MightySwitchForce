@@ -39,7 +39,6 @@ void CHooligan4::OnCollisionEnter(CCollider* pOther)
 	if (pOtherObj->GetName() == L"Player")
 	{
 		Count++;
-		CGameObject::holiganSave;
 		CGameObject::holiganSave++;
 	}
 	if (Count > 1)

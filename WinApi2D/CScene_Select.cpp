@@ -43,7 +43,7 @@ void CScene_Select::update()
 	}
 	if (m_isChanged)
 	{
-		if (timer >= 0.6f)
+		if (timer >= 0.62f)
 		{
 			timer = 0;
 			ChangeScn(GROUP_SCENE::OPENING);
