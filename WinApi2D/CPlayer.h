@@ -10,7 +10,6 @@ enum class PLAYER_STATE
 	IDLE,
 	HIT,
 	DIE,
-
 	MOVE,
 	ATTACK,
 	JUMPRISE,
@@ -45,11 +44,11 @@ private:
 	bool alpTrriger=true;
 	bool crashTrriger = true;
 	bool m_bJustHit;
+	float m_HitTimer;
 	bool isLeft;
 	bool Run;
 	bool CameraLock;
 	bool Count = 1 ;
-	bool statiti;
 	
 	float m_gravity;
 	float timer = 0;

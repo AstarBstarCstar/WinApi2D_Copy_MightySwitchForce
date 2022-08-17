@@ -407,9 +407,6 @@
     <ClCompile Include="SwitchBlock2.cpp">
       <Filter>Object\SwitchBlock</Filter>
     </ClCompile>
-    <ClCompile Include="SwitchBlock.cpp">
-      <Filter>Object\SwitchBlock</Filter>
-    </ClCompile>
     <ClCompile Include="CPlayerSiren.cpp">
       <Filter>Object\Character</Filter>
     </ClCompile>
@@ -424,6 +421,9 @@
     </ClCompile>
     <ClCompile Include="CScene_Ending.cpp">
       <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="SwitchBlock.cpp">
+      <Filter>Object\SwitchBlock</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

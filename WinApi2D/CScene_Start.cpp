@@ -72,47 +72,30 @@ void CScene_Start::Enter()
 		AddObject(pMon, GROUP_GAMEOBJ::MONSTER);
 
 		SwitchBlock* pSwitch = new SwitchBlock;
-		SwitchBlock* pSwitchC1 = pSwitch->Clone();
-		SwitchBlock* pSwitchC2 = pSwitch->Clone();
 		SwitchBlock* pSwitchC3 = pSwitch->Clone();
-		SwitchBlock* pSwitchC4 = pSwitch->Clone();
 		SwitchBlock* pSwitchC5 = pSwitch->Clone();
 
 		SwitchBlock2* pSwitch2 = new SwitchBlock2;
-		SwitchBlock2* pSwitch2C1 = pSwitch2->Clone();
 		SwitchBlock2* pSwitch2C2 = pSwitch2->Clone();
 		SwitchBlock2* pSwitch2C3 = pSwitch2->Clone();
-		SwitchBlock2* pSwitch2C4 = pSwitch2->Clone();
-		SwitchBlock2* pSwitch2C5 = pSwitch2->Clone();
 
 		
 
 		pSwitch->SetPos(fPoint(352, 2270));
-		pSwitchC1->SetPos(fPoint(544, 2270));
-		pSwitchC2->SetPos(fPoint(736, 2270));
+
 		pSwitchC3->SetPos(fPoint(352, 1886));
-		pSwitchC4->SetPos(fPoint(544, 1886));
 		pSwitchC5->SetPos(fPoint(736, 1886));
 
 		pSwitch2->SetPos(fPoint(352, 2078));
-		pSwitch2C1->SetPos(fPoint(544,2078));
 		pSwitch2C2->SetPos(fPoint(736,2078));
 		pSwitch2C3->SetPos(fPoint(352, 1694));
-		pSwitch2C4->SetPos(fPoint(544, 1694));
-		pSwitch2C5->SetPos(fPoint(736, 1694));
 		
 		AddObject(pSwitch, GROUP_GAMEOBJ::SWITCHBLOCK);
-		AddObject(pSwitchC1, GROUP_GAMEOBJ::SWITCHBLOCK);
-		AddObject(pSwitchC2, GROUP_GAMEOBJ::SWITCHBLOCK);
 		AddObject(pSwitch2, GROUP_GAMEOBJ::SWITCHBLOCK);
-		AddObject(pSwitch2C1, GROUP_GAMEOBJ::SWITCHBLOCK);
 		AddObject(pSwitch2C2, GROUP_GAMEOBJ::SWITCHBLOCK);
 		AddObject(pSwitchC3, GROUP_GAMEOBJ::SWITCHBLOCK);
-		AddObject(pSwitchC4, GROUP_GAMEOBJ::SWITCHBLOCK);
 		AddObject(pSwitchC5, GROUP_GAMEOBJ::SWITCHBLOCK);
 		AddObject(pSwitch2C3, GROUP_GAMEOBJ::SWITCHBLOCK);
-		AddObject(pSwitch2C4, GROUP_GAMEOBJ::SWITCHBLOCK);
-		AddObject(pSwitch2C5, GROUP_GAMEOBJ::SWITCHBLOCK);
 
 		//CTurtle* pTurtle = new CTurtle;
 		//CTurtle* pTur = CTurtle::Create(MON_TYPE::NORMAL, fPoint(1100.f, 1000.f));
