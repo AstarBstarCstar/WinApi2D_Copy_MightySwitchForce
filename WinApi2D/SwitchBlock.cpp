@@ -57,6 +57,7 @@ void SwitchBlock::update()
 
 void SwitchBlock::render()
 {
+	if(CPlayer::debugMode)
 	CGameObject::debug_render();//디버그용 정보 표시
 	fCurTime += (float)fDT;
 
@@ -87,12 +88,3 @@ void SwitchBlock::render()
 
 	component_render();
 }
-//void SwitchBlock::SetSwitching(bool SW)
-//{
-//	Switching = SW;
-//}
-//
-//bool SwitchBlock::GetSwitching()
-//{
-//	return Switching;
-//}

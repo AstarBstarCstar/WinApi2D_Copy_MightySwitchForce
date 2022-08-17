@@ -87,5 +87,6 @@ public:
 	virtual void OnCollision(CCollider* pOther);
 	virtual void OnCollisionExit(CCollider* pOther);
 	static bool isGameOver;
+	static bool debugMode;
 	static CPlayer* GetPlayer();	// 게임 내에 하나만 있는 플레이어 객체 확인(임의로 싱글톤 선언)
 };

@@ -1,6 +1,7 @@
 #include "framework.h"
 #include "CCollider.h"
 #include "CGameObject.h"
+#include "CPlayer.h"
 
 UINT CCollider::s_iID = 0;
 
@@ -81,20 +82,23 @@ void CCollider::finalupdate()
 
 void CCollider::render()
 {
-	COLORREF rgb = RGB(0, 0, 0);
-	if (m_iColCount)
-		rgb = RGB(255, 0, 0);
-	else
-		rgb = RGB(0, 255, 0);
+	if (CPlayer::debugMode)
+	{
+		COLORREF rgb = RGB(0, 0, 0);
+		if (m_iColCount)
+			rgb = RGB(255, 0, 0);
+		else
+			rgb = RGB(0, 255, 0);
 
-	fPoint fptRenderPos = CCameraManager::GetInst()->GetRenderPos(m_fptFinalPos);
+		fPoint fptRenderPos = CCameraManager::GetInst()->GetRenderPos(m_fptFinalPos);
 
-	CRenderManager::GetInst()->RenderRectangle(
-		fptRenderPos.x - m_fptScale.x / 2.f,
-		fptRenderPos.y - m_fptScale.y / 2.f,
-		fptRenderPos.x + m_fptScale.x / 2.f,
-		fptRenderPos.y + m_fptScale.y / 2.f,
-		rgb);
+		CRenderManager::GetInst()->RenderRectangle(
+			fptRenderPos.x - m_fptScale.x / 2.f,
+			fptRenderPos.y - m_fptScale.y / 2.f,
+			fptRenderPos.x + m_fptScale.x / 2.f,
+			fptRenderPos.y + m_fptScale.y / 2.f,
+			rgb);
+	}
 }
 
 void CCollider::OnCollision(CCollider* pOther)

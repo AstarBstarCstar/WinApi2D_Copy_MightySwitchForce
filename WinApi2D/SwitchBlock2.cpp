@@ -7,8 +7,6 @@
 SwitchBlock2::SwitchBlock2()
 {
 	m_pImg = CResourceManager::GetInst()->LoadD2DImage(L"SWBlock", L"texture\\Object\\SwitchBlock\\SwitchBlock.png");
-	//CSoundManager::GetInst()->AddSound(L"Switching", L"sound\\Switch.wav", false, false);
-	//CSoundManager::GetInst()->AddSound(L"Flip", L"sound\\Flip.wav", false, false);
 	SetScale(fPoint(192, 192));
 	SetName(L"SWB");
 
@@ -33,8 +31,6 @@ void SwitchBlock2::update()
 {
 	if (KeyDown('C'))
 	{
-		//CSoundManager::GetInst()->Play(L"Switching");
-		//CSoundManager::GetInst()->Play(L"Flip");
 		if (m_bSW==true)//활성화 된 스위치블럭 상태에서 c 누를시
 		{
 			m_eChanger = BLOCK_CHANGE::CLOSE;
@@ -57,6 +53,7 @@ void SwitchBlock2::update()
 
 void SwitchBlock2::render()
 {
+	if (CPlayer::debugMode)
 	CGameObject::debug_render();//디버그용 정보 표시
 	fCurTime += (float)fDT;
 

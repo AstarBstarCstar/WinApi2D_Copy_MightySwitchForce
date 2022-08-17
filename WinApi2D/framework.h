@@ -38,7 +38,7 @@ using namespace std;
 //## 게임 그룹						##
 //========================================
 
-enum class GROUP_GAMEOBJ//TODO: 가려져있는 반투명 오브젝트. 스위치 눌린상태로 보여지는그룹 bool time managetfDT -> 한프레임당 시간이 짧게 걸렸
+enum class GROUP_GAMEOBJ
 {
 	DEFAULT,
 	BACKGROUND,
@@ -48,11 +48,9 @@ enum class GROUP_GAMEOBJ//TODO: 가려져있는 반투명 오브젝트. 스위�
 	SWITCHBLOCK,
 	MONSTER,
 	PLAYER,
-
 	MISSILE_PLAYER,
-	MISSILE_MONSTER,
 
-	UI,		// UI는 모든 게임오브젝트 중 최상단 Layer에 위치
+	UI,		
 	SIZE,
 };
 

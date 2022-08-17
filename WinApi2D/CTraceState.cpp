@@ -3,8 +3,7 @@
 #include "CPlayer.h"
 #include "CMonster.h"
 
-CTraceState::CTraceState(STATE_MON state)
-	: CState(state)
+CTraceState::CTraceState(STATE_MON state): CState(state)
 {
 }
 

@@ -90,7 +90,7 @@ void CScene_Ending::Enter()
 	int cel;
 	temp = CScene_Start::timer;
 	min = temp / 60;
-	sec = ceil((short)temp % 60);
+	sec = ceil((int)temp % 60);
 	cel = ceil((int)(temp * 100) % 100);
 	wstring Time_min;
 	wstring Time_sec;
