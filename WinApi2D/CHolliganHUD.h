@@ -9,6 +9,12 @@ private:
 	fPoint m_fptPos;
 	fPoint m_fptScale;
 	CD2DImage* m_pImg;
+	CD2DImage* m_pImg2;
+	float alpha;
+
+	bool on;
+	bool off;
+	float timer = 0.f;
 	
 
 public:

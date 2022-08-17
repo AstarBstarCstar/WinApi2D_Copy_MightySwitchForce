@@ -17,6 +17,7 @@ private:
 	// Component
 	CCollider* m_pCollider;
 	CAnimator* m_pAnimator;
+	float m_fAccelGravity;
 
 	bool m_bAlive;
 	void SetDead();
@@ -58,6 +59,8 @@ public:
 	CAnimator* GetAnimator();				// 애니메이터 반환
 	void CreateAnimator();
 	GROUP_GAMEOBJ GetGroup();
+	void SetGroup(GROUP_GAMEOBJ GROUP);
+	void Gravity_Apply();
 	// 애니메이터 생성
 };
 

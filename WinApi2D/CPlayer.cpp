@@ -13,6 +13,7 @@
 CPlayer* CPlayer::instance = nullptr;
 bool CPlayer::isGameOver = false;
 bool CPlayer::debugMode = false;
+bool CPlayer::CameraLock = false;
 float CPlayer::m_fCurHp;
 CPlayer::CPlayer()
 {
@@ -29,6 +30,7 @@ CPlayer::CPlayer()
 	CD2DImage* m_Hit = CResourceManager::GetInst()->LoadD2DImage(L"Hit", L"texture\\Animation\\PatriciaWagon\\Hit\\Hit.png");
 	CD2DImage* m_Sweat = CResourceManager::GetInst()->LoadD2DImage(L"Sweat", L"texture\\Animation\\PatriciaWagon\\Sweat\\Sweat_260_236.png");
 	CD2DImage* m_Smashed = CResourceManager::GetInst()->LoadD2DImage(L"Smashed", L"texture\\Animation\\PatriciaWagon\\Smashed\\Smashed_731_846.png");
+	m_crik = CResourceManager::GetInst()->LoadD2DImage(L"crik", L"texture\\crik.png");
 	CreateAnimator();
 	GetAnimator()->CreateAnimation(L"Idle", m_Idle, fPoint(0.f, 0.f), fPoint(124.f, 224.f), fPoint(124.f, 0.f), fPoint(124.f, 224.f), 0, 0.065f, 7, true, false);
 	GetAnimator()->CreateAnimation(L"R_Idle", m_Idle, fPoint(0.f, 0.f), fPoint(124.f, 224.f), fPoint(124.f, 0.f), fPoint(124.f, 224.f), 0, 0.065f, 7, true, true);
@@ -63,6 +65,15 @@ CPlayer::CPlayer()
 	CSoundManager::GetInst()->AddSound(L"Spike", L"sound\\SFX_DIE_SPIKES.wav" , false, false);
 	CSoundManager::GetInst()->AddSound(L"Hit", L"sound\\OUCH_5.wav", false, false);
 	CSoundManager::GetInst()->AddSound(L"Switching", L"sound\\Switch.wav", false, false);
+	CSoundManager::GetInst()->AddSound(L"Jump", L"sound\\SFX_JUMP.wav", false, false);
+	CSoundManager::GetInst()->AddSound(L"HITBULLET", L"sound\\SFX_PELLET_HIT_FOE.wav", false, false);
+	CSoundManager::GetInst()->AddSound(L"BATHIT", L"sound\\SFX_BAT_HIT.wav", false, false);
+
+	CSoundManager::GetInst()->AddSound(L"TAKEOFF", L"sound\\SFX_ROBOT_TAKEOFF.wav", false, false);
+	CSoundManager::GetInst()->AddSound(L"ROBOTCLOSE", L"sound\\SFX_ROBOT_CLOSE.wav", false, false);
+	CSoundManager::GetInst()->AddSound(L"ROBOTOPEN", L"sound\\SFX_ROBOT_OPEN.wav", false, false);
+	
+	
 
 	CreateCollider();
 	GetCollider()->SetScale(fPoint(60.f, 160.f));
@@ -93,34 +104,20 @@ CPlayer::~CPlayer()
 {
 }
 
-void CPlayer::SetPlayerPos()
-{
-	
-}
-
-/*
-TODO:
-공격->   Z
-점프->   X
-스위치->C
-카메라->Space
-UP DOWN 키 없음*/
 void CPlayer::update()
 {
-
-	//1,static영역
-	//2.scene swbl.관리
-	//3.플레이어가 해당 신에 있는 스위칭블럭 오브젝트들을 전부 확인후 변경
-
 	CGameObject::Switching;
 	if (CGameObject::Switching != true || m_State==PLAYER_STATE::SMASHED)
 	{
 		update_Animation();
 		GetAnimator()->update();
+		if (CameraLock != true)
+		{
 		update_State();
 		if (m_State != PLAYER_STATE::DIE)
 		{
 			update_Move();
+		}
 		}
 	}
 
@@ -140,6 +137,27 @@ void CPlayer::update()
 		else if (CPlayer::debugMode == true)
 			CPlayer::debugMode = false;
 	}
+	if (KeyDown(VK_SPACE))
+	{
+		CSoundManager::GetInst()->Play(L"Camera");
+		CameraLock = true;
+		CCameraManager::GetInst()->FollowTargetObj(nullptr, 0, 0);
+	}
+	if (KeyUp(VK_SPACE))
+	{
+		CSoundManager::GetInst()->Play(L"CameraRelease");
+		CameraLock = false;
+	}
+	if (CameraLock == true)
+	{
+		
+		/*CCameraManager::GetInst()->FollowTargetObj(nullptr, 0, 0);*/
+		CameraRelease();
+	}
+	if (m_State == PLAYER_STATE::SMASHED)
+	{
+		GetCollider()->SetScale(fPoint(0.f,0.f));
+	}
 }
 
 void CPlayer::render()
@@ -148,6 +166,9 @@ void CPlayer::render()
 
 	if(CPlayer::debugMode)
 	CGameObject::debug_render();//디버그용 정보 표시
+
+	if(CameraLock)
+	CRenderManager::GetInst()->RenderImage(m_crik, 800 - 1590 * 0.5, 450 - 890 * 0.5, 800 + 1590 * 0.5, 450 + 890 * 0.5);
 }
 
 void CPlayer::update_State()
@@ -190,6 +211,7 @@ void CPlayer::update_State()
 
 			if (KeyDown('X') && m_bGrounding && !m_bAttacking)
 			{
+				CSoundManager::GetInst()->Play(L"Jump");
 				GetAnimator()->FindAnimation(L"R_JumpRise")->SetFrame(0);
 				GetAnimator()->FindAnimation(L"JumpRise")->SetFrame(0);
 				m_State = PLAYER_STATE::JUMPRISE;
@@ -290,22 +312,23 @@ void CPlayer::update_Move()
 		{
 			Jump();
 		}
+		//CGameObject::Gravity_Apply(); //플레이어는 상태패턴과 다른 처리를 위해서 컴포넌트를 받지 않고 직접 할당
 
-
-			fPoint fptPos = GetPos();
-			fptPos.x += m_fvCurDir.x * m_fSpeed * fDT;
-			fptPos.y += m_fAccelGravity * fDT;
-			SetPos(fptPos);
-			m_fAccelGravity += GRAVITY * fDT;
-			if (m_fAccelGravity >= 6000.f)
-				m_fAccelGravity = 6000.f;
+		fPoint fptPos = GetPos();
+		fptPos.y += m_fAccelGravity * fDT;
+		fptPos.x += m_fvCurDir.x * m_fSpeed * fDT;
+		m_fAccelGravity += GRAVITY * fDT;
+		if (m_fAccelGravity >= 6000.f)
+			m_fAccelGravity = 6000.f;
+		SetPos(fptPos);
 		
+
 	}
 
 }
 void CPlayer::update_Animation()
 {
-	if (m_PrevState == m_State && m_fvPrevDir == m_fvCurDir)
+	if (m_PrevState == m_State && m_fvPrevDir == m_fvCurDir)//이전 상태와 현재상태가 같거나, 이전 방향과 현재 방향이 같다면 애니메이션 갱신 하지 않음
 	{
 		return;
 	}
@@ -323,16 +346,6 @@ void CPlayer::update_Animation()
 		{
 			GetAnimator()->Play(L"Idle");
 		}
-		//else if (-1 == m_fvCurDir.x && fIdleTime >= 3)
-		//{
-		//	GetAnimator()->Play(L"R_Sweat");
-		//	fIdleTime = 0.f;
-		//}
-		//else if (1 == m_fvCurDir.x && fIdleTime >= 3)
-		//{
-		//	GetAnimator()->Play(L"Sweat");
-		//	fIdleTime = 0.f;
-		//}
 		break;
 	}
 
@@ -367,12 +380,16 @@ void CPlayer::update_Animation()
 	}
 	case PLAYER_STATE::DIE:
 	{
+		isDead = true;
 		if (-1 == m_fvCurDir.x)
 		{
+			CSoundManager::GetInst()->Stop(L"Stbgm");
 			GetAnimator()->Play(L"R_Die");
 		}
 		else
 		{
+			
+			CSoundManager::GetInst()->Stop(L"Stbgm");
 			GetAnimator()->Play(L"Die");
 		}
 		if (GetAnimator()->PlayEnd(L"R_Die")==true|| GetAnimator()->PlayEnd(L"Die") == true)
@@ -500,7 +517,6 @@ void CPlayer::update_Animation()
 void CPlayer::CreateSiren()
 {
 	fPoint fSirenPos = GetPos();
-	//fSirenPos.x += GetScale().x / 2.f;
 	fSirenPos.y -= 100.f;
 
 	CPlayerSiren* pSiren = new CPlayerSiren;
@@ -515,7 +531,7 @@ void CPlayer::CreateMissile()
 	fPoint fpMissilePos = GetPos();
 	fpMissilePos.x += GetScale().x / 2.f;
 
-	// Misiile Object
+	/*발사체 오브젝트 생성*/
 	CMissile* pMissile = new CMissile;
 	pMissile->SetPos(fpMissilePos);
 	if (m_fvCurDir.x == -1)
@@ -567,7 +583,6 @@ void CPlayer::OnCollisionEnter(CCollider* pOther)
 			{
 				if (m_State == PLAYER_STATE::JUMPRISE)
 				{
-					//애니메이터점프 왼오른쪽구현
 					m_State = PLAYER_STATE::JUMPEND;
 				}
 			}
@@ -588,7 +603,7 @@ void CPlayer::OnCollision(CCollider* pOther)
 	}
 	if (pOtherObj->GetName() == L"Monster")
 	{
-		if (m_bJustHit == false)
+		if (m_bJustHit == false&&m_State!=PLAYER_STATE::SMASHED)
 		{
 			CSoundManager::GetInst()->Play(L"Hit");
 			CSoundManager::GetInst()->Play(L"Spike");
@@ -648,7 +663,6 @@ void CPlayer::OnCollision(CCollider* pOther)
 				}
 			}
 
-
 			if (GetCollider()->GetBorderPos().bottom > pOther->GetBorderPos().bottom &&
 				GetCollider()->GetBorderPos().top <= pOther->GetBorderPos().bottom)
 			{
@@ -684,6 +698,7 @@ void CPlayer::OnCollision(CCollider* pOther)
 		switch (Type)
 		{
 		case GROUP_TILE::GROUND:
+		case GROUP_TILE::WALL:
 		{
 			LONG yDiff = 0;
 			LONG xDiff = 0;
@@ -743,8 +758,8 @@ void CPlayer::OnCollision(CCollider* pOther)
 					fptPos.y += (float)(pOther->GetBorderPos().bottom - GetCollider()->GetBorderPos().top);
 					SetPos(fptPos);
 				}
-
 			}
+			
 			if (GetCollider()->GetBorderPos().top < pOther->GetBorderPos().top
 				&& GetCollider()->GetBorderPos().bottom >= pOther->GetBorderPos().top)
 			{
@@ -761,11 +776,8 @@ void CPlayer::OnCollision(CCollider* pOther)
 				}
 			}
 			break;
-
 		}
-		case GROUP_TILE::WALL:
-		{
-		}
+		
 		case GROUP_TILE::PLATFORM:
 		{
 			LONG yDiff = 0;
@@ -802,7 +814,7 @@ void CPlayer::OnCollision(CCollider* pOther)
 			}
 			break;
 		}
-		case GROUP_TILE::SPIKE:
+		default:
 		{
 			break;
 		}
@@ -818,40 +830,23 @@ void CPlayer::OnCollisionExit(CCollider* pOther)
 void CPlayer::CameraRelease()
 {
 	CameraLock = true;
-	bool CameraLimit = false;
-	if (Count == 0)
-	{
-		CSoundManager::GetInst()->Play(L"Camera");
-		Count += 1;
-	}
 
 	/*방향키로 카메라 이동 상하좌우*/
-
 	if (Key(VK_UP))
 	{
 		CCameraManager::GetInst()->Scroll(fVec2(0, -1), 600);
 	}
 	if (Key(VK_DOWN))
 	{
-		/*TODO:카메라 아래로 일정범위까지*/
 		CCameraManager::GetInst()->Scroll(fVec2(0, 1), 600);
 	}
 	if (Key(VK_LEFT))
 	{
-		/*TODO:카메라 왼쪽으로 일정범위까지*/
 		CCameraManager::GetInst()->Scroll(fVec2(-1, 0), 600);
 	}
 	if (Key(VK_RIGHT))
 	{
-		/*TODO:카메라 오른쪽으로 일정범위까지*/
 		CCameraManager::GetInst()->Scroll(fVec2(1, 0), 600);
-	}
-	if (KeyUp(VK_SPACE))
-	{
-		CSoundManager::GetInst()->Play(L"CameraRelease");
-		CameraLock = false;
-		Count = 0;
-		return;
 	}
 }
 

@@ -17,6 +17,7 @@ private:
 
 	UINT m_iTileX;
 	UINT m_iTileY;
+	CButtonUI* btnTileGroup;
 
 public:
 	CScene_Tool();
@@ -39,8 +40,8 @@ public:
 	void SaveTileData();
 	void LoadTileData();
 	void LoadMap();
-
 	void ClickTileGroup(CButtonUI* button);
+	void ClickTileGroup();
 	void ClickTile(CTileButton* button);
 
 private:

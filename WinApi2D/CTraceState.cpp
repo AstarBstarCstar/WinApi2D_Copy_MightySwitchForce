@@ -27,16 +27,18 @@ void CTraceState::update()
 	if (fLen >= pMonster->GetMonInfo().fRecogRange)
 	{
 		ChangeAIState(GetOwnerAI(), STATE_MON::IDLE);
+		tracing = false;
 	}
-
 	fPoint pos = pMonster->GetPos();
 	pos += fvDiff.Normalize() * 500 * fDT;
+	tracing = true;
 	pMonster->SetPos(pos);
 }
 
 void CTraceState::Enter()
 {
 }
+
 
 void CTraceState::Exit()
 {

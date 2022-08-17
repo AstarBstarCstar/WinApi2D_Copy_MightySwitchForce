@@ -5,14 +5,12 @@
 
 COpening::COpening()
 {
-	videoTrigger = false;
+	videoTrigger = true;
 }
 
 COpening::~COpening()
 {
 }
-
-
 
 void COpening::update()
 {
@@ -25,10 +23,12 @@ void COpening::update()
 
 void COpening::Enter()
 {
-	
-	Initialize();
-	CCore::GetInst()->SetRender(false);
-}
+	if (videoTrigger)
+	{
+		Initialize();
+		CCore::GetInst()->SetRender(false);
+	}
+	}
 
 void COpening::Exit()
 {
@@ -40,7 +40,8 @@ void COpening::Exit()
 
 void COpening::Initialize()
 {
-	m_Opening = MCIWndCreate(hWnd, NULL, MCIWNDF_NOPLAYBAR | WS_VISIBLE | WS_CHILD, L"contents\\Opening.wmv");//TODO: 화질개선
+	m_Opening = MCIWndCreate(hWnd, NULL, MCIWNDF_NOPLAYBAR | WS_VISIBLE | WS_CHILD, L"contents\\Opening.wmv");
 	MoveWindow(m_Opening, 0, 0, 1600, 900, true);
 	MCIWndPlay(m_Opening);
+	videoTrigger = false;
 }

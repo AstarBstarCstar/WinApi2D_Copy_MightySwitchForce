@@ -11,11 +11,10 @@ enum class PLAYER_STATE
 	HIT,
 	DIE,
 	MOVE,
-	ATTACK,
 	JUMPRISE,
-	JUMPFALL,
 	JUMPEND,
-	FIRE,
+	JUMPFALL,
+	ATTACK,
 	MOVEFIRE,
 	JUMPFIRE,
 	SMASHED,
@@ -27,7 +26,6 @@ class CPlayer : public CGameObject
 {
 private:
 	static CPlayer* instance;
-	
 	float m_fFullHp;
 
 	fVec2 m_fCurDir;
@@ -46,11 +44,11 @@ private:
 	float m_HitTimer;
 	bool isLeft;
 	bool Run;
-	bool CameraLock;
 	bool Count = 1 ;
-	
+	bool died = false;
 	float m_gravity;
-	float timer = 0;
+	float timer = 0.f;
+	float dietimer = 0.f;
 	UINT m_Wall;
 	UINT m_Plat;
 	UINT m_Spike;
@@ -61,6 +59,8 @@ private:
 	PLAYER_STATE m_State;
 	PLAYER_STATE m_PrevState;
 
+	CD2DImage* m_crik;
+
 	
 
 	void CreateMissile();
@@ -69,7 +69,6 @@ private:
 public:
 	CPlayer();
 	~CPlayer();
-	void SetPlayerPos();
 	virtual CPlayer* Clone();
 
 	virtual void update();
@@ -78,15 +77,20 @@ public:
 	PLAYER_STATE GetState();
 	void RegisterPlayer();
 	void CameraRelease();
-
 	void update_State();
 	void update_Move();
 	void update_Animation();
+
+public:
 	virtual void OnCollisionEnter(CCollider* pOther);
 	virtual void OnCollision(CCollider* pOther);
 	virtual void OnCollisionExit(CCollider* pOther);
+
+public:
 	static float m_fCurHp;
 	static bool isGameOver;
+	static bool isDead;
 	static bool debugMode;
+	static bool CameraLock;//->
 	static CPlayer* GetPlayer();	// 게임 내에 하나만 있는 플레이어 객체 확인(임의로 싱글톤 선언)
 };

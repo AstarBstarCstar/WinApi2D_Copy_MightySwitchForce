@@ -22,6 +22,8 @@ CScene_Tool::CScene_Tool()
 	m_velocity = 500;
 	m_iTileX = 0;
 	m_iTileY = 0;
+	btnTileGroup = new CButtonUI;
+	btnTileGroup->SetTextColor(RGB(255, 255, 0));
 }
 
 CScene_Tool::~CScene_Tool()
@@ -52,6 +54,10 @@ void CScene_Tool::update()
 	if (Key('S'))
 	{
 		CCameraManager::GetInst()->Scroll(fVec2(0, 1), m_velocity);
+	}
+	if (KeyDown('Z'))
+	{
+		ClickTileGroup();
 	}
 
 	SetTileIdx();
@@ -268,7 +274,7 @@ void CScene_Tool::SaveTileData()
 	ofn.nMaxFileTitle = 0; // 타이틀 바 문자열 크기. nullptr이면 0.
 	wstring strTileFolder = CPathManager::GetInst()->GetContentPath();
 	strTileFolder += L"tile";
-	ofn.lpstrInitialDir = strTileFolder.c_str(); // 초기경로. 우리는 타일 저장할거기 때문에, content->tile 경로로 해두자.
+	ofn.lpstrInitialDir = strTileFolder.c_str(); // 초기경로. 
 	ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST; // 스타일
 
 	if (GetSaveFileName(&ofn))
@@ -292,7 +298,7 @@ void CScene_Tool::LoadTileData()
 	ofn.nMaxFileTitle = 0; // 타이틀 바 문자열 크기. nullptr이면 0.
 	wstring strTileFolder = CPathManager::GetInst()->GetContentPath();
 	strTileFolder += L"tile";
-	ofn.lpstrInitialDir = strTileFolder.c_str(); // 초기경로. 우리는 타일 저장할거기 때문에, content->tile 경로로 해두자.
+	ofn.lpstrInitialDir = strTileFolder.c_str(); // 초기경로. 
 	ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST; // 스타일
 
 	if (GetOpenFileName(&ofn))
@@ -316,7 +322,7 @@ void CScene_Tool::LoadMap()
 	ofn.nMaxFileTitle = 0; // 타이틀 바 문자열 크기. nullptr이면 0.
 	wstring strTileFolder = CPathManager::GetInst()->GetContentPath();
 	strTileFolder += L"map";
-	ofn.lpstrInitialDir = strTileFolder.c_str(); // 초기경로. 우리는 타일 저장할거기 때문에, content->tile 경로로 해두자.
+	ofn.lpstrInitialDir = strTileFolder.c_str(); // 초기경로. 
 	ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST; // 스타일
 
 	if (GetOpenFileName(&ofn))
@@ -363,6 +369,36 @@ void CScene_Tool::ClickTileGroup(CButtonUI* button)
 	}
 }
 
+void CScene_Tool::ClickTileGroup()
+{
+	if (m_gTile == GROUP_TILE::NONE)
+	{
+		m_gTile = GROUP_TILE::GROUND;
+		btnTileGroup->SetText(L"GROUND");
+		
+	}
+	else if (m_gTile == GROUP_TILE::GROUND)
+	{
+		m_gTile = GROUP_TILE::WALL;
+		btnTileGroup->SetText(L"WALL");
+	}
+	else if (m_gTile == GROUP_TILE::WALL)
+	{
+		m_gTile = GROUP_TILE::SPIKE;
+		btnTileGroup->SetText(L"SPIKE");
+	}
+	else if (m_gTile == GROUP_TILE::SPIKE)
+	{
+		m_gTile = GROUP_TILE::PLATFORM;
+		btnTileGroup->SetText(L"PLATFORM");
+	}
+	else if (m_gTile == GROUP_TILE::PLATFORM)
+	{
+		m_gTile = GROUP_TILE::NONE;
+		btnTileGroup->SetText(L"NONE");
+	}
+}
+
 void ClickTileButton(DWORD_PTR param1, DWORD_PTR param2)
 {
 	// param1 : Scene_tool
@@ -400,7 +436,6 @@ void CScene_Tool::CreateTilePanel()
 		}
 	}
 
-	CButtonUI* btnTileGroup = new CButtonUI;
 	btnTileGroup->SetScale(fPoint(100.f, 50.f));
 	btnTileGroup->SetPos(fPoint(50.f, 500.f));
 	btnTileGroup->SetText(L"NONE");

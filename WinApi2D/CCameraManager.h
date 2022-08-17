@@ -74,6 +74,7 @@ public:
 	void SetBoundary(bool Boundary);
 	void LerpDiff(fPoint pos);
 	void CheckBoundary();
+	void CheckCamBoundary();
 private:
 	void CalDiff();
 };

@@ -92,6 +92,7 @@ void CGameObject::SetDead()
 	m_bAlive = false;
 }
 
+
 void CGameObject::finalupdate()
 {
 	if (nullptr != m_pCollider)
@@ -99,7 +100,15 @@ void CGameObject::finalupdate()
 		m_pCollider->finalupdate();
 	}
 }
-
+void CGameObject::Gravity_Apply()
+{
+	fPoint fptPos = GetPos();
+	fptPos.y += m_fAccelGravity * fDT;
+	m_fAccelGravity += GRAVITY * fDT;
+	if (m_fAccelGravity >= 6000.f)
+		m_fAccelGravity = 6000.f;
+	SetPos(fptPos);
+}
 void CGameObject::render()
 {
 	// 절대 위치를 넘기고, 랜더링 위치를 받아옴

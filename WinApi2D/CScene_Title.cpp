@@ -52,6 +52,7 @@ void CScene_Title::Enter()
 	CSoundManager::GetInst()->AddSound(L"EnterVoice", L"sound\\IntroStart.wav", false,false);
 	CSoundManager::GetInst()->AddSound(L"Click", L"sound\\MAKE_CHOICE.wav", false,false);
 	CSoundManager::GetInst()->AddSound(L"TitleBGM", L"sound\\Title.wav", false,true);
+	CSoundManager::GetInst()->AddSound(L"READY", L"sound\\READY_1.wav",false,false);
 	CSoundManager::GetInst()->Play(L"TitleBGM");
 
 	CMap* Title = new CMap;

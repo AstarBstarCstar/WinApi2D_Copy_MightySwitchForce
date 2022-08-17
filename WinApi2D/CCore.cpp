@@ -2,6 +2,7 @@
 #include "CCore.h"
 #include "CGameObject.h"
 #include "CTexture.h"
+#include "CPlayer.h"
 CCore::CCore()
 {
 	// 게임 화면을 그리기 위한 DC 핸들값 초기화
@@ -42,12 +43,17 @@ void CCore::render()
 		//CCameraManager::GetInst()->render(m_pMemTex->GetDC());
 	}
 	// 오른쪽 상단에 FPS 표시
-	WCHAR strFPS[6];
-	swprintf_s(strFPS, L"%5d", CTimeManager::GetInst()->GetFPS());
-	CRenderManager::GetInst()->RenderText(strFPS, WINSIZEX - 50, 10, WINSIZEX, 50, 12, RGB(0, 0, 0));
+	
+	
+		WCHAR strFPS[6];
+		swprintf_s(strFPS, L"%5d", CTimeManager::GetInst()->GetFPS());
 
-	CRenderManager::GetInst()->GetRenderTarget()->EndDraw();
-}
+		if (CPlayer::debugMode)
+		CRenderManager::GetInst()->RenderText(strFPS, WINSIZEX - 50, 10, WINSIZEX, 50, 12, RGB(0, 255, 0));
+
+		CRenderManager::GetInst()->GetRenderTarget()->EndDraw();
+	}
+
 
 void CCore::init()
 {

@@ -28,7 +28,6 @@ bool CAnimator::PlayEnd(const wstring& strName)
 {
 	CAnimation* pAnim = FindAnimation(strName);
 	 pAnim->m_iCurFrm;
-	 pAnim->m_vecAnimFrm.size();
 	 if (pAnim->m_iCurFrm == pAnim->m_vecAnimFrm.size() - 1)
 	 {
 		 pAnim->m_iCurFrm = 0;

@@ -10,7 +10,7 @@ public:
 	CD2DImage* m_pImg;
 	int m_iX;
 	int m_iY;
-	int m_iIdx;			// ÅØ½ºÃÄ ÀÎµ¦½º
+	int m_iIdx;		
 
 	GROUP_TILE m_eGroup;
 

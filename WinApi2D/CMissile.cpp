@@ -86,14 +86,21 @@ void CMissile::OnCollisionEnter(CCollider* pOther)
 
 	if (pOtherObj->GetName() == L"Monster")
 	{
+		CSoundManager::GetInst()->Play(L"HITBULLET");
+		CSoundManager::GetInst()->Play(L"BATHIT");
 			DeleteObj(this);
+			
+
 	}
 	else if (pOtherObj->GetName() == L"Tile")
 	{
+		CSoundManager::GetInst()->Play(L"HITBULLET");
 			DeleteObj(this);
 	}
 	else if (pOtherObj->GetName() == L"SwitchBlock")
 	{
+		CSoundManager::GetInst()->Play(L"HITBULLET");
 		DeleteObj(this);
 	}
+	
 }

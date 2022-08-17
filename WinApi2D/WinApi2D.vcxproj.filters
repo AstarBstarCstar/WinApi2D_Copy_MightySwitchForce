@@ -219,9 +219,6 @@
     <ClInclude Include="CTileButton.h">
       <Filter>Object\Tile</Filter>
     </ClInclude>
-    <ClInclude Include="CGravity.h">
-      <Filter>Object</Filter>
-    </ClInclude>
     <ClInclude Include="CHooligan.h">
       <Filter>Object\Hooligan</Filter>
     </ClInclude>
@@ -395,9 +392,6 @@
     <ClCompile Include="CTileButton.cpp">
       <Filter>Object\Tile</Filter>
     </ClCompile>
-    <ClCompile Include="CGravity.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
     <ClCompile Include="CHooligan.cpp">
       <Filter>Object\Hooligan</Filter>
     </ClCompile>
@@ -471,5 +465,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
+    <None Include="ClassDiagram.cd" />
+    <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram2.cd" />
   </ItemGroup>
 </Project>

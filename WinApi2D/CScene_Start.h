@@ -7,6 +7,9 @@ class CButtonUI;
 
 class CScene_Start : public CScene
 {
+private:
+	void ObjectSetter();
+	void UISetter();
 public:
 	CScene_Start();
 	virtual ~CScene_Start();
@@ -27,8 +30,10 @@ public:
 	bool CameraLock=false;
 	bool Count=false;
 	static float timer;
+	static bool isStop;
 
 	float initTimer;
+	float changeTimer;
 	float temp = 0.f;
 	int min;
 	int sec;

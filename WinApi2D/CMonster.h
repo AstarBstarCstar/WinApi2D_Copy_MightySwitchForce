@@ -8,11 +8,15 @@ class CMonster : public CGameObject
 {
 private:
 	tMonInfo m_tInfo;
+	fPoint m_fCurDir;
 	AI* m_pAI;
+	CD2DImage* m_pImg2;
 
 public:
+
 	CMonster();
 	virtual ~CMonster();
+	void SetAnim(bool setter);
 	virtual CMonster* Clone();
 
 	static CMonster* Create(MON_TYPE type, fPoint pos);
@@ -28,6 +32,9 @@ public:
 	void SetMonInfo(const tMonInfo& info);
 
 	void OnCollisionEnter(CCollider* pOther);
+	void OnCollision(CCollider* pOther);
+	bool hit;
+	float deletetimer;
 };
 
 

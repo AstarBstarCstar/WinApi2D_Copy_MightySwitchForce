@@ -4,6 +4,7 @@
 #include "CD2DImage.h"
 #include "CAnimator.h"
 #include "CAnimation.h"
+#include "CScene_Start.h"
 
 CExitRobot::CExitRobot()
 {	
@@ -46,6 +47,8 @@ void CExitRobot::OnCollision(CCollider* pOther)
 			GetAnimator()->Play(L"EnterZero");
 			CSoundManager::GetInst()->Stop(L"Stbgm");
 			CSoundManager::GetInst()->Play(L"Clear");
+			CSoundManager::GetInst()->Play(L"ROBOTOPEN");
+			CScene_Start::isStop = false;
 		}
 	}
 }
@@ -92,11 +95,13 @@ void CExitRobot::update()
 	if (GetAnimator()->PlayEnd(L"EnterZero")==true)
 	{
 		GetAnimator()->Play(L"TakeOff");
+		CSoundManager::GetInst()->Play(L"ROBOTCLOSE");
 	}
 	if (GetAnimator()->PlayEnd(L"TakeOff") == true)
 	{
 		CCameraManager::GetInst()->ShakeM(5.f);
 		CCameraManager::GetInst()->FadeOut(8.f);
+		CSoundManager::GetInst()->Play(L"TAKEOFF");
 		GetAnimator()->Play(L"Fly");
 		End = true;
 		

@@ -2,6 +2,7 @@
 #include "CCameraManager.h"
 #include "CGameObject.h"
 #include "CTexture.h"
+#include "CPlayer.h"
 
 CCameraManager::CCameraManager()
 {
@@ -11,7 +12,7 @@ CCameraManager::CCameraManager()
 	m_fTime = 2.f;
 	m_pTargetObj = nullptr;
 	m_fAccTime = m_fTime;
-	m_fSpeed = 877;
+	m_fSpeed = 1277;
 	m_pImg = nullptr;
 }
 
@@ -77,13 +78,13 @@ void CCameraManager::render()
 	else if (CAM_EFFECT::SHAKINGPLUS == m_eEffect)
 	{
 		int random;
-		random = rand() % 30-15;
+		random = rand() % 60-15;
 		m_fptLookAt.x += random;
 	}
 	else if (CAM_EFFECT::SHAKINGMINUS == m_eEffect)
 	{
 		int random;
-		random = rand() % 30 - 15;
+		random = rand() % 60 - 15;
 		m_fptLookAt.x += random;
 		m_fptLookAt.y += random;
 	}
@@ -194,9 +195,34 @@ void CCameraManager::LerpDiff(fPoint targetPos)
 
 void CCameraManager::CalDiff()
 {
+	if (CPlayer::CameraLock == true)
+	{
+		if (m_bBoundary)
+		{
+			CheckCamBoundary();
+		}
+		else
+		{
+			if (m_pTargetObj != nullptr)
+			{
+				if (m_pTargetObj->isDead())
+				{
+					m_pTargetObj = nullptr;
+				}
+				else
+				{
+					if (m_bContectX)
+						m_fptLookAt.x = m_fptCurLookAt.x;
+
+					if (m_bContectY)
+						m_fptLookAt.y = m_fptCurLookAt.y;
+				}
+			}
+		}
+		return;
+	}
 	m_fAccTime += fDT;
 	fVec2 lookDir = m_fptLookAt - m_fptPrevLookAt;
-
 	//시간이 지나면 도착한것으로 간주
 	if (m_fTime <= m_fAccTime)
 	{
@@ -223,6 +249,33 @@ void CCameraManager::CheckBoundary()
 			m_fptLookAt.y = m_pTargetObj->GetPos().y;
 	}
 
+	if (m_fptLookAt.x - WINSIZEX / 2.f < m_fptLastLT.x)
+	{
+		m_fptLookAt.x = m_fptLastLT.x + WINSIZEX / 2.f;
+	}
+
+	if (m_fptLookAt.y - WINSIZEY / 2.f < m_fptLastLT.y)
+	{
+		m_fptLookAt.y = m_fptLastLT.y + WINSIZEY / 2.f;
+	}
+
+	if (m_fptLookAt.x + WINSIZEX / 2.f > m_fptLastRB.x)
+	{
+		m_fptLookAt.x = m_fptLastRB.x - WINSIZEX / 2.f;
+	}
+
+	if (m_fptLookAt.y + WINSIZEY / 2.f > m_fptLastRB.y)
+	{
+		m_fptLookAt.y = m_fptLastRB.y - WINSIZEY / 2.f;
+	}
+
+	float fMoveDist = (m_fptLookAt - m_fptPrevLookAt).Length();
+	m_fTime = fMoveDist / m_fSpeed;
+	m_fAccTime = 0;
+}
+
+void CCameraManager::CheckCamBoundary()
+{
 	if (m_fptLookAt.x - WINSIZEX / 2.f < m_fptLastLT.x)
 	{
 		m_fptLookAt.x = m_fptLastLT.x + WINSIZEX / 2.f;

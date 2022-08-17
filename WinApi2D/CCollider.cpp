@@ -127,3 +127,9 @@ GROUP_GAMEOBJ CGameObject::GetGroup()
 {
 	return objGroup;
 }
+void CGameObject::SetGroup(GROUP_GAMEOBJ GROUP)
+{
+	objGroup = GROUP;
+}
+
+

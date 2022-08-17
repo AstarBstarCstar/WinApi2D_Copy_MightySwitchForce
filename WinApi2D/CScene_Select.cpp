@@ -7,10 +7,13 @@
 #include "CSound.h"
 #include "CD2DImage.h"
 #include "CButtonUI.h"
+#include "CScene_Start.h"
 
+float CScene_Select::temptimer = NULL;
 CScene_Select::CScene_Select()
 {
 	m_isChanged = false;
+	is_checked = false;
 }
 
 CScene_Select::~CScene_Select()
@@ -19,6 +22,7 @@ CScene_Select::~CScene_Select()
 
 void CScene_Select::update()
 {
+	TimerSetter();
 	timer += fDT;
 	if (KeyDown(VK_UP))
 	{
@@ -30,7 +34,11 @@ void CScene_Select::update()
 	}
 	if (KeyDown('A'))
 	{
+		if (m_isChanged)
+			return;
+
 		m_isChanged = true;
+		is_checked = false;
 		timer = 0.f;
 		CCameraManager::GetInst()->FadeOut(0.63f);
 		CSoundManager::GetInst()->Play(L"LevelSelected");
@@ -40,6 +48,7 @@ void CScene_Select::update()
 		ChangeScn(GROUP_SCENE::TITLE);
 		CSoundManager::GetInst()->Play(L"BackButton");
 		CSoundManager::GetInst()->Stop(L"SelectBGM");
+		is_checked = false;
 	}
 	if (m_isChanged)
 	{
@@ -71,6 +80,7 @@ void ClickQuit(DWORD_PTR, DWORD_PTR)
 
 void CScene_Select::Enter()
 {
+	is_checked = false;
 	CCameraManager::GetInst()->FadeIn(0.7f);
 	CSoundManager::GetInst()->AddSound(L"BackButton", L"sound\\BackButton.wav", false,false);
 	CSoundManager::GetInst()->AddSound(L"CursorMove", L"sound\\CursorMove.wav", false, false);
@@ -129,17 +139,9 @@ void CScene_Select::Enter()
 	m_pPAR->SetScale(fPoint(200.f, 50.f));
 	m_pPAR->SetTextColor(RGB(255, 255, 0));
 	m_pPAR->SetFontSize(75);
-	m_pPAR->SetText(L"01:50.00");
+	m_pPAR->SetText(L"01:00.00");
 	m_pPAR->SetPos(fPoint(WINSIZEX / 2.f - 405.f, WINSIZEY / 2.f +185.f));
 	AddObject(m_pPAR, GROUP_GAMEOBJ::UI);
-
-	CButtonUI* m_pBestTime = new CButtonUI;
-	m_pBestTime->SetScale(fPoint(200.f, 50.f));
-	m_pBestTime->SetTextColor(RGB(255, 255, 0));
-	m_pBestTime->SetFontSize(75);
-	m_pBestTime->SetText(L"--:--.--");
-	m_pBestTime->SetPos(fPoint(WINSIZEX / 2.f -405.f, WINSIZEY / 2.f + 100.f));
-	AddObject(m_pBestTime, GROUP_GAMEOBJ::UI);
 
 	CButtonUI* Back = new CButtonUI;
 	Back->SetScale(fPoint(100.f, 50.f));
@@ -155,6 +157,42 @@ void CScene_Select::Enter()
 	SelectButton->SetClickedCallBack(ClickINC, 0, 0);
 	AddObject(SelectButton, GROUP_GAMEOBJ::UI);
 
+		m_pMin = new CButtonUI;
+		m_pMin->SetScale(fPoint(100.f, -735.f));
+		m_pMin->SetTextColor(RGB(255, 255, 0));
+		m_pMin->SetFontSize(75);
+		m_pMin->SetPos(fPoint(WINSIZEX / 2.f - 450.f, WINSIZEY / 2.f + 500.f));
+		AddObject(m_pMin, GROUP_GAMEOBJ::UI);
+
+		CButtonUI* m_pcol = new CButtonUI;
+		m_pcol->SetScale(fPoint(100.f, -735.f));
+		m_pcol->SetTextColor(RGB(255, 255, 0));
+		m_pcol->SetFontSize(75);
+		m_pcol->SetText(L":");
+		m_pcol->SetPos(fPoint(WINSIZEX / 2.f - 415.f, WINSIZEY / 2.f + 500.f));
+		AddObject(m_pcol, GROUP_GAMEOBJ::UI);
+
+		m_pSec = new CButtonUI;
+		m_pSec->SetScale(fPoint(100.f, -735.f));
+		m_pSec->SetTextColor(RGB(255, 255, 0));
+		m_pSec->SetFontSize(75);
+		m_pSec->SetPos(fPoint(WINSIZEX / 2.f - 353.f, WINSIZEY / 2.f + 500.f));
+		AddObject(m_pSec, GROUP_GAMEOBJ::UI);
+
+		CButtonUI* m_pcom = new CButtonUI;
+		m_pcom->SetScale(fPoint(100.f, -732.f));
+		m_pcom->SetTextColor(RGB(255, 255, 0));
+		m_pcom->SetFontSize(75);
+		m_pcom->SetText(L".");
+		m_pcom->SetPos(fPoint(WINSIZEX / 2.f - 293.f, WINSIZEY / 2.f + 500.f));
+		AddObject(m_pcom, GROUP_GAMEOBJ::UI);
+
+		m_pCel = new CButtonUI;
+		m_pCel->SetScale(fPoint(100.f, -735.f));
+		m_pCel->SetTextColor(RGB(255, 255, 0));
+		m_pCel->SetFontSize(75);
+		m_pCel->SetPos(fPoint(WINSIZEX / 2.f - 230.f, WINSIZEY / 2.f + 500.f));
+		AddObject(m_pCel, GROUP_GAMEOBJ::UI);
 }
 
 void CScene_Select::Exit()
@@ -162,4 +200,38 @@ void CScene_Select::Exit()
 	DeleteAll();
 
 	CCollisionManager::GetInst()->Reset();
+}
+
+void CScene_Select::TimerSetter()
+{
+	if (is_checked)
+		return;
+
+	if (CScene_Select::temptimer == NULL)
+	{
+		m_pMin->SetText(L"-");
+		m_pSec->SetText(L"--");
+		m_pCel->SetText(L"--");
+
+	}
+	else
+	{
+		float temp = CScene_Select::temptimer;
+		int min;
+		int sec;
+		int cel;
+		wstring Time_min;
+		wstring Time_sec;
+		wstring Time_cel;
+		min = temp / 60;
+		sec = (int)temp % 60;
+		cel = (int)(temp * 100) % 100;
+		Time_min = std::to_wstring(min);
+		Time_sec = std::to_wstring(sec);
+		Time_cel = std::to_wstring(cel);
+		m_pMin->SetText(Time_min);
+		m_pSec->SetText(Time_sec);
+		m_pCel->SetText(Time_cel);
+	}
+	is_checked = true;
 }

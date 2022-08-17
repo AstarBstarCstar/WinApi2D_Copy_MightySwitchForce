@@ -1,7 +1,5 @@
 #include "framework.h"
 #include "CState.h"
-#include "framework.h"
-#include "CState.h"
 #include "AI.h"
 #include "CMonster.h"
 

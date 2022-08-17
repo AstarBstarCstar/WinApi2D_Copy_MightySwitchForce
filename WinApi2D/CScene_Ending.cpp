@@ -8,6 +8,7 @@
 #include "CD2DImage.h"
 #include "CButtonUI.h"
 #include "CScene_Start.h"
+#include "CScene_Select.h"
 
 CScene_Ending::CScene_Ending()
 {
@@ -68,7 +69,7 @@ void CScene_Ending::Enter()
 		End3->SetPos(fPoint(0, 0));
 		AddObject(End3, GROUP_GAMEOBJ::MAP);
 	}
-	default:
+	case 3:
 	{
 		CMap* End4 = new CMap;
 		End4->Load(L"End1", L"texture\\background\\4.png");
@@ -79,9 +80,13 @@ void CScene_Ending::Enter()
 	m_pPar->SetScale(fPoint(100.f, -920.f));
 	m_pPar->SetTextColor(RGB(255, 255, 0));
 	m_pPar->SetFontSize(75);
-	m_pPar->SetText(L"1:50.00");
+	m_pPar->SetText(L"1:00.00");
 	m_pPar->SetPos(fPoint(WINSIZEX / 2.f - 405.f, WINSIZEY / 2.f + 100.f));
 	AddObject(m_pPar, GROUP_GAMEOBJ::UI);
+
+
+	if (CScene_Start::timer <= 60)
+		CScene_Select::temptimer = CScene_Start::timer;
 
 
 	float temp = 0.f;
@@ -90,8 +95,8 @@ void CScene_Ending::Enter()
 	int cel;
 	temp = CScene_Start::timer;
 	min = temp / 60;
-	sec = ceil((int)temp % 60);
-	cel = ceil((int)(temp * 100) % 100);
+	sec = (int)temp % 60;
+	cel = (int)(temp * 100) % 100;
 	wstring Time_min;
 	wstring Time_sec;
 	wstring Time_cel;

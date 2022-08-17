@@ -40,6 +40,10 @@ void CHooligan2::OnCollisionEnter(CCollider* pOther)
 		int R = rand() % 3;
 		DeleteObj(this);
 		CSoundManager::GetInst()->Play(L"Collect");
+
+		if (CGameObject::holiganSave > 5)
+			return;
+
 		switch (R)
 		{
 		case 0:

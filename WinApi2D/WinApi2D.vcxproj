@@ -162,7 +162,6 @@
     <ClInclude Include="CEventManager.h" />
     <ClInclude Include="CExitRobot.h" />
     <ClInclude Include="CGameObject.h" />
-    <ClInclude Include="CGravity.h" />
     <ClInclude Include="CHeartHUD.h" />
     <ClInclude Include="CHolliganHUD.h" />
     <ClInclude Include="CHolliganSave.h" />
@@ -228,7 +227,6 @@
     <ClCompile Include="CEventManager.cpp" />
     <ClCompile Include="CExitRobot.cpp" />
     <ClCompile Include="CGameObject.cpp" />
-    <ClCompile Include="CGravity.cpp" />
     <ClCompile Include="CHeartHUD.cpp" />
     <ClCompile Include="CHolliganHUD.cpp" />
     <ClCompile Include="CHolliganSave.cpp" />
@@ -283,6 +281,9 @@
     <Image Include="WinApi2D.ico" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+    <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram2.cd" />
     <None Include="cpp.hint" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
