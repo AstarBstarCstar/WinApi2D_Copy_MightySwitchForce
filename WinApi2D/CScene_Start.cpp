@@ -17,6 +17,8 @@
 #include "CHooligan5.h"
 #include "CPlayerSiren.h"
 #include "CExitRobot.h"
+#include "CUI.h"
+#include "CButtonUI.h"
 
 #include "CSound.h"
 #include "CD2DImage.h"
@@ -32,7 +34,7 @@ CScene_Start::~CScene_Start()
 void CScene_Start::update()
 {
 	CScene::update();
-
+	CScene_Start::timer += fDT;
 	if (KeyDown(VK_TAB))
 	{
 		ChangeScn(GROUP_SCENE::TOOL);
@@ -46,9 +48,21 @@ void CScene_Start::update()
 	}
 
 }
+	float CScene_Start::timer;
 void CScene_Start::Enter()
 {
 	{
+
+
+		/*CUI* m_pMin = new CButtonUI;
+		m_pMin->SetScale(fPoint(100.f, -735.f));
+		m_pMin->SetTextColor(RGB(255, 255, 0));
+		m_pMin->SetFontSize(75);
+		m_pMin->SetText(Time_min);
+		m_pMin->SetPos(fPoint(WINSIZEX / 2.f - 525.f, WINSIZEY / 2.f + 100.f));
+		AddObject(m_pMin, GROUP_GAMEOBJ::UI);*/
+
+		CScene_Start::timer = 0.f;
 		CCameraManager::GetInst()->FadeIn(0.7f);
 		CSoundManager::GetInst()->AddSound(L"Stbgm", L"sound\\MSF_ST2.wav", true, true);
 		CSoundManager::GetInst()->Play(L"Stbgm");

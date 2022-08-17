@@ -18,5 +18,6 @@ public:
 	float timer = 0.f;
 	bool trriger=true;
 	bool End = false;
+	bool cleartrriger = true;
 };
 

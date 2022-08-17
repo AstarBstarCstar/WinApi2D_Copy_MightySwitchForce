@@ -19,6 +19,7 @@ public:
 
 	unsigned int GetFPS();
 	float GetfDT();
+	float GetGamefDT();
 	double GetDT();
 };
 

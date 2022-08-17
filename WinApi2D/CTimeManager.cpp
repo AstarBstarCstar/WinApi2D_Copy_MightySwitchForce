@@ -60,6 +60,11 @@ float CTimeManager::GetfDT()
 {
 	return (float)m_dDT;
 }
+float CTimeManager::GetGamefDT()
+{
+	return (float)m_dDT;
+}
+
 
 double CTimeManager::GetDT()
 {
