@@ -11,5 +11,7 @@ public:
 
 	virtual void Enter();
 	virtual void Exit();
+	bool m_isChanged;
+	float timer = 0.f;
 };
 

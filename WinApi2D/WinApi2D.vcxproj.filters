@@ -249,6 +249,9 @@
     <ClInclude Include="SwitchBlock2.h">
       <Filter>Object\SwitchBlock</Filter>
     </ClInclude>
+    <ClInclude Include="CPlayerSiren.h">
+      <Filter>Object\Character</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinApi2D.cpp">
@@ -256,9 +259,6 @@
     </ClCompile>
     <ClCompile Include="CCore.cpp">
       <Filter>Engine\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="CGameObject.cpp">
-      <Filter>Object</Filter>
     </ClCompile>
     <ClCompile Include="CTimeManager.cpp">
       <Filter>Engine\Manager</Filter>
@@ -400,6 +400,12 @@
     </ClCompile>
     <ClCompile Include="SwitchBlock.cpp">
       <Filter>Object\SwitchBlock</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayerSiren.cpp">
+      <Filter>Object\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="CGameObject.cpp">
+      <Filter>Resouce</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

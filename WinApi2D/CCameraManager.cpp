@@ -135,6 +135,11 @@ void CCameraManager::FadeIn(float duration)
 	fDuration = duration;
 	fCurTime = 0.f;
 }
+void CCameraManager::Shake(float duration)
+{
+	m_eEffect = CAM_EFFECT::SHAKING;
+	fDuration = duration;
+}
 
 void CCameraManager::FadeOut(float duration)
 {

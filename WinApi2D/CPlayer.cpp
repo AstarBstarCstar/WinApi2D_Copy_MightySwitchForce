@@ -8,6 +8,8 @@
 #include "CAnimator.h"
 #include "CAnimation.h"
 #include "CTile.h"
+#include "SwitchBlock.h"
+#include "CPlayerSiren.h"
 CPlayer* CPlayer::instance = nullptr;
 CPlayer::CPlayer()
 {
@@ -64,7 +66,7 @@ CPlayer::CPlayer()
 	CreateCollider();
 	GetCollider()->SetScale(fPoint(55.f, 160.f));
 	GetCollider()->SetOffsetPos(fPoint(0.f, 25.f));
-
+	
 	isLeft = false;
 	CameraLock = false;
 	m_bJustHit = false;
@@ -97,14 +99,27 @@ TODO:
 UP DOWN 키 없음*/
 void CPlayer::update()
 {
-	CCameraManager::GetInst()->SetLookAt(GetPos());
-	update_Animation();
-	update_State();
-	update_Move();
+	//1,static영역
+	//2.scene swbl.관리
+	//3.플레이어가 해당 신에 있는 스위칭블럭 오브젝트들을 전부 확인후 변경
+	
+	CGameObject::Switching;
+	if (CGameObject::Switching != true)
+	{
+		update_Animation();
+		update_Move();
+		GetAnimator()->update();
+		update_State();
+	}
 
+	else if (CGameObject::Switching == true)
+	{
+		update_State();
+	}
+	CCameraManager::GetInst()->SetLookAt(GetPos());
 	m_PrevState = m_State;
 	m_fPrevDir = m_fCurDir;
-	GetAnimator()->update();
+
 }
 
 void CPlayer::render()
@@ -151,6 +166,10 @@ void CPlayer::update_State()
 	{
 		m_State = PLAYER_STATE::JUMPFALL;
 	}
+	else
+	{
+		m_fSpeed = 0.f;
+	}
 	if (KeyDown('Z') && !m_bGrounding)
 	{
 		CreateMissile();
@@ -162,6 +181,10 @@ void CPlayer::update_State()
 		CreateMissile();
 		m_State = PLAYER_STATE::ATTACK;
 		m_bAttacking = true;
+	}
+	if (KeyDown('C'))
+	{
+		CreateSiren();
 	}
 	if (Key(VK_LEFT) && KeyDown('Z') && m_bGrounding && m_fSpeed > 500)
 	{
@@ -354,7 +377,18 @@ void CPlayer::update_Animation()
 	}
 	}
 }
+void CPlayer::CreateSiren()
+{
+	fPoint fSirenPos = GetPos();
+	//fSirenPos.x += GetScale().x / 2.f;
+	fSirenPos.y -= 100.f;
 
+	CPlayerSiren* pSiren = new CPlayerSiren;
+	pSiren->SetPos(fSirenPos);
+	pSiren->SetScale(fPoint(512.f,512.f));
+		pSiren->SetName(L"PlayerSiren");
+		CreateObj(pSiren, GROUP_GAMEOBJ::UI);
+}
 void CPlayer::CreateMissile()
 {
 	fPoint fpMissilePos = GetPos();
@@ -387,6 +421,10 @@ void CPlayer::Jump()
 void CPlayer::OnCollisionEnter(CCollider* pOther)
 {
 	CGameObject* pOtherObj = pOther->GetObj();
+	if (pOtherObj->GetName() == L"Switching")
+	{
+		DeleteObj(this);
+	}
 	CTile* pTile = (CTile*)pOtherObj;
 	GROUP_TILE Type = pTile->GetGroup();
 	if (pOtherObj->GetName() == L"Tile")

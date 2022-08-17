@@ -18,7 +18,9 @@ SwitchBlock::SwitchBlock()
 	fCurTime = 0.f;
 	m_eChanger = BLOCK_CHANGE::OPEN;
 	fDuration = 0.5f;
+
 }
+bool CGameObject::Switching;
 SwitchBlock::~SwitchBlock()
 {
 }
@@ -30,10 +32,13 @@ SwitchBlock* SwitchBlock::Clone()
 
 void SwitchBlock::update()
 {
+	
 	//bool?
 	//if bool true 일때 블록만 업데이트  
+	//GetSwitching();
 	if (KeyDown('C'))
 	{
+
 		CSoundManager::GetInst()->Play(L"Switching");
 		CSoundManager::GetInst()->Play(L"Flip");
 		if (m_bSW == true)//활성화 된 스위치블럭 상태에서 c 누를시
@@ -42,7 +47,6 @@ void SwitchBlock::update()
 			fDuration = 0.5;
 			fCurTime = 0.f;
 			m_bSW = false;
-			SetName(L"SWB");
 		}
 		else//활성화 안 된 스위치블럭 상태에서 c 누를시
 		{
@@ -50,7 +54,8 @@ void SwitchBlock::update()
 			fDuration = 0.5;
 			fCurTime = 0.f;
 			m_bSW = true;
-			SetName(L"SwitchBlock");
+			SetName(L"Switching");
+			CGameObject::Switching = true;
 		}
 	}
 }
@@ -68,11 +73,17 @@ void SwitchBlock::render()
 		if (fAlpha <= 0.5f)
 		{
 			fAlpha = 0.5f;
+			SetName(L"SWB");
 		}
 	}
 	else if (BLOCK_CHANGE::OPEN == m_eChanger)
 	{
 		fAlpha =0.5f+ fRatio; 
+		if (fAlpha >= 1.f)
+		{
+			SetName(L"SwitchBlock");
+			Switching = false;
+		}
 	}
 
 	fPoint scale = GetScale();
@@ -81,3 +92,12 @@ void SwitchBlock::render()
 
 	component_render();
 }
+//void SwitchBlock::SetSwitching(bool SW)
+//{
+//	Switching = SW;
+//}
+//
+//bool SwitchBlock::GetSwitching()
+//{
+//	return Switching;
+//}

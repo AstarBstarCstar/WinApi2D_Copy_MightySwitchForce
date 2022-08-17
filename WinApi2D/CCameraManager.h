@@ -7,6 +7,7 @@ enum class CAM_EFFECT
 {
 	FADE_IN,
 	FADE_OUT,
+	SHAKING,
 
 	NONE
 };
@@ -65,6 +66,7 @@ public:
 
 	void FadeIn(float duration);
 	void FadeOut(float duration);
+	void Shake(float duration);
 
 	void Scroll(fVec2 vec, float velocity);
 	void SetBoundary(fPoint LT, fPoint RB);
@@ -74,4 +76,3 @@ public:
 private:
 	void CalDiff();
 };
-

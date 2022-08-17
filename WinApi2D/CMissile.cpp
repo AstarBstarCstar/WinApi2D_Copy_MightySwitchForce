@@ -32,21 +32,30 @@ CMissile::~CMissile()
  
 void CMissile::update()
 {
-	fPoint pos = GetPos();
 
-	pos.x += m_fSpeed * m_fvDir.x * fDT;
-	pos.y += m_fSpeed * m_fvDir.y * fDT;
-
-	SetPos(pos);
-	GetAnimator()->update();
-
-	if (m_fvDir.x == 1)
+	CGameObject::Switching;
+	if (CGameObject::Switching != true)
 	{
-		GetAnimator()->Play(L"Bullet");
+		fPoint pos = GetPos();
+
+		pos.x += m_fSpeed * m_fvDir.x * fDT;
+		pos.y += m_fSpeed * m_fvDir.y * fDT;
+
+		SetPos(pos);
+		GetAnimator()->update();
+
+		if (m_fvDir.x == 1)
+		{
+			GetAnimator()->Play(L"Bullet");
+		}
+		else
+		{
+			GetAnimator()->Play(L"R_Bullet");
+		}
 	}
-	else
+
+	else if (CGameObject::Switching == true)
 	{
-		GetAnimator()->Play(L"R_Bullet");
 	}
 }
 
