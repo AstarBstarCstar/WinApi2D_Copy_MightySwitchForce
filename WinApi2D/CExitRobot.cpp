@@ -38,7 +38,7 @@ void CExitRobot::OnCollision(CCollider* pOther)
 
 	if (pOtherObj->GetName() == L"Player")
 	{
-		if (CGameObject::holiganSave == 6)
+		if (CGameObject::holiganSave >= 5)
 		{
 			trriger = false;
 			///*GetAnimator()->Play("");*/
@@ -57,7 +57,7 @@ CExitRobot* CExitRobot::Clone()
 
 void CExitRobot::render()
 {
-	if (CGameObject::holiganSave==6)
+	if (CGameObject::holiganSave>=5)
 	{
 		fPoint pos = GetPos();
 		fPoint scale = GetScale();
@@ -69,7 +69,7 @@ void CExitRobot::render()
 
 void CExitRobot::update()
 {
-	if (CGameObject::holiganSave == 6)
+	if (CGameObject::holiganSave >= 5)
 	{
 		if (cleartrriger == true)
 		{

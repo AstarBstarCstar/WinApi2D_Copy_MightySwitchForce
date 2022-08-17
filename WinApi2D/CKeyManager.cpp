@@ -53,6 +53,7 @@ void CKeyManager::update()
 	ScreenToClient(hWnd, &ptPos);
 
 	m_fptCurMousePos = fPoint((float)ptPos.x, (float)ptPos.y);
+
 }
 
 void CKeyManager::init()

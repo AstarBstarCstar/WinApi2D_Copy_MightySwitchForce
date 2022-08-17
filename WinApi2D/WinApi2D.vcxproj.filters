@@ -79,6 +79,9 @@
     <Filter Include="Object\Monster">
       <UniqueIdentifier>{420d0a9c-29f5-4b74-bf0e-3aad66a70842}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object\UI\HUDs">
+      <UniqueIdentifier>{9fc5aee3-88a9-4581-9282-a52448cd15b4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -262,7 +265,16 @@
       <Filter>Scene</Filter>
     </ClInclude>
     <ClInclude Include="CHUD.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>Object\UI\HUDs</Filter>
+    </ClInclude>
+    <ClInclude Include="CHolliganSave.h">
+      <Filter>Object\UI\HUDs</Filter>
+    </ClInclude>
+    <ClInclude Include="CHolliganHUD.h">
+      <Filter>Object\UI\HUDs</Filter>
+    </ClInclude>
+    <ClInclude Include="CHeartHUD.h">
+      <Filter>Object\UI\HUDs</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -429,7 +441,16 @@
       <Filter>Object\SwitchBlock</Filter>
     </ClCompile>
     <ClCompile Include="CHUD.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>Object\UI\HUDs</Filter>
+    </ClCompile>
+    <ClCompile Include="CHolliganSave.cpp">
+      <Filter>Object\UI\HUDs</Filter>
+    </ClCompile>
+    <ClCompile Include="CHolliganHUD.cpp">
+      <Filter>Object\UI\HUDs</Filter>
+    </ClCompile>
+    <ClCompile Include="CHeartHUD.cpp">
+      <Filter>Object\UI\HUDs</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
